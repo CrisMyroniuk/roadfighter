@@ -6,6 +6,7 @@ public abstract class Vehicle extends MapObject {
 	public double getSpeed() {
 		System.out.println("Error");
 		return speed;
+		System.out.println("casaaa");
 	}
 
 	public void setSpeed(double speed) {
