@@ -11,4 +11,9 @@ public abstract class Vehicle extends MapObject {
 		this.speed = speed;
 	}
 	
+	public void move(double x, double y) {
+		
+	}
+	
+	
 }
