@@ -1,9 +1,14 @@
 package roadfighter;
 
-public class Vehicle {
+public abstract class Vehicle extends MapObject {
 	private double speed;
-	public Vehicle() {
-		String hola = "hola";
+
+	public double getSpeed() {
+		return speed;
 	}
 
+	public void setSpeed(double speed) {
+		this.speed = speed;
+	}
+	
 }
