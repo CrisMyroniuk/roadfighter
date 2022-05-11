@@ -1,5 +1,5 @@
 package roadfighter;
 
 public interface Collide {
-	public void collision();
+	public void collision(MapObject mo);
 }
