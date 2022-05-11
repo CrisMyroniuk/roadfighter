@@ -2,5 +2,10 @@ package roadfighter;
 
 public class Movement {
 	private boolean move;
-	private Enum keys;
+	private static Move keys = Move.KEY_NONE;
+	
+	public void capture(Move entrada) {
+		
+	}
+	
 }
