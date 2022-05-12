@@ -1,5 +1,5 @@
 package roadfighter;
 
-public class Enemy extends Vehicle{
-	private Enum orientation;
+public abstract class Enemy extends Vehicle{
+	private Direction direction;
 }

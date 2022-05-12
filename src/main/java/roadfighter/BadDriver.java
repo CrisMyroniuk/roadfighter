@@ -7,4 +7,10 @@ public class BadDriver extends Enemy{
 	public void stuck(CarPlayer player) {
 		
 	}
+
+	@Override
+	public void move(double x, double y) {
+		// TODO Auto-generated method stub
+		
+	}
 }
