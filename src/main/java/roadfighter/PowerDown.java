@@ -13,8 +13,7 @@ public class PowerDown extends Item{
 	}
 	
 	public PowerDown(int x, int y,double h, double w, double sp) {
-		setX(x);
-		setY(y);
+		setCoordinate(new Coordinate(x, y));
 		setHeight(h);
 		setWidth(w);
 		setModel(null);

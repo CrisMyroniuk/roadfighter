@@ -12,7 +12,7 @@ import roadfighter.CarPlayer;
 public class TurboTest {
 	
 	
-	CarPlayer cp = new CarPlayer(0, 0, 1, 1, 80);
+	CarPlayer cp = new CarPlayer(0, 0);
 	
 //	@Before
 //	public void setUp() {
@@ -44,9 +44,9 @@ public class TurboTest {
 	@Test
 	public void maxSpeedWithTurbo() {
 		
-		double prevMaxSpeed = cp.getMaximusSpeed();
+		double prevMaxSpeed = cp.getSpeedLimit();
 		cp.activateTurbo();
-		assertEquals(prevMaxSpeed + 50, cp.getMaximusSpeed(), 0.01);
+		assertEquals(prevMaxSpeed + 50, cp.getSpeedLimit(), 0.01);
 	}
 	
 	@Test
@@ -84,9 +84,9 @@ public class TurboTest {
 		cp.activateTurbo();
 
 		double time = 100;
-		double TurboMaxSpeed = cp.getMaximusSpeed();
+		double TurboMaxSpeed = cp.getSpeedLimit();
 		cp.updateTurboTime(time);
-		assertEquals(TurboMaxSpeed -50, cp.getMaximusSpeed(), 0.01);
+		assertEquals(TurboMaxSpeed -50, cp.getSpeedLimit(), 0.01);
 	}
 	
 	@Test

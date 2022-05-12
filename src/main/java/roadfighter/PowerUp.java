@@ -14,8 +14,7 @@ public class PowerUp extends Item{
 	}
 
 	public PowerUp(int x, int y,double h, double w,int p) {
-		setX(x);
-		setY(y);
+		setCoordinate(new Coordinate(x,y));
 		setHeight(h);
 		setWidth(w);
 		setModel(null);

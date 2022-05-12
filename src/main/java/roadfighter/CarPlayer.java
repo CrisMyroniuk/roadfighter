@@ -78,8 +78,7 @@ public class CarPlayer extends Vehicle {
 		this.speedLimit = 200;
 		this.turbo = false;
 		this.point = 0;
-		setX(x);
-		setY(y);
+		setCoordinate(new Coordinate(x, y));
 	}
 
 	// endregion
@@ -156,9 +155,9 @@ public class CarPlayer extends Vehicle {
 
 	@Override
 	public void move(double x, double y) {
-		// TODO Auto-generated method stub
-		this.setX(getX()+x);
-		this.setY(getY()+y);
+		// TODO Auto-generated method stub.
+		getCoordinate().setX(getCoordinate().getX()+x);
+		getCoordinate().setY(getCoordinate().getY()+y);
 	}
 
 	// endregion

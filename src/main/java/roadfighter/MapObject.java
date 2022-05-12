@@ -5,8 +5,7 @@ import java.awt.Image;
 public abstract class MapObject {
 
 	private Image model;
-	private double x;
-	private double y;
+	Coordinate coordinate;
 	private double width;
 	private double height;
 	
@@ -18,20 +17,12 @@ public abstract class MapObject {
 		this.model = model;
 	}
 
-	public double getX() {
-		return x;
+	public Coordinate getCoordinate() {
+		return coordinate;
 	}
 
-	public void setX(double x) {
-		this.x = x;
-	}
-
-	public double getY() {
-		return y;
-	}
-
-	public void setY(double y) {
-		this.y = y;
+	public void setCoordinate(Coordinate coordinate) {
+		this.coordinate = coordinate;
 	}
 
 	public double getWidth() {

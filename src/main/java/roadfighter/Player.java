@@ -16,21 +16,29 @@ public class Player {
 		switch (d) {
 		case RIGHT: {
 			car.setDirectionRight();
+			break;
 		}
 		case LEFT: {
 			car.setDirectionLeft();
+			break;
 		}
 		case UP: {
 			car.setDirectionUp();
 			car.changeSpeed(10, Action.SPEED_UP);
+			break;
 		}
 		case DOWN: {
 			car.setDirectionDown();
 			car.changeSpeed(10, Action.SPEED_DOWN);
+			break;
 		}
 		default:
 			throw new IllegalArgumentException("Unexpected value: " + d);
 		}
+	}
+	
+	public Coordinate myCoord() {
+		return car.getCoordinate();
 	}
 	
 	//endregion
