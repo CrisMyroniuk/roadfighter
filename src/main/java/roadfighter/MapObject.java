@@ -5,7 +5,7 @@ import java.awt.Image;
 public abstract class MapObject {
 
 	private Image model;
-	Coordinate coordinate;
+	private Coordinate coordinate;
 	private double width;
 	private double height;
 	

@@ -28,6 +28,9 @@ public class PowerDown extends Item{
 		cp.changeSpeed(10,Action.SPEED_DOWN);
 	}
 
-	
+	public void desaparecer() {
+		//To do llamar a que haga alguna animacion y/o sonido
+		visible = false;
+	}
 
 }

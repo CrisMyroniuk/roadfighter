@@ -27,5 +27,10 @@ public class PowerUp extends Item{
 		// TODO Agregamos los puntos al jugador
 		cp.addPoints(points);
 	}
+	
+	public void desaparecer() {
+		//To do llamar a que haga alguna animacion y/o sonido
+		visible = false;
+	}
 
 }
