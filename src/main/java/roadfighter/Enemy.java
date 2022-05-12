@@ -1,5 +1,15 @@
 package roadfighter;
 
 public abstract class Enemy extends Vehicle{
-	private Direction direction;
-}
+	private Enum orientation;
+	private boolean visible;
+	
+	public Enemy(double x, double y) {
+		super();
+		this.orientation = orientation;
+		this.visible = visible;
+		this.setX(x);
+		this.setY(y);
+	}
+
+
