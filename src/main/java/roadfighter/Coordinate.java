@@ -13,6 +13,11 @@ public class Coordinate {
 	public void setX(double x) {
 		this.x = x;
 	}
+	
+	public double getNorm () {
+		//la norma como si fuera un vector
+		return this.x == 0 && this.y == 0 ? 0 : Math.hypot(x, y);
+	}
 
 	public double getY() {
 		return y;
@@ -27,11 +32,26 @@ public class Coordinate {
 		setX(x);
 		setY(y);
 	}
+	
+	public Coordinate normalize() {
+		double norm = this.getNorm();
+		if (norm != 0) {
+			this.x /= norm;
+			this.y /= norm;
+		}
+		
+		return this;
+	}
 
 	public boolean intersection(Coordinate c) {
 		if(getX()==c.getX())
 			if(getY()==c.getY())
 				return true;
 		return false;
+	}
+	
+	@Override
+	public String toString() {
+		return "(" + x + ", " + y + ")";
 	}
 }

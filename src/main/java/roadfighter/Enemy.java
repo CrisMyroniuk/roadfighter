@@ -49,5 +49,4 @@ public class Enemy extends Vehicle{
 			throw new IllegalArgumentException("Unexpected value: " + direction);
 		}
 	}
-
 }
