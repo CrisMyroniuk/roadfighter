@@ -8,8 +8,10 @@ public class Map {
 	public Map() {
 		ArrayList<Item> items;
 		
-		Image image;
+		Image background;
 		
+		//Vamos a usar las coordenadas para esto de aca abajo? 
+		//En el UML dejamos la clase coordenada
 		int x;
 		int y;
 	}
