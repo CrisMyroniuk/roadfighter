@@ -1,6 +1,18 @@
 package roadfighter;
 
+import java.util.Objects;
+
 public class Coordinate {
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(x, y);
+	}
+
+	public boolean equals(Coordinate c) {
+		return this.getX() == c.getX()
+				&& this.getY() == c.getY();
+	}
 
 	private double x;
 	private double y;

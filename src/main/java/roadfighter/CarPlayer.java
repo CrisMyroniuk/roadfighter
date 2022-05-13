@@ -10,7 +10,6 @@ public class CarPlayer extends Vehicle {
 	
 
 	private boolean turbo;
-	// private Movement movement;
 	private static double turboDuration = 100;
 	private static double turboExtraSpeed = 50; // +50
 	private static double turboExtraAceleration = 2; // x2

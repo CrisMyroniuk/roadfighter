@@ -1,8 +1,7 @@
 package roadfighter;
 
-import org.hamcrest.CoreMatchers;
 
-public class Enemy extends Vehicle{
+public abstract class Enemy extends Vehicle{
 	private Direction direction;
 	private boolean visible;
 	
@@ -22,14 +21,6 @@ public class Enemy extends Vehicle{
 		this.visible = visible;
 	}
 	
-	
-	public Enemy(double x, double y,Direction d) {
-		super();
-		this.setDirection(d);
-		this.setVisible(true);
-		setCoordinate(new Coordinate(x, y));
-	}
-
 	public void changeState() {
 		setVisible(false);
 	}
@@ -44,6 +35,15 @@ public class Enemy extends Vehicle{
 		}
 		case DOWN:{
 			getCoordinate().setY(getCoordinate().getY()-y);
+			break;
+		}
+		case LEFT:{
+			getCoordinate().setX(getCoordinate().getX()-x);
+			break;
+		}
+		case RIGHT:{
+			getCoordinate().setX(getCoordinate().getX()-y);
+			break;
 		}
 		default:
 			throw new IllegalArgumentException("Unexpected value: " + direction);

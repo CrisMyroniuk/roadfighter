@@ -6,8 +6,8 @@ public class BadDriver extends Enemy {
 	private double timer;
 	
 	public BadDriver(double x, double y, Direction d) {
-		super(x, y, d);
-		
+		setCoordinate(new Coordinate(x, y));
+		setDirection(d);
 		objective = new Coordinate(x, y);
 		timer = 3;
 	}
@@ -17,7 +17,7 @@ public class BadDriver extends Enemy {
 			objective = new Coordinate(
 					player.getCoordinate().getX(),
 					this.getCoordinate().getY()
-					);
+					); // acceder solo a las cordenadas no al player completo
 		}
 	}
 	
