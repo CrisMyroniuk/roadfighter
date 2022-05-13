@@ -14,6 +14,7 @@ public class CarPlayer extends Vehicle {
 	private static double turboDuration = 100;
 	private static double turboExtraSpeed = 50; // +50
 	private static double turboExtraAceleration = 2; // x2
+	private static double turboSpeedLimit = 100; // +100
 	// endregion
 
 	// region Properties
@@ -98,12 +99,12 @@ public class CarPlayer extends Vehicle {
 		case SPEED_UP:
 			if(getSpeed()<getSpeedLimit())
 				setSpeed(getSpeed() + sp);
-			//setMaximusSpeed(getMaximusSpeed() + sp);
 			// a desarrollar
 			break;
 		case SPEED_DOWN:
+			if(getSpeed() < sp)
+				sp = getSpeed();	//Para que la velocidad no sea menor que cero
 			setSpeed(getSpeed() - sp);
-			//setMaximusSpeed(getMaximusSpeed() - sp); // que hace esto?
 			// a desarrollar
 			break;
 		case STOP:
@@ -122,6 +123,7 @@ public class CarPlayer extends Vehicle {
 	public void activateTurbo() {
 		if (!isTurbo()) {
 			this.aceleration *= turboExtraAceleration;
+			this.speedLimit += turboSpeedLimit;
 			changeSpeed(turboExtraSpeed, Action.SPEED_UP);
 			this.turbo = true;
 		}
@@ -130,6 +132,7 @@ public class CarPlayer extends Vehicle {
 	public void desactivateTurbo() {
 		this.aceleration /= turboExtraAceleration;
 		changeSpeed(turboExtraSpeed, Action.SPEED_DOWN);
+		this.speedLimit -= turboSpeedLimit;
 		this.turbo = false;
 	}
 
