@@ -6,40 +6,52 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class Match {
-
-	// public Map
+	
+	private ArrayList<Item> items;
+	private MatchMap map;
 	private Player player;
 	private Enemy enemy;
-	private Item item;
-	private Enum state;
 
 	public Player getPlayer() {
 		return player;
-	}
-
-	public void setPlayer(Player player) {
-		this.player = player;
 	}
 
 	public Enemy getEnemy() {
 		return enemy;
 	}
 
-	public void setEnemy(Enemy enemy) {
-		this.enemy = enemy;
+	public Match(Player pla, Enemy ene, MatchMap map, ArrayList<Item> items) {
+		this.items = items;
+		player = pla;
+		enemy = ene;
+		this.map = map;
 	}
 
-	public Match(Player pla, Enemy ene) {
-		setPlayer(pla);
-		setEnemy(ene);
+	public void verifyState() {
+		
+		double playerX = player.getCarPlayer().getCoordinate().getX();
+		double playerY = player.getCarPlayer().getCoordinate().getY();
+		double mapX = map.getMapDimension().getX();
+		double mapY = map.getMapDimension().getY();
+		
+		if(playerY >= mapY && (playerX > 0 && playerX < mapX)) {
+			player.changeStateWin();
+		}
+		
+		if(playerX <= 0 || playerX >= mapX) {
+			player.changeStateDeath();
+		}
 	}
-
+	
 	public boolean matchState() {
-		// Retorna el estado de la partida
-		return true;
+		if(player.getState() == PlayerState.PLAYER_DEATH || player.getState() == PlayerState.PLAYER_WINS)
+			return false;
+		else {
+			return true;
+		}
 	}
 
-	public static void main(String[] args) {
+/*	public static void main(String[] args) {
 
 		ArrayList<Enemy> enemigos = new ArrayList<Enemy>();
 		Random r = new Random();
@@ -110,6 +122,6 @@ public class Match {
 //		} else
 //			System.out.println("no chocaron, todavia");
 
-	}
+	}*/
 
 }

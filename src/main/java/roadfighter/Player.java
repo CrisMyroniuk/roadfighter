@@ -1,44 +1,82 @@
 package roadfighter;
 
 public class Player {
+
+	private Integer points;
+	private PlayerState state;
 	private CarPlayer car;
-	private boolean live;
-	
-	
+
 	public Player (CarPlayer cp) {
 		car=cp;
-		live=true;
+		state=state.PLAYER_LIVE;
+		points=0;
+	}
+	
+	public Integer getPoint() {
+		return points;
+	}
+	
+	public CarPlayer getCarPlayer() {
+		return car;
+	}
+
+	public void setPoint(Integer point) {
+		this.points = point;
+	}
+	
+	public void addPoints(int p) {
+		setPoint(getPoint() + p);
+	}
+
+	public void removePoints(int p) {
+		setPoint(getPoint() - p);
 	}
 	
 	//region Metodos
 	
-	public void setDireccion(Direction d) {
-		switch (d) {
-		case RIGHT: {
-			car.setDirectionRight();
-			break;
-		}
-		case LEFT: {
-			car.setDirectionLeft();
-			break;
-		}
-		case UP: {
-			car.setDirectionUp();
-			car.changeSpeed(10, Action.SPEED_UP);
-			break;
-		}
-		case DOWN: {
-			car.setDirectionDown();
-			car.changeSpeed(10, Action.SPEED_DOWN);
-			break;
-		}
-		default:
-			throw new IllegalArgumentException("Unexpected value: " + d);
-		}
-	}
+//	public void setDireccion(Direction d) {
+//		switch (d) {
+//		case RIGHT: {
+//			car.setDirectionRight();
+//			break;
+//		}
+//		case LEFT: {
+//			car.setDirectionLeft();
+//			break;
+//		}
+//		case UP: {
+//			car.setDirectionUp();
+//			car.changeSpeed(10, Action.SPEED_UP);
+//			break;
+//		}
+//		case DOWN: {
+//			car.setDirectionDown();
+//			car.changeSpeed(10, Action.SPEED_DOWN);
+//			break;
+//		}
+//		default:
+//			throw new IllegalArgumentException("Unexpected value: " + d);
+//		}
+//	}
 	
 	public Coordinate myCoord() {
 		return car.getCoordinate();
+	}
+	
+	public void changeStateDeath() {
+		
+		this.state = PlayerState.PLAYER_DEATH;
+		
+	}
+	
+	public void changeStateWin() {
+		
+		this.state = PlayerState.PLAYER_WINS;
+		
+	}
+	
+	public PlayerState getState() {
+		return state;
 	}
 	
 	//endregion
