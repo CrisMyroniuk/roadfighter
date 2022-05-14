@@ -27,7 +27,7 @@ class PowerUpTest {
 		PowerUp powerUp = new PowerUp(1, 1, 1, 1, puntos);
 		
 		powerUp.effectPlayer(car);
-		assertEquals(puntos, player.getPoint());
+		assertEquals(puntos, player.getCarPlayer().getPoint());
 	}
 	
 	void desaparecer() {
