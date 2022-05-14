@@ -49,6 +49,10 @@ public class CarPlayer extends Vehicle {
 	public void setDirection(Direction direction) {
 		this.direction = direction;
 	}
+	
+	public Turbo getTurbo() {
+		return turbo;
+	}
 
 	// public Enum getDirection() {
 	// return direction;
@@ -125,6 +129,20 @@ public class CarPlayer extends Vehicle {
 	public void setDirectionDown() {
 		setDirection(Direction.DOWN);
 		move(0,-10);
+	}
+	
+	public void activateTurbo() {
+		turbo.activateTurbo(this);
+	}
+	
+	public void desactivateTurbo() {
+		turbo.desactivateTurbo(this);
+	}
+	
+	public void updateTurboTime(double dt) {
+		if (turbo.getDuration() - dt <= 0) {
+			desactivateTurbo();
+		}
 	}
 
 	@Override
