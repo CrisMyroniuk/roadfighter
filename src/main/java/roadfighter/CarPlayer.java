@@ -3,26 +3,27 @@ package roadfighter;
 public class CarPlayer extends Vehicle {
 
 	// region Variables
-	private double aceleration;
+	private double acceleration;
 	private Integer point;
 	private double speedLimit;
 	private Direction direction ;
-	
+	private Turbo turbo;
 
-	private boolean turbo;
+	/*private boolean turbo;
 	private static double turboDuration = 100;
 	private static double turboExtraSpeed = 50; // +50
 	private static double turboExtraAceleration = 2; // x2
 	private static double turboSpeedLimit = 100; // +100
+	*/
 	// endregion
 
 	// region Properties
 	public double getAceleration() {
-		return aceleration;
+		return acceleration;
 	}
 
 	public void setAceleration(double aceleration) {
-		this.aceleration = aceleration;
+		this.acceleration = aceleration;
 	}
 
 	public Integer getPoint() {
@@ -55,13 +56,6 @@ public class CarPlayer extends Vehicle {
 	// public void setDirection(Enum direction) {
 	// this.direction = direction;
 	// }
-	public boolean isTurbo() {
-		return turbo;
-	}
-
-	public void setTurbo(boolean turbo) {
-		this.turbo = turbo;
-	}
 	// public Movement getMovement() {
 	// return movement;
 	// }
@@ -74,9 +68,9 @@ public class CarPlayer extends Vehicle {
 
 	public CarPlayer(double x, double y) {
 
-		this.aceleration = 20;
+		this.acceleration = 20;
 		this.speedLimit = 200;
-		this.turbo = false;
+		this.turbo = new Turbo(false); //inicializamos el turbo en desactivado.
 		this.point = 0;
 		setCoordinate(new Coordinate(x, y));
 	}
@@ -111,28 +105,6 @@ public class CarPlayer extends Vehicle {
 			break;
 		}
 
-	}
-
-	public void updateTurboTime(double dt) {
-		if (turboDuration - dt <= 0) {
-			desactivateTurbo();
-		}
-	}
-
-	public void activateTurbo() {
-		if (!isTurbo()) {
-			this.aceleration *= turboExtraAceleration;
-			this.speedLimit += turboSpeedLimit;
-			changeSpeed(turboExtraSpeed, Action.SPEED_UP);
-			this.turbo = true;
-		}
-	}
-
-	public void desactivateTurbo() {
-		this.aceleration /= turboExtraAceleration;
-		changeSpeed(turboExtraSpeed, Action.SPEED_DOWN);
-		this.speedLimit -= turboSpeedLimit;
-		this.turbo = false;
 	}
 
 	public void setDirectionRight() {
