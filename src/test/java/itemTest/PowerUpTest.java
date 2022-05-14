@@ -6,15 +6,19 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import roadfighter.CarPlayer;
+import roadfighter.Player;
 import roadfighter.PowerUp;
 
 class PowerUpTest {
 	
+	Player player;
 	CarPlayer car;
 	
 	@BeforeEach
 	void init() {
+		
 		car = new CarPlayer(0.0 ,0.0);
+		player = new Player(car);
 	}
 	
 	@Test
@@ -23,7 +27,7 @@ class PowerUpTest {
 		PowerUp powerUp = new PowerUp(1, 1, 1, 1, puntos);
 		
 		powerUp.effectPlayer(car);
-		assertEquals(puntos, car.getPoint());
+		assertEquals(puntos, player.getPoint());
 	}
 	
 	void desaparecer() {
