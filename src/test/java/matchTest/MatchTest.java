@@ -7,13 +7,13 @@ import java.util.ArrayList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import roadfighter.CarPlayer;
-import roadfighter.Coordinate;
-import roadfighter.Enemy;
-import roadfighter.Item;
-import roadfighter.MatchMap;
-import roadfighter.Player;
-import roadfighter.Match;
+import roadfighter.objects.CarPlayer;
+import roadfighter.objects.Coordinate;
+import roadfighter.objects.Enemy;
+import roadfighter.objects.Item;
+import roadfighter.objects.Match;
+import roadfighter.objects.MatchMap;
+import roadfighter.objects.Player;
 
 class MatchTest {
 	

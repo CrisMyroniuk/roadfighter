@@ -9,7 +9,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import roadfighter.CarPlayer;
+import roadfighter.objects.CarPlayer;
 
 class TurboTest {
 	

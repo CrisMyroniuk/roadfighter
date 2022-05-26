@@ -1,4 +1,4 @@
-package roadfighter;
+package roadfighter.objects;
 
 import java.util.Random;
 import java.util.Scanner;

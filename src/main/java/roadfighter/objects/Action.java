@@ -1,4 +1,4 @@
-package roadfighter;
+package roadfighter.objects;
 
 public enum Action {
 	SPEED_UP,

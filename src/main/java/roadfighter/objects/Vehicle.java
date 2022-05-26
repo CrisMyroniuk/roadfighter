@@ -1,4 +1,4 @@
-package roadfighter;
+package roadfighter.objects;
 
 public abstract class Vehicle extends MapObject {
 	private double speed;

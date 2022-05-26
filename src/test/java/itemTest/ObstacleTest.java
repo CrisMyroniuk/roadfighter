@@ -5,8 +5,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import roadfighter.CarPlayer;
-import roadfighter.Obstacle;
+import roadfighter.objects.CarPlayer;
+import roadfighter.objects.Obstacle;
 
 class ObstacleTest {
 	

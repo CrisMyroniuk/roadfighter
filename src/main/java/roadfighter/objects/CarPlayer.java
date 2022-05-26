@@ -1,4 +1,4 @@
-package roadfighter;
+package roadfighter.objects;
 
 public class CarPlayer extends Vehicle {
 

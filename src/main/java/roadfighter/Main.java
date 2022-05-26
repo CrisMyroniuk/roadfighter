@@ -13,7 +13,7 @@ public class Main extends Application {
 		Group root = new Group();
 		Scene currentScene = new Scene(root);
 		
-		Image background = new Image("background.png");
+		Image background = new Image("file:background.png");
 		ImageView imageView = new ImageView(background);
 		root.getChildren().add(imageView);
 		

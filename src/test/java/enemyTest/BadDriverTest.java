@@ -3,9 +3,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-import roadfighter.BadDriver;
-import roadfighter.CarPlayer;
-import roadfighter.Direction;
+import roadfighter.objects.BadDriver;
+import roadfighter.objects.CarPlayer;
+import roadfighter.objects.Direction;
 
 class BadDriverTest {
 	/*
