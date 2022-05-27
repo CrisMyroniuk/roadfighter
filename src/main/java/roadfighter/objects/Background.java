@@ -14,14 +14,14 @@ public class Background extends GameObject implements Updatable, Renderable{
 	private VBox render;
 	private double posX = 0;
 
-	private final int cityWidth = 720;
-	private final int cityHeight = 720;
+	private final int cityWidth = 500;
+	private final int cityHeight = 795;
 	
 	public Background() {
 		Image backgroundImage = new Image("file:background.png", cityWidth, cityHeight, false, false);
 		ImagePattern image_pattern = new ImagePattern(backgroundImage, cityWidth, cityHeight, cityWidth, cityHeight,
 				false);
-		Rectangle city = new Rectangle(500 + cityWidth, cityHeight);
+		Rectangle city = new Rectangle(cityWidth,500 + cityHeight);
 		
 		city.setFill(image_pattern);
 		render = new VBox(city);
@@ -34,7 +34,7 @@ public class Background extends GameObject implements Updatable, Renderable{
 
 	public void update(double deltaTime) {
 		posX += -250 * deltaTime * 0.01;
-		render.setTranslateX(posX % cityWidth);
+		render.setTranslateY(posX % cityWidth);
 		
 	}
 

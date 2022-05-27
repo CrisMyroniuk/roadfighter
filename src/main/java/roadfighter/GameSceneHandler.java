@@ -1,5 +1,22 @@
 package roadfighter;
 
-public class GameSceneHandler {
+public class GameSceneHandler extends SceneHandler {
+
+	public GameSceneHandler(RoadFighterGame g) {
+		super(g);
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	protected void prepareScene() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected void defineEventHandlers() {
+		// TODO Auto-generated method stub
+		
+	}
 
 }
