@@ -1,5 +1,7 @@
 package roadfighter.objects_menu;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -38,9 +40,7 @@ public class TextoComenzar extends GameObject implements Renderable {
 				+"-fx-font-size: 40px;" 
 				+"-fx-padding: 10 20 10 20"
 				);
-
 		
-
 	}
 
 	@Override
@@ -50,5 +50,13 @@ public class TextoComenzar extends GameObject implements Renderable {
 
 	@Override
 	public void destroy() {	}
+	
+	public void setOnAction(EventHandler<ActionEvent> onPress) {
+		button.setOnAction(onPress);
+	}
+	
+	public void removeOnAction(EventHandler<ActionEvent> onPress) {
+		button.removeEventFilter(ActionEvent.ACTION, onPress);
+	}
 	
 }

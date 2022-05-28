@@ -1,5 +1,6 @@
 package roadfighter;
 
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -20,6 +21,8 @@ public class MenuSceneHandler extends SceneHandler {
 	//private Ground ground;
 	private Title title;
 	private TextoComenzar textoComenzar;
+	
+	private EventHandler<ActionEvent> onPressHandler;
 	
 	public MenuSceneHandler(RoadFighterGame g) {
 		super(g);	
@@ -59,10 +62,18 @@ public class MenuSceneHandler extends SceneHandler {
 				}
 			}
 		};
+		
+		onPressHandler = new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				g.startGame();
+			}
+		};
 	}
 
 	public void load() {
-		//boolean fullStart = true;
+		boolean fullStart = true;
 		Group baseGroup = new Group();
 		rootGroup.getChildren().add(baseGroup);
 		
@@ -79,15 +90,25 @@ public class MenuSceneHandler extends SceneHandler {
 		gameOB.setRootNode(baseGroup);
 		gameOB.add(background/*, player, ground*/, title, textoComenzar/*, fpsInfo*/);
 
-		/*if (fullStart) {
-			addTimeEventsAnimationTimer();
+		if (fullStart) {
+			//addTimeEventsAnimationTimer();
 			addInputEvents();
-		}*/
+		}
 	}
 
 	public void unload() {
 		rootGroup.getChildren().remove(0);
 		super.unload();
+	}
+	
+	protected void addInputEvents() {
+		super.addInputEvents();
+		textoComenzar.setOnAction(onPressHandler);
+	}
+	
+	protected void removeInputEvents() {
+		super.removeInputEvents();
+		textoComenzar.removeOnAction(onPressHandler);
 	}
 	
 }

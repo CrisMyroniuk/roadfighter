@@ -57,6 +57,7 @@ public class RoadFighterGame extends Application {
 	}
 	
 	public void startGame() {
+		System.out.println("started");
 		/*menuSceneHandler.unload();
 		gameSceneHandler = new GameSceneHandler(this);
 		Scene scene = gameSceneHandler.getScene();
