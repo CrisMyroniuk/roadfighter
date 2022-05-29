@@ -1,8 +1,9 @@
 package roadfighter.objects;
 
-import java.awt.Image;
+import javafx.scene.image.Image;
+import roadfighter.utils.GameObject;
 
-public abstract class MapObject {
+public abstract class MapObject extends GameObject{
 
 	private Image model;
 	private Coordinate coordinate;
@@ -41,5 +42,7 @@ public abstract class MapObject {
 		this.height = height;
 	}
 
-
+	public void destroy() {
+		
+	}
 }

@@ -16,7 +16,7 @@ public class Turbo {
 	}
 
 	public void setTurbo(boolean turbo) {
-		this.activate = activate;
+		this.activate = turbo;
 	}
 	
 	public double getDuration() {

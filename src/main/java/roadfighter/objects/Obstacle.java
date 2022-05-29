@@ -10,5 +10,10 @@ public class Obstacle extends Item{
 	public void effectPlayer(CarPlayer cp) {
 		cp.changeSpeed(0,Action.STOP);
 	}
+	
+	@Override
+	public void destroy() {
+		//capas tengamos que cortar audio
+	}
 
 }

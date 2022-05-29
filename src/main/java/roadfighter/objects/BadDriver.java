@@ -45,4 +45,8 @@ public class BadDriver extends Enemy {
 	public boolean hasObstructed() {
 		return timer <= 0;
 	}
+	
+	public void update(double delta) {
+		moveTowardsObjective(delta);
+	}
 }

@@ -32,5 +32,10 @@ public class PowerDown extends Item{
 		//To do llamar a que haga alguna animacion y/o sonido
 		visible = false;
 	}
+	
+	@Override
+	public void destroy() {
+		//cortar audio
+	}
 
 }

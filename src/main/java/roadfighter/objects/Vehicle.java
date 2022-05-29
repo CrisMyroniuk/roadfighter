@@ -1,6 +1,8 @@
 package roadfighter.objects;
 
-public abstract class Vehicle extends MapObject {
+import roadfighter.interfaces.Updatable;
+
+public abstract class Vehicle extends MapObject implements Updatable {
 	private double speed;
 
 	public double getSpeed() {

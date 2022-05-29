@@ -1,7 +1,5 @@
 package roadfighter.objects;
 
-import java.awt.Image;
-
 public class MatchMap {
 	
 	//private Image background;

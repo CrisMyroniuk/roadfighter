@@ -1,6 +1,8 @@
 package roadfighter.objects;
 
-public class Player {
+import roadfighter.utils.GameObject;
+
+public class Player extends GameObject{
 
 	private Integer points;
 	private PlayerState state;
@@ -77,6 +79,13 @@ public class Player {
 	
 	public PlayerState getState() {
 		return state;
+	}
+
+	@Override
+	public void destroy() {
+		// TODO lo que sea que se tenga que desalocar del jugador
+		// supongo que eventualmente podria ir si se cierra alguna conexion
+		
 	}
 	
 	//endregion

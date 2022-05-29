@@ -8,5 +8,7 @@ public class GoodDriver extends Enemy{
 		setCoordinate(new Coordinate(x, y));
 	}
 	
-	
+	public void update(double delta) {
+		
+	}
 }

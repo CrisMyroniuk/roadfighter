@@ -37,9 +37,9 @@ public class MenuSceneHandler extends SceneHandler {
 		mouseEventHandler = new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-				if (event.getButton() == MouseButton.PRIMARY) {
-					g.startGame();
-				}
+//				if (event.getButton() == MouseButton.PRIMARY) {
+//					g.startGame();
+//				}
 			}
 		};
 
@@ -47,9 +47,6 @@ public class MenuSceneHandler extends SceneHandler {
 			@Override
 			public void handle(KeyEvent e) {
 				switch (e.getCode()) {
-				case UP:
-				case W:
-				case SPACE:
 				case ENTER:
 					g.startGame();
 					break;
@@ -74,6 +71,8 @@ public class MenuSceneHandler extends SceneHandler {
 
 	public void load() {
 		boolean fullStart = true;
+		//esto esta re al pedo porque siempre queres el fullstart
+		//(siempre va al menu desde la escena del juego, si cambia eso hay que pasarle un boolean)
 		Group baseGroup = new Group();
 		rootGroup.getChildren().add(baseGroup);
 		
