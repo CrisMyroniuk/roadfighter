@@ -9,6 +9,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import roadfighter.objects.Background;
+import roadfighter.objects.CarPlayerFX;
 import roadfighter.objects_menu.TextoComenzar;
 import roadfighter.objects_menu.Title;
 import roadfighter.utils.GameObjectBuilder;
@@ -21,6 +22,7 @@ public class MenuSceneHandler extends SceneHandler {
 	//private Ground ground;
 	private Title title;
 	private TextoComenzar textoComenzar;
+	private CarPlayerFX player;
 	
 	private EventHandler<ActionEvent> onPressHandler;
 	
@@ -84,10 +86,10 @@ public class MenuSceneHandler extends SceneHandler {
 
 		title = new Title();
 		textoComenzar = new TextoComenzar();
-
+		player = new CarPlayerFX(Config.baseWidth-210, Config.baseHeight / 3);
 		GameObjectBuilder gameOB = GameObjectBuilder.getInstance();
 		gameOB.setRootNode(baseGroup);
-		gameOB.add(background/*, player, ground*/, title, textoComenzar/*, fpsInfo*/);
+		gameOB.add(background, player/*, ground*/, title, textoComenzar/*, fpsInfo*/);
 
 		if (fullStart) {
 			//addTimeEventsAnimationTimer();
