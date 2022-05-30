@@ -1,19 +1,53 @@
 package roadfighter.objects;
 
-public class Obstacle extends Item{
+import javafx.scene.Node;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 
-	public Obstacle() {
-		visible=true;
+public class Obstacle extends Item{
+	
+	// si hay varios obstaculos diferentes habria que hacer mas clases
+	// o meterle mas cosas al constructor para que tengan diferentes sprites/hitboxes
+	private final double WIDTH = 25;
+	private final double HEIGHT = 25;
+	
+	private Rectangle hitbox;
+	private Image sprite;
+	private ImageView render;
+
+	public Obstacle(double x, double y) {
+		visible = true;
+		initImages();
+		render = new ImageView(sprite);
+		
+		hitbox = new Rectangle(x, y, WIDTH, HEIGHT);
+	}
+	
+	private void initImages() {
+		//si tiene animacion supongo que va aca
+		sprite = new Image("file:src/resources/images/ObstacleSprite.png");
 	}
 
 	@Override
 	public void effectPlayer(CarPlayer cp) {
+		System.out.println("chocado");
 		cp.changeSpeed(0,Action.STOP);
 	}
 	
 	@Override
-	public void destroy() {
-		//capas tengamos que cortar audio
+	public Shape getCollider() {
+		return hitbox;
 	}
-
+	
+	@Override
+	public Node getRender() {
+		return render;
+	}
+	
+	@Override
+	public void destroy() {
+		// capas haya que cortar audio
+	}
 }

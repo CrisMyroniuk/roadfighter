@@ -1,5 +1,8 @@
 package roadfighter.objects;
 
+import javafx.scene.Node;
+import javafx.scene.shape.Shape;
+
 public class PowerUp extends Item{
 
 	int points;
@@ -36,6 +39,18 @@ public class PowerUp extends Item{
 	@Override
 	public void destroy() {
 		//cortar audio
+	}
+
+	@Override
+	public Shape getCollider() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Node getRender() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -3,9 +3,13 @@ package roadfighter.objects;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
+import roadfighter.interfaces.Collidator;
+import roadfighter.interfaces.Collideable;
 import roadfighter.interfaces.Renderable;
 
-public class CarPlayer extends Vehicle implements Renderable{
+public class CarPlayer extends Vehicle implements Collidator, Renderable{
 
 	// region Variables
 	private double acceleration;
@@ -14,10 +18,12 @@ public class CarPlayer extends Vehicle implements Renderable{
 	private Direction direction ;
 	private Turbo turbo;
 	
-	private final int width = 84;
-	private final int height = 134;
 	private ImageView render;
 	private Image sprite;
+	
+	private final int WIDTH = 84;
+	private final int HEIGHT = 134;
+	private Rectangle hitbox;
 
 	/*private boolean turbo;
 	private static double turboDuration = 100;
@@ -92,8 +98,10 @@ public class CarPlayer extends Vehicle implements Renderable{
 		
 		initImages();
 		render = new ImageView(sprite);
-		render.relocate(getCoordinate().getX() - width / 2, 
-						getCoordinate().getY() - height / 2);
+		render.relocate(getCoordinate().getX() - WIDTH / 2, 
+						getCoordinate().getY() - HEIGHT / 2);
+		
+		hitbox = new Rectangle(x, y, WIDTH, HEIGHT);
 	}
 	
 	private void initImages() {
@@ -186,12 +194,27 @@ public class CarPlayer extends Vehicle implements Renderable{
 		
 		move(translateX * delta, translateY * delta);
 		
-		render.setTranslateX(getCoordinate().getX() - width / 2);
-		render.setTranslateY(getCoordinate().getY() - height / 2);
+		render.setTranslateX(getCoordinate().getX() - WIDTH / 2);
+		render.setTranslateY(getCoordinate().getY() - HEIGHT / 2);
 	}
 
 	@Override
 	public Node getRender() {
 		return render;
+	}
+
+	@Override
+	public Shape getCollider() {
+		return hitbox;
+	}
+
+	@Override
+	public void collide(Collideable collideable) {
+		collideable.effectPlayer(this);
+	}
+
+	@Override
+	public void effectPlayer(CarPlayer source) {
+		// aca supongo que podriamos poner los efectos cuando 2 jugadores se chocan entre si
 	}
 }

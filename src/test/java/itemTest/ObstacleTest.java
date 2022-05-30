@@ -24,7 +24,7 @@ class ObstacleTest {
 	@Test
 	void efectoObstaculo() {
 		car.setSpeed(10);
-		Obstacle obstacle = new Obstacle();
+		Obstacle obstacle = new Obstacle(0, 0);
 		
 		obstacle.effectPlayer(car);
 		

@@ -1,6 +1,9 @@
 package roadfighter.objects;
 
-public abstract class Item extends MapObject{
+import roadfighter.interfaces.Collideable;
+import roadfighter.interfaces.Renderable;
+
+public abstract class Item extends MapObject implements Collideable, Renderable{
 	
 	protected boolean visible;
 	public abstract void effectPlayer(CarPlayer cp);

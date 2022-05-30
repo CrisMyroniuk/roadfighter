@@ -1,12 +1,17 @@
 package roadfighter;
 
+import java.util.List;
+
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import roadfighter.interfaces.Collidator;
+import roadfighter.interfaces.Collideable;
 import roadfighter.objects.CarPlayer;
+import roadfighter.objects.Obstacle;
 import roadfighter.objects.Player;
 import roadfighter.utils.GameObjectBuilder;
 
@@ -23,11 +28,15 @@ public class GameSceneHandler extends SceneHandler {
 	
 	private Player player;
 	private CarPlayer car;
+	private Obstacle obstacle;
 	
 	private EventHandler<KeyEvent> keyReleasedHandler;
 	
+	private GameObjectBuilder GOBuilder;
+	
 	public GameSceneHandler(RoadFighterGame g) {
 		super(g);
+		GOBuilder = GameObjectBuilder.getInstance();
 	}
 	
 	public void load(boolean fullStart) {
@@ -36,10 +45,11 @@ public class GameSceneHandler extends SceneHandler {
 
 		car = new CarPlayer(50.0, 500.0);
 		player = new Player(car);
+		obstacle = new Obstacle(100.0, 50.0);
 		
-		GameObjectBuilder GOBuilder = GameObjectBuilder.getInstance();
+		GOBuilder = GameObjectBuilder.getInstance();
 		GOBuilder.setRootNode(rootGroup);
-		GOBuilder.add(player, car);
+		GOBuilder.add(player, car, obstacle);
 		
 		if (fullStart) {
 			addTimeEventsAnimationTimer();
@@ -129,5 +139,9 @@ public class GameSceneHandler extends SceneHandler {
 		//aca va cualquier cosa que no se haga en el metodo update()
 		//de los updateables
 	}
-
+	
+	private void checkCollisions() {
+		List<Collidator> collidators = GOBuilder.getCollidators();
+		List<Collideable> collideables = GOBuilder.getCollideables();
+	}
 }
