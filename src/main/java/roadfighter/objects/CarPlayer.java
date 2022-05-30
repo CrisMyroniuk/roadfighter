@@ -3,6 +3,7 @@ package roadfighter.objects;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import roadfighter.interfaces.Collidator;
@@ -98,10 +99,11 @@ public class CarPlayer extends Vehicle implements Collidator, Renderable{
 		
 		initImages();
 		render = new ImageView(sprite);
-		render.relocate(getCoordinate().getX() - WIDTH / 2, 
-						getCoordinate().getY() - HEIGHT / 2);
+		//render.relocate(x - WIDTH / 2, y - HEIGHT / 2);
 		
-		hitbox = new Rectangle(x, y, WIDTH, HEIGHT);
+		hitbox = new Rectangle(x - WIDTH / 2, y - HEIGHT / 2, WIDTH, HEIGHT);
+		hitbox.setFill(null);
+		hitbox.setStroke(Color.FUCHSIA);
 	}
 	
 	private void initImages() {
@@ -196,6 +198,8 @@ public class CarPlayer extends Vehicle implements Collidator, Renderable{
 		
 		render.setTranslateX(getCoordinate().getX() - WIDTH / 2);
 		render.setTranslateY(getCoordinate().getY() - HEIGHT / 2);
+		hitbox.setX(this.getCoordinate().getX() - WIDTH / 2);
+		hitbox.setY(this.getCoordinate().getY() - HEIGHT / 2);
 	}
 
 	@Override
@@ -210,6 +214,7 @@ public class CarPlayer extends Vehicle implements Collidator, Renderable{
 
 	@Override
 	public void collide(Collideable collideable) {
+		System.out.println("colision");
 		collideable.effectPlayer(this);
 	}
 

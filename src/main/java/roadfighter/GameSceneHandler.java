@@ -3,11 +3,13 @@ package roadfighter;
 import java.util.List;
 
 import javafx.event.EventHandler;
+import javafx.geometry.Bounds;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Shape;
 import roadfighter.interfaces.Collidator;
 import roadfighter.interfaces.Collideable;
 import roadfighter.objects.CarPlayer;
@@ -43,9 +45,9 @@ public class GameSceneHandler extends SceneHandler {
 		Group rootGroup = new Group();
 		scene.setRoot(rootGroup);
 
-		car = new CarPlayer(50.0, 500.0);
+		car = new CarPlayer(100.0, 500.0);
 		player = new Player(car);
-		obstacle = new Obstacle(100.0, 50.0);
+		obstacle = new Obstacle(100.0, 200.0);
 		
 		GOBuilder = GameObjectBuilder.getInstance();
 		GOBuilder.setRootNode(rootGroup);
@@ -136,12 +138,45 @@ public class GameSceneHandler extends SceneHandler {
 	@Override
 	public void update(double delta) {
 		super.update(delta);
+		checkCollisions();
 		//aca va cualquier cosa que no se haga en el metodo update()
 		//de los updateables
 	}
 	
 	private void checkCollisions() {
+		// copie el codigo de flappy bird porque no entendi muy bien la logica de esto
 		List<Collidator> collidators = GOBuilder.getCollidators();
 		List<Collideable> collideables = GOBuilder.getCollideables();
+		
+		for (int i = 0; i < collidators.size(); i++) {
+			Collidator collidator = collidators.get(i);
+			for (int j = i + 1; j < collidators.size(); j++) {
+				Collidator otherCollidator = collidators.get(j);
+				Shape intersect = Shape.intersect(collidator.getCollider(), otherCollidator.getCollider());
+				if (intersect.getBoundsInLocal().getWidth() != -1) {
+					collidator.collide(otherCollidator);
+					otherCollidator.collide(collidator);
+				}
+			}
+
+			for (int j = 0; j < collideables.size(); j++) {
+				Collideable collideable = collideables.get(j);
+				Shape intersect = Shape.intersect(collidator.getCollider(), collideable.getCollider());
+
+				// TODO test times
+				// XXX Si el substract es distinto???
+				// Check intersects
+				if (intersect.getBoundsInLocal().getWidth() != -1) {
+					collidator.collide(collideable);
+				} else {
+					// Check contains
+					Bounds collideableBounds = collideable.getCollider().getBoundsInLocal();
+					Bounds collidatorBounds = collidator.getCollider().getBoundsInLocal();
+					if (collideableBounds.contains(collidatorBounds.getCenterX(), collidatorBounds.getCenterY())) {
+						collidator.collide(collideable);
+					}
+				}
+			}
+		}
 	}
 }
