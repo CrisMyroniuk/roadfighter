@@ -1,9 +1,16 @@
 package roadfighter.objects;
 
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import roadfighter.interfaces.Collidator;
+import roadfighter.interfaces.Renderable;
 
 public abstract class Enemy extends Vehicle{
 	private Direction direction;
 	private boolean visible;
+	
 	
 	public Direction getDirection() {
 		return direction;
@@ -25,6 +32,7 @@ public abstract class Enemy extends Vehicle{
 		setVisible(false);
 	}
 
+	
 	@Override
 	public void move(double x, double y) {
 		// TODO Auto-generated method stub

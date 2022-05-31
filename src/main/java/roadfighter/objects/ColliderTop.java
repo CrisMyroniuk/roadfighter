@@ -7,7 +7,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 
-public class Obstacle extends Item{
+public class ColliderTop extends Item{
 	
 	// si hay varios obstaculos diferentes habria que hacer mas clases
 	// o meterle mas cosas al constructor para que tengan diferentes sprites/hitboxes
@@ -18,27 +18,15 @@ public class Obstacle extends Item{
 	private Image sprite;
 	private ImageView render;
 
-	public Obstacle(double x, double y) {
+	public ColliderTop(double x, double y) {
 		visible = true;
-		initImages();
 		setCoordinate(new Coordinate(x, y));
 		render = new ImageView(sprite);
 		render.relocate(x - WIDTH / 2, y - HEIGHT / 2);
 		
-		hitbox = new Rectangle(x - WIDTH / 2, y - HEIGHT / 2, WIDTH, HEIGHT);
+		hitbox = new Rectangle(0,-200, 500, 25);
 		hitbox.setFill(null);
 		hitbox.setStroke(Color.FUCHSIA);
-	}
-	
-	private void initImages() {
-		//si tiene animacion supongo que va aca
-		sprite = new Image("file:src/resources/images/ObstacleSprite.png");
-	}
-
-	@Override
-	public void effectPlayer(CarPlayer cp) {
-		System.out.println("chocado");
-		cp.changeSpeed(0,Action.STOP);
 	}
 	
 	@Override
@@ -57,9 +45,15 @@ public class Obstacle extends Item{
 	}
 
 	@Override
-	public void effectEnemy(GoodDriver source) {
-		// TODO Auto-generated method stub
+	public void effectPlayer(CarPlayer cp) {
+		cp.setCoordinate(new Coordinate(cp.getOriginalCoordinate().getX(),cp.getOriginalCoordinate().getY()));
 		
 	}
-
+	
+	@Override
+	public void effectEnemy(GoodDriver e) {
+		System.out.print("HOLA");
+		e.setCoordinate(new Coordinate(e.getOriginalCoordinate().getX(),e.getOriginalCoordinate().getY()));
+		
+	}
 }

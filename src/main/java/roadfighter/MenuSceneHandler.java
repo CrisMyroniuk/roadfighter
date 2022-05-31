@@ -1,15 +1,30 @@
 package roadfighter;
 
+import java.util.List;
+
+import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Bounds;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
+import roadfighter.interfaces.Collidator;
+import roadfighter.interfaces.Collideable;
 import roadfighter.objects.Background;
+import roadfighter.objects.CarPlayer;
 import roadfighter.objects.CarPlayerFX;
+import roadfighter.objects.ColliderTop;
+import roadfighter.objects.Direction;
+import roadfighter.objects.Enemy;
+import roadfighter.objects.GoodDriver;
+import roadfighter.objects.Obstacle;
+import roadfighter.objects.Player;
 import roadfighter.objects_menu.TextoComenzar;
 import roadfighter.objects_menu.Title;
 import roadfighter.utils.GameObjectBuilder;
@@ -22,10 +37,15 @@ public class MenuSceneHandler extends SceneHandler {
 	//private Ground ground;
 	private Title title;
 	private TextoComenzar textoComenzar;
-	private CarPlayerFX player;
-	
+	//private CarPlayerFX player;
+	private Player player;
+	private CarPlayer car;
+	private Rectangle colliderBottom;
 	private EventHandler<ActionEvent> onPressHandler;
-	
+	private ColliderTop colliderTop;
+	private GameObjectBuilder gameOB;
+	private Enemy enemy1;
+	private Enemy enemy2;
 	public MenuSceneHandler(RoadFighterGame g) {
 		super(g);	
 	}
@@ -86,15 +106,27 @@ public class MenuSceneHandler extends SceneHandler {
 
 		title = new Title();
 		textoComenzar = new TextoComenzar();
-		player = new CarPlayerFX(Config.baseWidth-210, Config.baseHeight / 3);
-		GameObjectBuilder gameOB = GameObjectBuilder.getInstance();
+		car = new CarPlayer(290.0, 1100);
+		player = new Player(car);
+		colliderTop = new ColliderTop(100.0, 200.0);
+		enemy1 = new GoodDriver(370.0, 1300.0,Direction.UP,"file:src/resources/images/Enemy1.png");
+		enemy2 = new GoodDriver(210.0, 1500,Direction.UP,"file:src/resources/images/Enemy2.png");
+		 gameOB = GameObjectBuilder.getInstance();
 		gameOB.setRootNode(baseGroup);
-		gameOB.add(background, player/*, ground*/, title, textoComenzar/*, fpsInfo*/);
+		gameOB.add(background, player,car,colliderTop,enemy1,enemy2, title, textoComenzar);
 
 		if (fullStart) {
-			//addTimeEventsAnimationTimer();
+			addTimeEventsAnimationTimer();
 			addInputEvents();
 		}
+	}
+	
+	@Override
+	public void update(double delta) {
+		super.update(delta);
+		checkCollisions();
+		//aca va cualquier cosa que no se haga en el metodo update()
+		//de los updateables
 	}
 
 	public void unload() {
@@ -110,6 +142,43 @@ public class MenuSceneHandler extends SceneHandler {
 	protected void removeInputEvents() {
 		super.removeInputEvents();
 		textoComenzar.removeOnAction(onPressHandler);
+	}
+	
+	private void checkCollisions() {
+		// copie el codigo de flappy bird porque no entendi muy bien la logica de esto
+		List<Collidator> collidators = gameOB.getCollidators();
+		List<Collideable> collideables = gameOB.getCollideables();
+		
+		for (int i = 0; i < collidators.size(); i++) {
+			Collidator collidator = collidators.get(i);
+			for (int j = i + 1; j < collidators.size(); j++) {
+				Collidator otherCollidator = collidators.get(j);
+				Shape intersect = Shape.intersect(collidator.getCollider(), otherCollidator.getCollider());
+				if (intersect.getBoundsInLocal().getWidth() != -1) {
+					collidator.collide(otherCollidator);
+					otherCollidator.collide(collidator);
+				}
+			}
+
+			for (int j = 0; j < collideables.size(); j++) {
+				Collideable collideable = collideables.get(j);
+				Shape intersect = Shape.intersect(collidator.getCollider(), collideable.getCollider());
+
+				// TODO test times
+				// XXX Si el substract es distinto???
+				// Check intersects
+				if (intersect.getBoundsInLocal().getWidth() != -1) {
+					collidator.collide(collideable);
+				} else {
+					// Check contains
+					Bounds collideableBounds = collideable.getCollider().getBoundsInLocal();
+					Bounds collidatorBounds = collidator.getCollider().getBoundsInLocal();
+					if (collideableBounds.contains(collidatorBounds.getCenterX(), collidatorBounds.getCenterY())) {
+						collidator.collide(collideable);
+					}
+				}
+			}
+		}
 	}
 	
 }

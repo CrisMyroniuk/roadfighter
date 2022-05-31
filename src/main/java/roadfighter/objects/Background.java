@@ -3,6 +3,7 @@ package roadfighter.objects;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import roadfighter.interfaces.Renderable;
@@ -16,7 +17,7 @@ public class Background extends GameObject implements Updatable, Renderable{
 
 	private final int cityWidth = 500;
 	private final int cityHeight = 795;
-	
+	private Rectangle colliderTop;
 	public Background() {
 		Image backgroundImage = new Image("file:background.png", cityWidth, cityHeight, false, false);
 		ImagePattern image_pattern = new ImagePattern(backgroundImage, cityWidth, cityHeight, cityWidth, cityHeight,
@@ -24,6 +25,9 @@ public class Background extends GameObject implements Updatable, Renderable{
 		Rectangle city = new Rectangle(cityWidth,500 + cityHeight);
 		
 		city.setFill(image_pattern);
+		colliderTop = new Rectangle(40,40,30,795);
+		colliderTop.setFill(null);
+		colliderTop.setStroke(Color.FUCHSIA);
 		render = new VBox(city);
 		// TODO zIndex list
 		render.setViewOrder(10);

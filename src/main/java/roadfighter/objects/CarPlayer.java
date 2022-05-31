@@ -94,6 +94,7 @@ public class CarPlayer extends Vehicle implements Collidator, Renderable{
 		this.turbo = new Turbo(false); //inicializamos el turbo en desactivado.
 		this.point = 0;
 		setCoordinate(new Coordinate(x, y));
+		setOriginalCoordinate(new Coordinate(x, y));
 		this.direction = Direction.UP;
 		this.setSpeed(250);
 		
@@ -107,7 +108,7 @@ public class CarPlayer extends Vehicle implements Collidator, Renderable{
 	}
 	
 	private void initImages() {
-		sprite = new Image("file:src/resources/images/CarPlayerSprite.png");
+		sprite = new Image("file:src/resources/images/Player.png",80,140.0,false,false);
 	}
 
 	// endregion
@@ -222,4 +223,11 @@ public class CarPlayer extends Vehicle implements Collidator, Renderable{
 	public void effectPlayer(CarPlayer source) {
 		// aca supongo que podriamos poner los efectos cuando 2 jugadores se chocan entre si
 	}
+
+	@Override
+	public void effectEnemy(GoodDriver source) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

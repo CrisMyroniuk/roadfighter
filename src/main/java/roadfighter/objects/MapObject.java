@@ -7,6 +7,7 @@ public abstract class MapObject extends GameObject{
 
 	private Image model;
 	private Coordinate coordinate;
+	private Coordinate originalCoordinate; //mas que nada para volver a renderizar el auto en el menu, en la misma posicion.
 	private double width;
 	private double height;
 	
@@ -44,5 +45,13 @@ public abstract class MapObject extends GameObject{
 
 	public void destroy() {
 		
+	}
+
+	public Coordinate getOriginalCoordinate() {
+		return originalCoordinate;
+	}
+
+	public void setOriginalCoordinate(Coordinate originalCoordinate) {
+		this.originalCoordinate = originalCoordinate;
 	}
 }
