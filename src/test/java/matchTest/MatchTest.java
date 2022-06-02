@@ -7,11 +7,11 @@ import java.util.ArrayList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import roadfighter.match.Match;
 import roadfighter.objects.CarPlayer;
 import roadfighter.objects.Coordinate;
 import roadfighter.objects.Enemy;
 import roadfighter.objects.Item;
-import roadfighter.objects.Match;
 import roadfighter.objects.MatchMap;
 import roadfighter.objects.Player;
 

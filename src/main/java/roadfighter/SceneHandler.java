@@ -44,12 +44,12 @@ public abstract class SceneHandler {
 	
 	protected void addInputEvents() {
 		scene.addEventHandler(KeyEvent.KEY_PRESSED, keyEventHandler);
-		scene.addEventHandler(MouseEvent.MOUSE_PRESSED, mouseEventHandler);
+		//scene.addEventHandler(MouseEvent.MOUSE_PRESSED, mouseEventHandler);
 	}
 		
 	protected void removeInputEvents() {
 		scene.removeEventHandler(KeyEvent.KEY_PRESSED, keyEventHandler);
-		scene.removeEventHandler(MouseEvent.MOUSE_PRESSED, mouseEventHandler);
+		//scene.removeEventHandler(MouseEvent.MOUSE_PRESSED, mouseEventHandler);
 	}
 	
 	protected void unload() {

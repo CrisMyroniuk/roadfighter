@@ -4,12 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+//import javax.swing.text.JTextComponent.KeyBinding;
+
 import javafx.event.EventHandler;
 import javafx.geometry.Bounds;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+//import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
+//import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
 import roadfighter.interfaces.Collidator;
@@ -37,8 +40,8 @@ public class GameSceneHandler extends SceneHandler {
 	private Background background;
 	
 	private Player player;
-	private CarPlayer car;
-	private Obstacle obstacle;
+	private ArrayList<Obstacle> obstacles = new ArrayList<Obstacle>();
+	private ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
 	
 	private BadDriver enemy;
 	private Random random;
@@ -54,7 +57,7 @@ public class GameSceneHandler extends SceneHandler {
 		random = new Random();
 	}
 	
-	public void load(boolean fullStart) {
+	public void load() {
 		Group rootGroup = new Group();
 		scene.setRoot(rootGroup);
 		
@@ -70,10 +73,10 @@ public class GameSceneHandler extends SceneHandler {
 		GOBuilder.setRootNode(rootGroup);
 		GOBuilder.add(player, car, obstacle, enemy, background);
 		
-		if (fullStart) {
-			addTimeEventsAnimationTimer();
-			addInputEvents();
-		}
+//		if (fullStart) {
+		addTimeEventsAnimationTimer();
+		addInputEvents();
+//		}
 	}
 
 	@Override
@@ -84,33 +87,23 @@ public class GameSceneHandler extends SceneHandler {
 
 	@Override
 	protected void defineEventHandlers() {
-		//los event handlers acceden directamente al auto pero no se si esta bien eso
-		mouseEventHandler = new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent event) {
-			}
-		};
 		keyEventHandler = new EventHandler<KeyEvent>() {
 			@Override
 			public void handle(KeyEvent e) {
 				switch (e.getCode()) {
 				case W:
-					player.input(Direction.UP, true);
+					player.getCarPlayer().setDirectionUp();
 					break;
 				case A:
-					player.input(Direction.LEFT, true);
+					player.getCarPlayer().setDirectionLeft();
 					break;
 				case S:
-					player.input(Direction.DOWN, true);
+					player.getCarPlayer().setDirectionDown();
 					break;
 				case D:
-					player.input(Direction.RIGHT, true);
+					player.getCarPlayer().setDirectionRight();
 					break;
 				case E:
-					break;
-				case R:
-					break;
-				case ESCAPE:
 					break;
 				default:
 					break;
@@ -123,22 +116,27 @@ public class GameSceneHandler extends SceneHandler {
 			public void handle(KeyEvent e) {
 				switch (e.getCode()) {
 				case W:
-					player.input(Direction.UP, false);
+					System.out.println("dejo de acelerar");
+					player.getCarPlayer().setDirectionNone();
 					break;
 				case A:
-					player.input(Direction.LEFT, false);
+					player.getCarPlayer().setDirectionNone();
 					break;
 				case S:
-					player.input(Direction.DOWN, false);
+					player.getCarPlayer().setDirectionNone();
 					break;
 				case D:
-					player.input(Direction.RIGHT, false);
-					break;
-				case E:
-					break;
-				case R:
-					break;
-				case ESCAPE:
+					player.getCarPlayer().setDirectionNone();
+			//		player.input(Direction.UP, false);
+			//		break;
+			//	case A:
+			//		player.input(Direction.LEFT, false);
+			//		break;
+			//	case S:
+			//		player.input(Direction.DOWN, false);
+			//		break;
+			//	case D:
+			//		player.input(Direction.RIGHT, false);
 					break;
 				default:
 					break;
