@@ -1,33 +1,52 @@
 package roadfighter.objects;
 
+import java.util.ArrayList;
+
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import roadfighter.utils.GameObject;
 
-public class Player extends GameObject{
+public class Player extends GameObject {
 
 	private Integer points;
 	private PlayerState state;
 	private CarPlayer car;
-	
-	private boolean up;
-	private boolean down;
-	private boolean left;
-	private boolean right;
+	private ArrayList<KeyCode> keys;
+//	private boolean up;
+//	private boolean down;
+//	private boolean left;
+//	private boolean right;
 
-	public Player () {
-		car = new CarPlayer(0, 0, this);
-		state=state.PLAYER_LIVE;
-		points=0;
-		
-		up = false;
-		down = false;
-		left = false;
-		right = false;
+	public Player(CarPlayer carPlayer) {
+		setKeys(new ArrayList<KeyCode>());
+		keys.add(KeyCode.W);
+		keys.add(KeyCode.A);
+		keys.add(KeyCode.S);
+		keys.add(KeyCode.D);
+		car = carPlayer;
+		state = state.PLAYER_LIVE;
+		points = 0;
 	}
-	
+
+	public Player(CarPlayer carPlayer,ArrayList<KeyCode> kc) {
+		car = carPlayer;
+		setKeys(kc);
+		state = state.PLAYER_LIVE;
+		points = 0;
+	}
+
+	public ArrayList<KeyCode> getKeys() {
+		return keys;
+	}
+
+	public void setKeys(ArrayList<KeyCode> keys) {
+		this.keys = keys;
+	}
+
 	public Integer getPoint() {
 		return points;
 	}
-	
+
 	public CarPlayer getCarPlayer() {
 		return car;
 	}
@@ -35,7 +54,7 @@ public class Player extends GameObject{
 	public void setPoint(Integer point) {
 		this.points = point;
 	}
-	
+
 	public void addPoints(int p) {
 		setPoint(getPoint() + p);
 	}
@@ -43,44 +62,74 @@ public class Player extends GameObject{
 	public void removePoints(int p) {
 		setPoint(getPoint() - p);
 	}
-	
-	public void input(Direction direction, boolean pressed) {
-		switch (direction) {
-		case UP:
-			up = pressed;
-			break;
-		case LEFT:
-			left = pressed;
-			break;
-		case DOWN:
-			down = pressed;
-			break;
-		case RIGHT:
-			right = pressed;
-			break;
-		default:
-			break;
+
+	public void eventPressed(KeyEvent e) {
+		if (e.getCode() == getKeys().get(0)) {
+			car.setDirectionUp();
+		}
+		if (e.getCode() == getKeys().get(1)) {
+			car.setDirectionLeft();
+		}
+		if (e.getCode() == getKeys().get(2)) {
+			car.setDirectionDown();
+		}
+		if (e.getCode() == getKeys().get(3)) {
+			car.setDirectionRight();
 		}
 	}
 	
-	public boolean upPressed() {
-		return up;
+	public void eventReleased(KeyEvent e) {
+		if (e.getCode() == getKeys().get(0)) {
+			car.setDirectionNone(Direction.UP);
+		}
+		if (e.getCode() == getKeys().get(1)) {
+			car.setDirectionNone(Direction.LEFT);
+		}
+		if (e.getCode() == getKeys().get(2)) {
+			car.setDirectionNone(Direction.DOWN);
+		}
+		if (e.getCode() == getKeys().get(3)) {
+			car.setDirectionNone(Direction.RIGHT);
+		}
 	}
-	
-	public boolean leftPressed() {
-		return left;
-	}
-	
-	public boolean downPressed() {
-		return down;
-	}
-	
-	public boolean rightPressed() {
-		return right;
-	}
-	
-	//region Metodos
-	
+
+//	public void input(Direction direction, boolean pressed) {
+//		switch (direction) {
+//		case UP:
+//			car.up = pressed;
+//			break;
+//		case LEFT:
+//			left = pressed;
+//			break;
+//		case DOWN:
+//			down = pressed;
+//			break;
+//		case RIGHT:
+//			right = pressed;
+//			break;
+//		default:
+//			break;
+//		}
+//	}
+
+//	public boolean upPressed() {
+//		return up;
+//	}
+//	
+//	public boolean leftPressed() {
+//		return left;
+//	}
+//	
+//	public boolean downPressed() {
+//		return down;
+//	}
+//	
+//	public boolean rightPressed() {
+//		return right;
+//	}
+//	
+	// region Metodos
+
 //	public void setDireccion(Direction d) {
 //		switch (d) {
 //		case RIGHT: {
@@ -105,61 +154,46 @@ public class Player extends GameObject{
 //			throw new IllegalArgumentException("Unexpected value: " + d);
 //		}
 //	}
-	
+
 	public Coordinate myCoord() {
 		return car.getCoordinate();
 	}
-	
+
 	public void changeStateDeath() {
-		
+
 		this.state = PlayerState.PLAYER_DEATH;
-		
+
 	}
-	
+
 	public void changeStateWin() {
-		
+
 		this.state = PlayerState.PLAYER_WINS;
-		
+
 	}
-	
+
 	public PlayerState getState() {
 		return state;
 	}
-	
-	public CarPlayer newCar(double x, double y) {
-		this.car = new CarPlayer(x, y, this);
-		return car;
-	}
+
 
 	@Override
 	public void destroy() {
 		// TODO lo que sea que se tenga que desalocar del jugador
 		// supongo que eventualmente podria ir si se cierra alguna conexion
-		
+
 	}
-	
-	//endregion
-	
-	/*private void addInputEvents() {
-		currentScene.addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
-			@Override
-			public void handle(KeyEvent e) {
-				switch (e.getCode()) {
-				case RIGHT:
-				case D:
-					mario.setDirectionRight(true);
-					break;
-				case LEFT:
-				case A:
-					mario.setDirectionLeft(true);
-					break;
-				case Q:
-					mario.die();
-					break;
-				default:
-					break;
-				}
-			}
-		});*/
-	
+
+	// endregion
+
+	/*
+	 * private void addInputEvents() {
+	 * currentScene.addEventHandler(KeyEvent.KEY_PRESSED, new
+	 * EventHandler<KeyEvent>() {
+	 * 
+	 * @Override public void handle(KeyEvent e) { switch (e.getCode()) { case RIGHT:
+	 * case D: mario.setDirectionRight(true); break; case LEFT: case A:
+	 * mario.setDirectionLeft(true); break; case Q: mario.die(); break; default:
+	 * break; } } });
+	 */
+
 }

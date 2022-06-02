@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import roadfighter.objects.CarPlayer;
 import roadfighter.objects.Obstacle;
+import roadfighter.objects.Player;
 
 class ObstacleTest {
 	
@@ -18,7 +19,7 @@ class ObstacleTest {
 	
 	@BeforeEach
 	void init() {
-		car = new CarPlayer(0.0 ,0.0, null);
+		Player player = new Player(new CarPlayer(0, 0));
 	}
 	
 	@Test

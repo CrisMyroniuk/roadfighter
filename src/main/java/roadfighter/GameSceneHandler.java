@@ -27,52 +27,61 @@ import roadfighter.utils.GameObject;
 import roadfighter.utils.GameObjectBuilder;
 
 public class GameSceneHandler extends SceneHandler {
-	//private KeyCode playerOneUpKey = KeyCode.W;
-	//private KeyCode playerOneLeftKey = KeyCode.A;
-	//private KeyCode playerOneDownKey = KeyCode.S;
-	//private KeyCode playerOneRightKey = KeyCode.D;
-	/* se podria hacer algo asi para poder configurar las teclas
-	 * pero no se donde poner estas variables y si lo hacemos asi
-	 * hay que usar if-else porque no deja poner las variables esas
-	 * en los casos del switch por algun motivo que no entendi muy bien
-	*/
-	
+	// private KeyCode playerOneUpKey = KeyCode.W;
+	// private KeyCode playerOneLeftKey = KeyCode.A;
+	// private KeyCode playerOneDownKey = KeyCode.S;
+	// private KeyCode playerOneRightKey = KeyCode.D;
+	/*
+	 * se podria hacer algo asi para poder configurar las teclas pero no se donde
+	 * poner estas variables y si lo hacemos asi hay que usar if-else porque no deja
+	 * poner las variables esas en los casos del switch por algun motivo que no
+	 * entendi muy bien
+	 */
+
 	private Background background;
-	
+
 	private Player player;
 	private ArrayList<Obstacle> obstacles = new ArrayList<Obstacle>();
 	private ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
-	
+
 	private BadDriver enemy;
 	private Random random;
 	private double spawnTimer;
-	
+
 	private EventHandler<KeyEvent> keyReleasedHandler;
-	
+
 	private GameObjectBuilder GOBuilder;
-	
+
 	public GameSceneHandler(RoadFighterGame g) {
 		super(g);
 		GOBuilder = GameObjectBuilder.getInstance();
 		random = new Random();
 	}
-	
+
 	public void load() {
 		Group rootGroup = new Group();
 		scene.setRoot(rootGroup);
-		
-		background = new Background();
 
-		player = new Player();
-		car = player.newCar(300.0, 600.0);
-		obstacle = new Obstacle(100.0, 200.0);
-		
-		enemy = new BadDriver(200.0, 0.0, Direction.UP);
+		background = new Background();
+		// R1 515
+		// R2 675
+		// R3 825
+		// R4 990
+		player = new Player(new CarPlayer(515.0, 600.0));
+		obstacles.add(new Obstacle(825.0, 200.0));
+
+		enemy = new BadDriver(990.0, 0.0, Direction.UP);
 		spawnTimer = 1;
-		
+
 		GOBuilder.setRootNode(rootGroup);
-		GOBuilder.add(player, car, obstacle, enemy, background);
-		
+		gameObjects.add(background);
+		gameObjects.add(player.getCarPlayer());
+		gameObjects.add(enemy);
+		for (Obstacle obstacle : obstacles) {
+			gameObjects.add(obstacle);
+		}
+		GOBuilder.add(gameObjects);
+
 //		if (fullStart) {
 		addTimeEventsAnimationTimer();
 		addInputEvents();
@@ -90,92 +99,73 @@ public class GameSceneHandler extends SceneHandler {
 		keyEventHandler = new EventHandler<KeyEvent>() {
 			@Override
 			public void handle(KeyEvent e) {
-				switch (e.getCode()) {
-				case W:
-					player.getCarPlayer().setDirectionUp();
-					break;
-				case A:
-					player.getCarPlayer().setDirectionLeft();
-					break;
-				case S:
-					player.getCarPlayer().setDirectionDown();
-					break;
-				case D:
-					player.getCarPlayer().setDirectionRight();
-					break;
-				case E:
-					break;
-				default:
-					break;
-				}
+				player.eventPressed(e);
+				/*
+				 * switch (e.getCode()) { case W: player.getCarPlayer().setDirectionUp(); break;
+				 * case A: player.getCarPlayer().setDirectionLeft(); break; case S:
+				 * player.getCarPlayer().setDirectionDown(); break; case D:
+				 * player.getCarPlayer().setDirectionRight(); break; case E: break; default:
+				 * break; }
+				 */
 			}
 		};
-		
+
 		keyReleasedHandler = new EventHandler<KeyEvent>() {
 			@Override
 			public void handle(KeyEvent e) {
-				switch (e.getCode()) {
-				case W:
-					System.out.println("dejo de acelerar");
-					player.getCarPlayer().setDirectionNone();
-					break;
-				case A:
-					player.getCarPlayer().setDirectionNone();
-					break;
-				case S:
-					player.getCarPlayer().setDirectionNone();
-					break;
-				case D:
-					player.getCarPlayer().setDirectionNone();
-			//		player.input(Direction.UP, false);
-			//		break;
-			//	case A:
-			//		player.input(Direction.LEFT, false);
-			//		break;
-			//	case S:
-			//		player.input(Direction.DOWN, false);
-			//		break;
-			//	case D:
-			//		player.input(Direction.RIGHT, false);
-					break;
-				default:
-					break;
-				}
+				player.eventReleased(e);
+				/*
+				 * switch (e.getCode()) { case W: System.out.println("dejo de acelerar");
+				 * player.getCarPlayer().setDirectionNone(Direction.UP); break; case A:
+				 * player.getCarPlayer().setDirectionNone(Direction.LEFT); break; case S:
+				 * player.getCarPlayer().setDirectionNone(Direction.RIGHT); break; case D:
+				 * player.getCarPlayer().setDirectionNone(Direction.DOWN); //
+				 * player.input(Direction.UP, false); // break; // case A: //
+				 * player.input(Direction.LEFT, false); // break; // case S: //
+				 * player.input(Direction.DOWN, false); // break; // case D: //
+				 * player.input(Direction.RIGHT, false); break; default: break; }
+				 */
 			}
 		};
-		
+
 	}
-	
+
 	@Override
 	protected void addInputEvents() {
 		super.addInputEvents();
 		scene.addEventHandler(KeyEvent.KEY_RELEASED, keyReleasedHandler);
 	}
-	
+
 	@Override
 	public void update(double delta) {
 		super.update(delta);
-		
-		// TODO esto no elimina nada, era para probar si funciona, habria que meterlo en una clase aparte que spawnee enemigos
-		// para eliminarlos podemos meter algo como el ColliderTop para que cuando salgan de la pantalla se eliminen,
-		// o que en el update() de los obstaculos/enemigos pregunte por la coordenada en Y y se destruya solo cuando este fuera de la pantalla
+
+		// TODO esto no elimina nada, era para probar si funciona, habria que meterlo en
+		// una clase aparte que spawnee enemigos
+		// para eliminarlos podemos meter algo como el ColliderTop para que cuando
+		// salgan de la pantalla se eliminen,
+		// o que en el update() de los obstaculos/enemigos pregunte por la coordenada en
+		// Y y se destruya solo cuando este fuera de la pantalla
 		spawnTimer -= delta;
 		if (spawnTimer <= 0) {
-			GOBuilder.add(new Obstacle(random.nextDouble(0, 500), -50), new BadDriver(random.nextDouble(0, 500), -50, Direction.UP));
-			
+			ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
+			gameObjects.add(new Obstacle(random.nextDouble(515, 990), -50));
+			gameObjects.add(new BadDriver(random.nextDouble(515, 990), -50, Direction.UP));
+			GOBuilder.add(gameObjects);
+
 			spawnTimer = random.nextDouble(1, 3);
 		}
-		
+
 		checkCollisions();
-		//aca va cualquier cosa que no se haga en el metodo update()
-		//de los updateables
+		// aca va cualquier cosa que no se haga en el metodo update()
+		// de los updateables
 	}
-	
+
 	private void checkCollisions() {
 		// copie el codigo de flappy bird porque no entendi muy bien la logica de esto
 		List<Collidator> collidators = GOBuilder.getCollidators();
 		List<Collideable> collideables = GOBuilder.getCollideables();
-		
+
 		for (int i = 0; i < collidators.size(); i++) {
 			Collidator collidator = collidators.get(i);
 			for (int j = i + 1; j < collidators.size(); j++) {

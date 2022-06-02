@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import roadfighter.objects.CarPlayer;
+import roadfighter.objects.Player;
 import roadfighter.objects.PowerDown;
 
 class PowerDownTest {
@@ -14,7 +15,7 @@ class PowerDownTest {
 	
 	@BeforeEach
 	void init() {
-		car = new CarPlayer(0.0 ,0.0, null);
+		Player player = new Player(new CarPlayer(0, 0));
 	}
 	
 	@Test

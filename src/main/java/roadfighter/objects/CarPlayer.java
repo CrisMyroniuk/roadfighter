@@ -19,6 +19,10 @@ public class CarPlayer extends Vehicle implements Collidator, Renderable{
 	private Turbo turbo;
 	
 	private Direction direction;
+	private boolean up;
+	private boolean down;
+	private boolean left;
+	private boolean right;
 	
 	private ImageView render;
 	private Image sprite;
@@ -26,8 +30,7 @@ public class CarPlayer extends Vehicle implements Collidator, Renderable{
 	private final int WIDTH = 80;
 	private final int HEIGHT = 140;
 	private Rectangle hitbox;
-	
-	private Player player;
+
 
 	/*private boolean turbo;
 	private static double turboDuration = 100;
@@ -38,8 +41,42 @@ public class CarPlayer extends Vehicle implements Collidator, Renderable{
 	// endregion
 
 	// region Properties
+	
+	
 	public double getAceleration() {
 		return acceleration;
+	}
+
+	public boolean isUp() {
+		return up;
+	}
+
+	public void setUp(boolean up) {
+		this.up = up;
+	}
+
+	public boolean isDown() {
+		return down;
+	}
+
+	public void setDown(boolean down) {
+		this.down = down;
+	}
+
+	public boolean isLeft() {
+		return left;
+	}
+
+	public void setLeft(boolean left) {
+		this.left = left;
+	}
+
+	public boolean isRight() {
+		return right;
+	}
+
+	public void setRight(boolean right) {
+		this.right = right;
 	}
 
 	public void setAceleration(double aceleration) {
@@ -90,9 +127,8 @@ public class CarPlayer extends Vehicle implements Collidator, Renderable{
 
 	// region Constructor
 
-	public CarPlayer(double x, double y, Player player) {
+	public CarPlayer(double x, double y) {
 
-		this.player = player;
 		
 		this.acceleration = 20;
 		this.speedLimit = 200;
@@ -149,28 +185,48 @@ public class CarPlayer extends Vehicle implements Collidator, Renderable{
 
 	}
 
-	public void setDirectionNone() {
-		setDirection(Direction.NONE);
+	public void setDirectionNone(Direction d) {
+		switch(d) {
+		case DOWN:
+			setDown(false);
+			break;
+		case LEFT:
+			setLeft(false);
+			break;
+		case RIGHT:
+			setRight(false);
+			break;
+		case UP:
+			setUp(false);
+			break;
+		default:
+			break;
+		
+		}
 		//move(10,0);
 	}
 	
 	public void setDirectionRight() {
 		setDirection(Direction.RIGHT);
+		setRight(true);
 		//move(10,0);
 	}
 
 	public void setDirectionLeft() {
 		setDirection(Direction.LEFT);
+		setLeft(true);
 		//move(-10,0);
 	}
 
 	public void setDirectionUp() {
 		setDirection(Direction.UP);
+		setUp(true);
 		//move(0,10);
 	}
 
 	public void setDirectionDown() {
 		setDirection(Direction.DOWN);
+		setDown(true);
 		//move(0,-10);
 	}
 	
@@ -200,17 +256,17 @@ public class CarPlayer extends Vehicle implements Collidator, Renderable{
 		double translateX = 0;
 		double translateY = 0;
 		
-		if (!player.leftPressed() || !player.rightPressed()) {
-			if (player.leftPressed()) {
+		if (!isLeft() || !isRight()) {
+			if (isLeft()) {
 				translateX = -horizontalSpeed;
-			} else if (player.rightPressed()) {
+			} else if (isRight()) {
 				translateX = horizontalSpeed;
 			}
 		}
-		if (!player.upPressed() || !player.downPressed()) {
-			if (player.upPressed()) {
+		if (!isUp()|| !isDown()) {
+			if (isUp()) {
 				translateY = -getSpeed();
-			} else if (player.downPressed()) {
+			} else if (isDown()) {
 				translateY = getSpeed();
 			}
 		}
