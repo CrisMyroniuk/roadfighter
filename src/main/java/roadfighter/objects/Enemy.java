@@ -11,6 +11,13 @@ public abstract class Enemy extends Vehicle{
 	private Direction direction;
 	private boolean visible;
 	
+	protected Image sprite;
+	protected ImageView render;
+	
+	protected int WIDTH;
+	protected int HEIGHT;
+	
+	protected Rectangle hitbox;
 	
 	public Direction getDirection() {
 		return direction;
@@ -56,5 +63,17 @@ public abstract class Enemy extends Vehicle{
 		default:
 			throw new IllegalArgumentException("Unexpected value: " + direction);
 		}
+	}
+	
+	@Override
+	public void update(double delta) {
+		double translateY = this.getSpeed() * delta;
+		
+		move(0, translateY);
+		
+		render.setTranslateX(getCoordinate().getX() - WIDTH / 2);
+		render.setTranslateY(getCoordinate().getY() - HEIGHT / 2);
+		hitbox.setX(this.getCoordinate().getX() - WIDTH / 2);
+		hitbox.setY(this.getCoordinate().getY() - HEIGHT / 2);
 	}
 }

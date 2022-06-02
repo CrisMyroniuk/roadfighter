@@ -56,4 +56,10 @@ public class ColliderTop extends Item{
 		e.setCoordinate(new Coordinate(e.getOriginalCoordinate().getX(),e.getOriginalCoordinate().getY()));
 		
 	}
+
+	@Override
+	public void update(double deltaTime) {
+		// TODO Auto-generated method stub
+		
+	}
 }

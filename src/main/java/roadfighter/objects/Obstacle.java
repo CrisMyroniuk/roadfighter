@@ -23,22 +23,43 @@ public class Obstacle extends Item{
 		initImages();
 		setCoordinate(new Coordinate(x, y));
 		render = new ImageView(sprite);
-		render.relocate(x - WIDTH / 2, y - HEIGHT / 2);
+		//render.relocate(x - WIDTH / 2, y - HEIGHT / 2);
 		
 		hitbox = new Rectangle(x - WIDTH / 2, y - HEIGHT / 2, WIDTH, HEIGHT);
 		hitbox.setFill(null);
 		hitbox.setStroke(Color.FUCHSIA);
+		
+		render.setTranslateX(getCoordinate().getX() - WIDTH / 2);
+		render.setTranslateY(getCoordinate().getY() - HEIGHT / 2);
 	}
 	
 	private void initImages() {
 		//si tiene animacion supongo que va aca
 		sprite = new Image("file:src/resources/images/ObstacleSprite.png");
 	}
+	
+	@Override
+	public void update(double delta) {
+		//getCoordinate().setX(getCoordinate().getX() + x);
+		getCoordinate().setY(getCoordinate().getY() + 150 * delta);
+		
+		render.setTranslateX(getCoordinate().getX() - WIDTH / 2);
+		render.setTranslateY(getCoordinate().getY() - HEIGHT / 2);
+		hitbox.setX(this.getCoordinate().getX() - WIDTH / 2);
+		hitbox.setY(this.getCoordinate().getY() - HEIGHT / 2);
+	}
 
 	@Override
 	public void effectPlayer(CarPlayer cp) {
 		System.out.println("chocado");
 		cp.changeSpeed(0,Action.STOP);
+		cp.move(0, 5);
+	}
+	
+	@Override
+	public void effectEnemy(GoodDriver source) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	@Override
@@ -55,11 +76,4 @@ public class Obstacle extends Item{
 	public void destroy() {
 		// capas haya que cortar audio
 	}
-
-	@Override
-	public void effectEnemy(GoodDriver source) {
-		// TODO Auto-generated method stub
-		
-	}
-
 }

@@ -16,15 +16,18 @@ public class CarPlayer extends Vehicle implements Collidator, Renderable{
 	private double acceleration;
 	private Integer point;
 	private double speedLimit;
-	private Direction direction ;
 	private Turbo turbo;
+	
+	private Direction direction;
 	
 	private ImageView render;
 	private Image sprite;
 	
-	private final int WIDTH = 84;
-	private final int HEIGHT = 134;
+	private final int WIDTH = 80;
+	private final int HEIGHT = 140;
 	private Rectangle hitbox;
+	
+	private Player player;
 
 	/*private boolean turbo;
 	private static double turboDuration = 100;
@@ -87,8 +90,10 @@ public class CarPlayer extends Vehicle implements Collidator, Renderable{
 
 	// region Constructor
 
-	public CarPlayer(double x, double y) {
+	public CarPlayer(double x, double y, Player player) {
 
+		this.player = player;
+		
 		this.acceleration = 20;
 		this.speedLimit = 200;
 		this.turbo = new Turbo(false); //inicializamos el turbo en desactivado.
@@ -97,6 +102,7 @@ public class CarPlayer extends Vehicle implements Collidator, Renderable{
 		setOriginalCoordinate(new Coordinate(x, y));
 		this.direction = Direction.UP;
 		this.setSpeed(250);
+		this.setHorizontalSpeed(100);
 		
 		initImages();
 		render = new ImageView(sprite);
@@ -108,7 +114,7 @@ public class CarPlayer extends Vehicle implements Collidator, Renderable{
 	}
 	
 	private void initImages() {
-		sprite = new Image("file:src/resources/images/Player.png",80,140.0,false,false);
+		sprite = new Image("file:src/resources/images/Player.png", WIDTH, HEIGHT, false, false);
 	}
 
 	// endregion
@@ -188,12 +194,21 @@ public class CarPlayer extends Vehicle implements Collidator, Renderable{
 	public void update(double delta) {
 		double translateX = 0;
 		double translateY = 0;
-		if (direction.equals(Direction.RIGHT)) 
-			translateX = 200;
-		else if (direction.equals(Direction.LEFT))
-			translateX = -200;
 		
-		translateY = -this.getSpeed();
+		if (!player.leftPressed() || !player.rightPressed()) {
+			if (player.leftPressed()) {
+				translateX = -horizontalSpeed;
+			} else if (player.rightPressed()) {
+				translateX = horizontalSpeed;
+			}
+		}
+		if (!player.upPressed() || !player.downPressed()) {
+			if (player.upPressed()) {
+				translateY = -getSpeed();
+			} else if (player.downPressed()) {
+				translateY = getSpeed();
+			}
+		}
 		
 		move(translateX * delta, translateY * delta);
 		

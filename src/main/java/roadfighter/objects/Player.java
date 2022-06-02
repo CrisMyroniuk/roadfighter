@@ -7,11 +7,21 @@ public class Player extends GameObject{
 	private Integer points;
 	private PlayerState state;
 	private CarPlayer car;
+	
+	private boolean up;
+	private boolean down;
+	private boolean left;
+	private boolean right;
 
-	public Player (CarPlayer cp) {
-		car=cp;
+	public Player () {
+		car = new CarPlayer(0, 0, this);
 		state=state.PLAYER_LIVE;
 		points=0;
+		
+		up = false;
+		down = false;
+		left = false;
+		right = false;
 	}
 	
 	public Integer getPoint() {
@@ -32,6 +42,41 @@ public class Player extends GameObject{
 
 	public void removePoints(int p) {
 		setPoint(getPoint() - p);
+	}
+	
+	public void input(Direction direction, boolean pressed) {
+		switch (direction) {
+		case UP:
+			up = pressed;
+			break;
+		case LEFT:
+			left = pressed;
+			break;
+		case DOWN:
+			down = pressed;
+			break;
+		case RIGHT:
+			right = pressed;
+			break;
+		default:
+			break;
+		}
+	}
+	
+	public boolean upPressed() {
+		return up;
+	}
+	
+	public boolean leftPressed() {
+		return left;
+	}
+	
+	public boolean downPressed() {
+		return down;
+	}
+	
+	public boolean rightPressed() {
+		return right;
 	}
 	
 	//region Metodos
@@ -79,6 +124,11 @@ public class Player extends GameObject{
 	
 	public PlayerState getState() {
 		return state;
+	}
+	
+	public CarPlayer newCar(double x, double y) {
+		this.car = new CarPlayer(x, y, this);
+		return car;
 	}
 
 	@Override

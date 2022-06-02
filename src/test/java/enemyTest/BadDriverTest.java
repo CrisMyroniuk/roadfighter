@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import roadfighter.objects.BadDriver;
 import roadfighter.objects.CarPlayer;
 import roadfighter.objects.Direction;
+import roadfighter.objects.Player;
 
 class BadDriverTest {
 	/*
@@ -17,7 +18,8 @@ class BadDriverTest {
 	void obstruyeAlPlayer() {
 		double unSegundo = 1;
 		BadDriver badDriver = new BadDriver(20, 20, Direction.UP);
-		CarPlayer car = new CarPlayer(0, 0);
+		Player player = new Player();
+		CarPlayer car = player.newCar(0, 0);
 		
 		badDriver.setSpeed(20);
 		badDriver.obstructPath(car);
@@ -31,7 +33,8 @@ class BadDriverTest {
 	void seMueveUnaSolaVez() {
 		double tresSegundos = 3;
 		BadDriver badDriver = new BadDriver(40, 20, Direction.UP);
-		CarPlayer car = new CarPlayer(0, 0);
+		Player player = new Player();
+		CarPlayer car = player.newCar(0, 0);
 		
 		badDriver.setSpeed(10);
 		badDriver.obstructPath(car);

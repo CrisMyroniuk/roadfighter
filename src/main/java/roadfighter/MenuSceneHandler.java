@@ -106,8 +106,9 @@ public class MenuSceneHandler extends SceneHandler {
 
 		title = new Title();
 		textoComenzar = new TextoComenzar();
-		car = new CarPlayer(290.0, 1100);
-		player = new Player(car);
+		player = new Player();
+		car = player.newCar(290.0, 1100);
+		player.input(Direction.UP, true);
 		colliderTop = new ColliderTop(100.0, 200.0);
 		enemy1 = new GoodDriver(370.0, 1300.0,Direction.UP,"file:src/resources/images/Enemy1.png");
 		enemy2 = new GoodDriver(210.0, 1500,Direction.UP,"file:src/resources/images/Enemy2.png");

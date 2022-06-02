@@ -1,15 +1,37 @@
 package roadfighter.objects;
 
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
+
 public class BadDriver extends Enemy {
 	
 	private Coordinate objective;
 	private double timer;
 	
+	private final int WIDTH = 80;
+	private final int HEIGHT = 140;
+	
 	public BadDriver(double x, double y, Direction d) {
 		setCoordinate(new Coordinate(x, y));
 		setDirection(d);
-		objective = new Coordinate(x, y);
+		this.setSpeed(100);
+
+		objective = this.getCoordinate();
 		timer = 3;
+		
+		initImages();
+		render = new ImageView(sprite);
+		
+		hitbox = new Rectangle(x - WIDTH / 2, y - HEIGHT / 2, WIDTH, HEIGHT);
+		hitbox.setFill(null);
+		hitbox.setStroke(Color.FUCHSIA);
+	}
+	
+	private void initImages() {
+		sprite = new Image("file:src/resources/images/Enemy2.png", WIDTH, HEIGHT, false, false);
 	}
 	
 	public void obstructPath(CarPlayer player) {
@@ -19,6 +41,12 @@ public class BadDriver extends Enemy {
 					this.getCoordinate().getY()
 					); // acceder solo a las cordenadas no al player completo
 		}
+	}
+	
+	@Override
+	public void update(double delta) {
+		super.update(delta);
+		//moveTowardsObjective(delta);
 	}
 	
 	public void moveTowardsObjective(double deltaTime) {
@@ -46,7 +74,27 @@ public class BadDriver extends Enemy {
 		return timer <= 0;
 	}
 	
-	public void update(double delta) {
-		moveTowardsObjective(delta);
+	@Override
+	public Shape getCollider() {
+		return hitbox;
 	}
+	
+	@Override
+	public ImageView getRender() {
+		return render;
+	}
+
+	@Override
+	public void effectPlayer(CarPlayer source) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void effectEnemy(GoodDriver source) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
 }

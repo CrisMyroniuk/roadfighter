@@ -27,7 +27,7 @@ class MatchTest {
 	@BeforeEach
 	void init() {
 		items = null;
-		player = new Player(new CarPlayer(40, 90));
+		player = new Player();
 		map = new MatchMap(new Coordinate(50,100));
 		match = new Match(player, enemy, map, items);
 	}

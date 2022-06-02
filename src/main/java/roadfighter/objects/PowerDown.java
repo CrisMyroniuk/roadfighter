@@ -53,4 +53,16 @@ public class PowerDown extends Item{
 		return null;
 	}
 
+	@Override
+	public void effectEnemy(GoodDriver source) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void update(double deltaTime) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

@@ -18,7 +18,7 @@ class ObstacleTest {
 	
 	@BeforeEach
 	void init() {
-		car = new CarPlayer(0.0 ,0.0);
+		car = new CarPlayer(0.0 ,0.0, null);
 	}
 	
 	@Test

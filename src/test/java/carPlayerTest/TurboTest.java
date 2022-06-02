@@ -10,6 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import roadfighter.objects.CarPlayer;
+import roadfighter.objects.Player;
 
 class TurboTest {
 	
@@ -25,7 +26,8 @@ class TurboTest {
 	
 	@BeforeEach
 	public void setUp() {
-		cp = new CarPlayer(0, 0);
+		Player player = new Player();
+		CarPlayer cp = player.newCar(0, 0);
 		//prevSpeed = cp.getSpeed();
 		prevAceleration = cp.getAceleration();
 		prevMaxSpeed = cp.getSpeedLimit();

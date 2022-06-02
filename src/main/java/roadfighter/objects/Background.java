@@ -22,7 +22,7 @@ public class Background extends GameObject implements Updatable, Renderable{
 		Image backgroundImage = new Image("file:background.png", cityWidth, cityHeight, false, false);
 		ImagePattern image_pattern = new ImagePattern(backgroundImage, cityWidth, cityHeight, cityWidth, cityHeight,
 				false);
-		Rectangle city = new Rectangle(cityWidth,500 + cityHeight);
+		Rectangle city = new Rectangle(cityWidth, 795 + cityHeight);
 		
 		city.setFill(image_pattern);
 		colliderTop = new Rectangle(40,40,30,795);
@@ -37,8 +37,8 @@ public class Background extends GameObject implements Updatable, Renderable{
 	}
 
 	public void update(double deltaTime) {
-		posX += -250 * deltaTime * 0.01;
-		render.setTranslateY(posX % cityWidth);
+		posX += 250 * deltaTime;
+		render.setTranslateY((posX % cityHeight) - 795);
 		
 	}
 

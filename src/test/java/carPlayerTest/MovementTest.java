@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import roadfighter.objects.CarPlayer;
 import roadfighter.objects.Coordinate;
+import roadfighter.objects.Player;
 
 class MovementTest {
 
@@ -16,7 +17,8 @@ class MovementTest {
 	
 	@BeforeEach
 	void init() {
-		car = new CarPlayer(0, 0);
+		Player player = new Player();
+		car = player.newCar(0, 0);
 		x = 10;
 		y = 10;
 	}

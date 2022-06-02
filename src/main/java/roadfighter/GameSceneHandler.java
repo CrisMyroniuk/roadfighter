@@ -1,6 +1,8 @@
 package roadfighter;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import javafx.event.EventHandler;
 import javafx.geometry.Bounds;
@@ -12,9 +14,13 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
 import roadfighter.interfaces.Collidator;
 import roadfighter.interfaces.Collideable;
+import roadfighter.objects.Background;
+import roadfighter.objects.BadDriver;
 import roadfighter.objects.CarPlayer;
+import roadfighter.objects.Direction;
 import roadfighter.objects.Obstacle;
 import roadfighter.objects.Player;
+import roadfighter.utils.GameObject;
 import roadfighter.utils.GameObjectBuilder;
 
 public class GameSceneHandler extends SceneHandler {
@@ -28,9 +34,15 @@ public class GameSceneHandler extends SceneHandler {
 	 * en los casos del switch por algun motivo que no entendi muy bien
 	*/
 	
+	private Background background;
+	
 	private Player player;
 	private CarPlayer car;
 	private Obstacle obstacle;
+	
+	private BadDriver enemy;
+	private Random random;
+	private double spawnTimer;
 	
 	private EventHandler<KeyEvent> keyReleasedHandler;
 	
@@ -39,19 +51,24 @@ public class GameSceneHandler extends SceneHandler {
 	public GameSceneHandler(RoadFighterGame g) {
 		super(g);
 		GOBuilder = GameObjectBuilder.getInstance();
+		random = new Random();
 	}
 	
 	public void load(boolean fullStart) {
 		Group rootGroup = new Group();
 		scene.setRoot(rootGroup);
+		
+		background = new Background();
 
-		car = new CarPlayer(100.0, 500.0);
-		player = new Player(car);
+		player = new Player();
+		car = player.newCar(300.0, 600.0);
 		obstacle = new Obstacle(100.0, 200.0);
 		
-		GOBuilder = GameObjectBuilder.getInstance();
+		enemy = new BadDriver(200.0, 0.0, Direction.UP);
+		spawnTimer = 1;
+		
 		GOBuilder.setRootNode(rootGroup);
-		GOBuilder.add(player, car, obstacle);
+		GOBuilder.add(player, car, obstacle, enemy, background);
 		
 		if (fullStart) {
 			addTimeEventsAnimationTimer();
@@ -78,15 +95,16 @@ public class GameSceneHandler extends SceneHandler {
 			public void handle(KeyEvent e) {
 				switch (e.getCode()) {
 				case W:
-					System.out.println("esta acelerando");
+					player.input(Direction.UP, true);
 					break;
 				case A:
-					car.setDirectionLeft();
+					player.input(Direction.LEFT, true);
 					break;
 				case S:
+					player.input(Direction.DOWN, true);
 					break;
 				case D:
-					car.setDirectionRight();
+					player.input(Direction.RIGHT, true);
 					break;
 				case E:
 					break;
@@ -105,15 +123,16 @@ public class GameSceneHandler extends SceneHandler {
 			public void handle(KeyEvent e) {
 				switch (e.getCode()) {
 				case W:
-					System.out.println("dejo de acelerar");
+					player.input(Direction.UP, false);
 					break;
 				case A:
-					car.setDirectionUp();
+					player.input(Direction.LEFT, false);
 					break;
 				case S:
+					player.input(Direction.DOWN, false);
 					break;
 				case D:
-					car.setDirectionUp();
+					player.input(Direction.RIGHT, false);
 					break;
 				case E:
 					break;
@@ -138,6 +157,17 @@ public class GameSceneHandler extends SceneHandler {
 	@Override
 	public void update(double delta) {
 		super.update(delta);
+		
+		// TODO esto no elimina nada, era para probar si funciona, habria que meterlo en una clase aparte que spawnee enemigos
+		// para eliminarlos podemos meter algo como el ColliderTop para que cuando salgan de la pantalla se eliminen,
+		// o que en el update() de los obstaculos/enemigos pregunte por la coordenada en Y y se destruya solo cuando este fuera de la pantalla
+		spawnTimer -= delta;
+		if (spawnTimer <= 0) {
+			GOBuilder.add(new Obstacle(random.nextDouble(0, 500), -50), new BadDriver(random.nextDouble(0, 500), -50, Direction.UP));
+			
+			spawnTimer = random.nextDouble(1, 3);
+		}
+		
 		checkCollisions();
 		//aca va cualquier cosa que no se haga en el metodo update()
 		//de los updateables

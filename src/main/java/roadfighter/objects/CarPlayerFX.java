@@ -225,4 +225,10 @@ public class CarPlayerFX extends GameObject implements Updatable, Renderable, Co
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void effectEnemy(GoodDriver source) {
+		// TODO Auto-generated method stub
+		
+	}
 }
