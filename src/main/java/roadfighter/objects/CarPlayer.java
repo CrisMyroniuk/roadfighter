@@ -63,7 +63,7 @@ public class CarPlayer extends Vehicle implements Collidator, Renderable{
 		return direction;
 	}
 
-	public void setDirection(Direction direction) {
+	private void setDirection(Direction direction) {
 		this.direction = direction;
 	}
 	
@@ -143,6 +143,11 @@ public class CarPlayer extends Vehicle implements Collidator, Renderable{
 
 	}
 
+	public void setDirectionNone() {
+		setDirection(Direction.NONE);
+		//move(10,0);
+	}
+	
 	public void setDirectionRight() {
 		setDirection(Direction.RIGHT);
 		//move(10,0);

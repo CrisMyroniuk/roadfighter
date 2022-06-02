@@ -44,7 +44,7 @@ public class GameObjectBuilder {
 		return instance;
 	}
 
-	public void add(GameObject... gameObjects) {
+	public void add(ArrayList<GameObject> gameObjects) {
 		checkRootNode();
 
 		for (GameObject gameObject : gameObjects) {

@@ -53,4 +53,10 @@ public class PowerUp extends Item{
 		return null;
 	}
 
+	@Override
+	public void effectEnemy(GoodDriver source) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

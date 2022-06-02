@@ -13,22 +13,25 @@ import roadfighter.utils.GameObject;
 public class Background extends GameObject implements Updatable, Renderable{
 
 	private VBox render;
-	private double posX = 0;
+	private double posY = 0;
 
-	private final int cityWidth = 500;
-	private final int cityHeight = 795;
+//	private final int cityWidth = 500;
+//	private final int cityHeight = 795;
+	private final int forestWidth=1500;
+	private final int forestHeight=1000;
+//	private final int roadWidth=750;
+//	private final int roadHeight=1000;
 	private Rectangle colliderTop;
 	public Background() {
-		Image backgroundImage = new Image("file:background.png", cityWidth, cityHeight, false, false);
-		ImagePattern image_pattern = new ImagePattern(backgroundImage, cityWidth, cityHeight, cityWidth, cityHeight,
-				false);
-		Rectangle city = new Rectangle(cityWidth,500 + cityHeight);
+		Image backgroundImage = new Image("file:src/resources/images/background.png", forestWidth, forestHeight, false, false);
+		ImagePattern image_pattern = new ImagePattern(backgroundImage, forestWidth, forestHeight,forestWidth, forestHeight,false);
+		Rectangle road = new Rectangle(forestWidth, forestHeight);
 		
-		city.setFill(image_pattern);
-		colliderTop = new Rectangle(40,40,30,795);
-		colliderTop.setFill(null);
-		colliderTop.setStroke(Color.FUCHSIA);
-		render = new VBox(city);
+		road.setFill(image_pattern);
+//		colliderTop = new Rectangle(40,40,30,795);
+//		colliderTop.setFill(null);
+//		colliderTop.setStroke(Color.FUCHSIA);
+		render = new VBox(road);
 		// TODO zIndex list
 		render.setViewOrder(10);
 	}
@@ -37,8 +40,8 @@ public class Background extends GameObject implements Updatable, Renderable{
 	}
 
 	public void update(double deltaTime) {
-		posX += -250 * deltaTime * 0.01;
-		render.setTranslateY(posX % cityWidth);
+		posY += deltaTime * 0.01;
+		render.setTranslateY(posY % forestHeight);
 		
 	}
 

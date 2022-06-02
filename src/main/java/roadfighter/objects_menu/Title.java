@@ -17,7 +17,6 @@ import roadfighter.utils.GameObject;
 
 public class Title extends GameObject implements Renderable {
 	private final int Y = Config.baseHeight / 3 - 35;
-	
 	private final TranslateTransition idleAnimation;
 	private final Duration translateDuration = Duration.millis(1000);
 
@@ -28,9 +27,8 @@ public class Title extends GameObject implements Renderable {
 		text = new Text("Road Fighter");
 
 		render = new VBox(text);
-		render.setAlignment(Pos.TOP_LEFT);
+		render.setAlignment(Pos.TOP_CENTER);
 		render.setTranslateY(Y);
-		render.setTranslateX(50);
 		// Esto debería heredarse?
 		render.setPrefWidth(Config.baseWidth);
 

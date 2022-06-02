@@ -1,5 +1,6 @@
 package roadfighter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javafx.animation.TranslateTransition;
@@ -18,22 +19,24 @@ import roadfighter.interfaces.Collidator;
 import roadfighter.interfaces.Collideable;
 import roadfighter.objects.Background;
 import roadfighter.objects.CarPlayer;
-import roadfighter.objects.CarPlayerFX;
+//import roadfighter.objects.CarPlayerFX;
 import roadfighter.objects.ColliderTop;
 import roadfighter.objects.Direction;
 import roadfighter.objects.Enemy;
 import roadfighter.objects.GoodDriver;
-import roadfighter.objects.Obstacle;
+//import roadfighter.objects.Obstacle;
 import roadfighter.objects.Player;
 import roadfighter.objects_menu.TextoComenzar;
 import roadfighter.objects_menu.Title;
+import roadfighter.utils.GameObject;
 import roadfighter.utils.GameObjectBuilder;
-import javafx.scene.Scene;
+//import javafx.scene.Scene;
 
 public class MenuSceneHandler extends SceneHandler {
 	
 	private Group rootGroup;
 	private Background background;
+	private ArrayList<GameObject> gameObjects=new ArrayList<GameObject>();
 	//private Ground ground;
 	private Title title;
 	private TextoComenzar textoComenzar;
@@ -46,6 +49,7 @@ public class MenuSceneHandler extends SceneHandler {
 	private GameObjectBuilder gameOB;
 	private Enemy enemy1;
 	private Enemy enemy2;
+	private Enemy enemy3;
 	public MenuSceneHandler(RoadFighterGame g) {
 		super(g);	
 	}
@@ -106,14 +110,28 @@ public class MenuSceneHandler extends SceneHandler {
 
 		title = new Title();
 		textoComenzar = new TextoComenzar();
-		car = new CarPlayer(290.0, 1100);
+		car = new CarPlayer(515.0, 1100);
 		player = new Player(car);
 		colliderTop = new ColliderTop(100.0, 200.0);
-		enemy1 = new GoodDriver(370.0, 1300.0,Direction.UP,"file:src/resources/images/Enemy1.png");
-		enemy2 = new GoodDriver(210.0, 1500,Direction.UP,"file:src/resources/images/Enemy2.png");
+		//R1 
+		//R2 675
+		//R3 825
+		//R4
+		enemy1 = new GoodDriver(675.0, 1300.0,Direction.UP,"file:src/resources/images/Enemy1.png");
+		enemy2 = new GoodDriver(825.0, 1500,Direction.UP,"file:src/resources/images/Enemy2.png");
+		enemy3 = new GoodDriver(990.0, 1500,Direction.UP,"file:src/resources/images/Enemy2.png");
 		 gameOB = GameObjectBuilder.getInstance();
 		gameOB.setRootNode(baseGroup);
-		gameOB.add(background, player,car,colliderTop,enemy1,enemy2, title, textoComenzar);
+		gameObjects.add(background);
+		gameObjects.add(player);
+		gameObjects.add(car);
+		gameObjects.add(colliderTop);
+		gameObjects.add(enemy1);
+		gameObjects.add(enemy2);
+		gameObjects.add(enemy3);
+		gameObjects.add(title);
+		gameObjects.add(textoComenzar);
+		gameOB.add(gameObjects);
 
 		if (fullStart) {
 			addTimeEventsAnimationTimer();

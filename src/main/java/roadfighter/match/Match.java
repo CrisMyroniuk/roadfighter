@@ -1,9 +1,13 @@
-package roadfighter.objects;
+package roadfighter.match;
 
-import java.util.Random;
-import java.util.Scanner;
+
+import roadfighter.objects.Enemy;
+import roadfighter.objects.Item;
+import roadfighter.objects.MatchMap;
+import roadfighter.objects.Player;
+import roadfighter.objects.PlayerState;
+
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class Match {
 	

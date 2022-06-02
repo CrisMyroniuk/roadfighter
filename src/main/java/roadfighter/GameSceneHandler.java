@@ -1,13 +1,17 @@
 package roadfighter;
 
+import java.util.ArrayList;
 import java.util.List;
+
+//import javax.swing.text.JTextComponent.KeyBinding;
 
 import javafx.event.EventHandler;
 import javafx.geometry.Bounds;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+//import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
+//import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
 import roadfighter.interfaces.Collidator;
@@ -15,6 +19,7 @@ import roadfighter.interfaces.Collideable;
 import roadfighter.objects.CarPlayer;
 import roadfighter.objects.Obstacle;
 import roadfighter.objects.Player;
+import roadfighter.utils.GameObject;
 import roadfighter.utils.GameObjectBuilder;
 
 public class GameSceneHandler extends SceneHandler {
@@ -29,8 +34,8 @@ public class GameSceneHandler extends SceneHandler {
 	*/
 	
 	private Player player;
-	private CarPlayer car;
-	private Obstacle obstacle;
+	private ArrayList<Obstacle> obstacles = new ArrayList<Obstacle>();
+	private ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
 	
 	private EventHandler<KeyEvent> keyReleasedHandler;
 	
@@ -41,22 +46,31 @@ public class GameSceneHandler extends SceneHandler {
 		GOBuilder = GameObjectBuilder.getInstance();
 	}
 	
-	public void load(boolean fullStart) {
+	public void load() {
 		Group rootGroup = new Group();
 		scene.setRoot(rootGroup);
-
-		car = new CarPlayer(100.0, 500.0);
-		player = new Player(car);
-		obstacle = new Obstacle(100.0, 200.0);
+		player=new Player(new CarPlayer(200.0,500.0));
+		//players.add(new Player(new CarPlayer(200.0,500.0)));
+		//car = new CarPlayer(100.0, 500.0);
+		//player = new Player(car);
+		obstacles.add(new Obstacle(100.0, 500.0));
+		obstacles.add(new Obstacle(200.0, 200.0));
 		
+//		for (Player player : players) {
+//			gameObjects.add(player);
+//		}
+		gameObjects.add(player.getCarPlayer());
+		for (Obstacle obstacle : obstacles) {
+			gameObjects.add(obstacle);
+		}
 		GOBuilder = GameObjectBuilder.getInstance();
 		GOBuilder.setRootNode(rootGroup);
-		GOBuilder.add(player, car, obstacle);
+		GOBuilder.add(gameObjects);
 		
-		if (fullStart) {
-			addTimeEventsAnimationTimer();
-			addInputEvents();
-		}
+//		if (fullStart) {
+		addTimeEventsAnimationTimer();
+		addInputEvents();
+//		}
 	}
 
 	@Override
@@ -67,32 +81,23 @@ public class GameSceneHandler extends SceneHandler {
 
 	@Override
 	protected void defineEventHandlers() {
-		//los event handlers acceden directamente al auto pero no se si esta bien eso
-		mouseEventHandler = new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent event) {
-			}
-		};
 		keyEventHandler = new EventHandler<KeyEvent>() {
 			@Override
 			public void handle(KeyEvent e) {
 				switch (e.getCode()) {
 				case W:
-					System.out.println("esta acelerando");
+					player.getCarPlayer().setDirectionUp();
 					break;
 				case A:
-					car.setDirectionLeft();
+					player.getCarPlayer().setDirectionLeft();
 					break;
 				case S:
+					player.getCarPlayer().setDirectionDown();
 					break;
 				case D:
-					car.setDirectionRight();
+					player.getCarPlayer().setDirectionRight();
 					break;
 				case E:
-					break;
-				case R:
-					break;
-				case ESCAPE:
 					break;
 				default:
 					break;
@@ -106,20 +111,18 @@ public class GameSceneHandler extends SceneHandler {
 				switch (e.getCode()) {
 				case W:
 					System.out.println("dejo de acelerar");
+					player.getCarPlayer().setDirectionNone();
 					break;
 				case A:
-					car.setDirectionUp();
+					player.getCarPlayer().setDirectionNone();
 					break;
 				case S:
+					player.getCarPlayer().setDirectionNone();
 					break;
 				case D:
-					car.setDirectionUp();
+					player.getCarPlayer().setDirectionNone();
 					break;
 				case E:
-					break;
-				case R:
-					break;
-				case ESCAPE:
 					break;
 				default:
 					break;
