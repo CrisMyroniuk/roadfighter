@@ -7,8 +7,11 @@ import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Bounds;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -26,7 +29,7 @@ import roadfighter.objects.Enemy;
 import roadfighter.objects.GoodDriver;
 //import roadfighter.objects.Obstacle;
 import roadfighter.objects.Player;
-import roadfighter.objects_menu.TextoComenzar;
+import roadfighter.objects_menu.ButtonMenu;
 import roadfighter.objects_menu.Title;
 import roadfighter.utils.GameObject;
 import roadfighter.utils.GameObjectBuilder;
@@ -39,12 +42,14 @@ public class MenuSceneHandler extends SceneHandler {
 	private ArrayList<GameObject> gameObjects=new ArrayList<GameObject>();
 	//private Ground ground;
 	private Title title;
-	private TextoComenzar textoComenzar;
+	private ButtonMenu boton1Player;
+	private ButtonMenu boton2Player;
 	//private CarPlayerFX player;
 	private Player player;
 	private CarPlayer car;
 	private Rectangle colliderBottom;
-	private EventHandler<ActionEvent> onPressHandler;
+	private EventHandler<ActionEvent> onPressHandlerOnePlayer;
+	private EventHandler<ActionEvent> onPressHandlerTwoPlayer;
 	private ColliderTop colliderTop;
 	private GameObjectBuilder gameOB;
 	private Enemy enemy1;
@@ -74,7 +79,7 @@ public class MenuSceneHandler extends SceneHandler {
 			public void handle(KeyEvent e) {
 				switch (e.getCode()) {
 				case ENTER:
-					g.startGame();
+					g.startGame(true);
 					break;
 				case Q:
 				case ESCAPE:
@@ -86,11 +91,19 @@ public class MenuSceneHandler extends SceneHandler {
 			}
 		};
 		
-		onPressHandler = new EventHandler<ActionEvent>() {
+		onPressHandlerOnePlayer = new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent event) {
-				g.startGame();
+				g.startGame(true);
+			}
+		};
+		
+		onPressHandlerTwoPlayer = new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				g.startGame(false);
 			}
 		};
 	}
@@ -109,7 +122,9 @@ public class MenuSceneHandler extends SceneHandler {
 		//fpsInfo = new FpsInfo(fps);
 
 		title = new Title();
-		textoComenzar = new TextoComenzar();
+		
+		boton1Player = new ButtonMenu("1 PLAYER",Config.baseHeight * 3 / 5);
+		boton2Player = new ButtonMenu("2 PLAYERS",(Config.baseHeight * 3 / 5) + 100);
 		player = new Player(new CarPlayer(515.0, 1100));
 		colliderTop = new ColliderTop(100.0, 200.0);
 		//R1 515 
@@ -128,7 +143,8 @@ public class MenuSceneHandler extends SceneHandler {
 		gameObjects.add(enemy2);
 		gameObjects.add(enemy3);
 		gameObjects.add(title);
-		gameObjects.add(textoComenzar);
+		gameObjects.add(boton1Player);
+		gameObjects.add(boton2Player);
 		gameOB.add(gameObjects);
 
 		if (fullStart) {
@@ -152,12 +168,14 @@ public class MenuSceneHandler extends SceneHandler {
 	
 	protected void addInputEvents() {
 		super.addInputEvents();
-		textoComenzar.setOnAction(onPressHandler);
+		boton1Player.setOnAction(onPressHandlerOnePlayer);
+		boton2Player.setOnAction(onPressHandlerTwoPlayer);
 	}
 	
 	protected void removeInputEvents() {
 		super.removeInputEvents();
-		textoComenzar.removeOnAction(onPressHandler);
+		boton1Player.removeOnAction(onPressHandlerOnePlayer);
+		boton2Player.setOnAction(onPressHandlerTwoPlayer);
 	}
 	
 	private void checkCollisions() {

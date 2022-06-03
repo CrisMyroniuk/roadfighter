@@ -10,6 +10,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Bounds;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
 //import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 //import javafx.scene.input.MouseEvent;
@@ -40,22 +41,27 @@ public class GameSceneHandler extends SceneHandler {
 
 	private Background background;
 
-	private Player player;
+	private ArrayList<Player> players = new ArrayList<Player>();
 	private ArrayList<Obstacle> obstacles = new ArrayList<Obstacle>();
 	private ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
 
+	private ArrayList<KeyCode> keysPlayerOne = new ArrayList<KeyCode>();
+	private ArrayList<KeyCode> keysPlayerTwo = new ArrayList<KeyCode>();
 	private BadDriver enemy;
 	private Random random;
 	private double spawnTimer;
+	
+	private boolean singlePlayer;
 
 	private EventHandler<KeyEvent> keyReleasedHandler;
 
 	private GameObjectBuilder GOBuilder;
 
-	public GameSceneHandler(RoadFighterGame g) {
+	public GameSceneHandler(RoadFighterGame g,boolean singlePlayer) {
 		super(g);
 		GOBuilder = GameObjectBuilder.getInstance();
 		random = new Random();
+		this.singlePlayer = singlePlayer;
 	}
 
 	public void load() {
@@ -67,7 +73,31 @@ public class GameSceneHandler extends SceneHandler {
 		// R2 675
 		// R3 825
 		// R4 990
-		player = new Player(new CarPlayer(515.0, 600.0));
+		
+		//teclas movimiento jugador 1
+		keysPlayerOne.add(KeyCode.W);
+		keysPlayerOne.add(KeyCode.A);
+		keysPlayerOne.add(KeyCode.S);
+		keysPlayerOne.add(KeyCode.D);
+		
+		//tecla poder jugador 1
+		keysPlayerOne.add(KeyCode.C);
+		players.add(new Player(new CarPlayer(515.0, 750.0),keysPlayerOne));
+		
+		//si son dos jugadores
+		if(!singlePlayer) {
+			//teclas movimiento jugador 2
+			keysPlayerTwo.add(KeyCode.UP);
+			keysPlayerTwo.add(KeyCode.LEFT);
+			keysPlayerTwo.add(KeyCode.DOWN);
+			keysPlayerTwo.add(KeyCode.RIGHT);
+			
+			//tecla poder jugador 2
+			keysPlayerTwo.add(KeyCode.L);
+			
+			players.add(new Player(new CarPlayer(1000, 750.0),keysPlayerTwo));
+		}
+		
 		obstacles.add(new Obstacle(825.0, 200.0));
 
 		enemy = new BadDriver(990.0, 0.0, Direction.UP);
@@ -75,7 +105,11 @@ public class GameSceneHandler extends SceneHandler {
 
 		GOBuilder.setRootNode(rootGroup);
 		gameObjects.add(background);
-		gameObjects.add(player.getCarPlayer());
+		
+		for(Player p : players) {
+			gameObjects.add(p.getCarPlayer());
+		}
+		
 		gameObjects.add(enemy);
 		for (Obstacle obstacle : obstacles) {
 			gameObjects.add(obstacle);
@@ -99,7 +133,10 @@ public class GameSceneHandler extends SceneHandler {
 		keyEventHandler = new EventHandler<KeyEvent>() {
 			@Override
 			public void handle(KeyEvent e) {
-				player.eventPressed(e);
+				
+				for(Player p : players) {
+					p.eventPressed(e);
+				}
 				/*
 				 * switch (e.getCode()) { case W: player.getCarPlayer().setDirectionUp(); break;
 				 * case A: player.getCarPlayer().setDirectionLeft(); break; case S:
@@ -113,7 +150,10 @@ public class GameSceneHandler extends SceneHandler {
 		keyReleasedHandler = new EventHandler<KeyEvent>() {
 			@Override
 			public void handle(KeyEvent e) {
-				player.eventReleased(e);
+				
+				for(Player p : players) {
+					p.eventReleased(e);
+				}
 				/*
 				 * switch (e.getCode()) { case W: System.out.println("dejo de acelerar");
 				 * player.getCarPlayer().setDirectionNone(Direction.UP); break; case A:

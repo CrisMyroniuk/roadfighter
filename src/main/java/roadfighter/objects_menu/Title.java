@@ -4,6 +4,8 @@ import javafx.animation.Animation;
 import javafx.animation.TranslateTransition;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -24,7 +26,7 @@ public class Title extends GameObject implements Renderable {
 	private VBox render;
 
 	public Title() {
-		text = new Text("Road Fighter");
+		text = new Text("ROAD FIGHTER");
 
 		render = new VBox(text);
 		render.setAlignment(Pos.TOP_CENTER);
@@ -35,7 +37,17 @@ public class Title extends GameObject implements Renderable {
 		Font font = Font.font("Verdana", FontWeight.EXTRA_BOLD, 50);
 		text.setTextAlignment(TextAlignment.CENTER);
 		text.setFont(font);
-		text.setFill(Color.RED);
+		
+		text.setStyle(" -fx-fill: \n"
+		+ "		        linear-gradient(#ffd65b, #e68400),\n"
+		+ "		        linear-gradient(#ffef84, #f2ba44),\n"
+		+ "		        linear-gradient(#ffea6a, #efaa22),\n"
+		+ "		        linear-gradient(#ffe657 0%, #f8c202 80%, #eea10b 100%),\n"
+		+ "		        linear-gradient(from 0% 0% to 15% 50%, rgba(255,255,255,0.9), rgba(255,255,255,0));"
+		+ "-fx-background-radius: 30;"
+		+"-fx-background-insets: 0,1,2,3,0;"
+		+"-fx-text-fill: #654b00;"
+		+"-fx-font-size: 85px;");
 		
 		idleAnimation = initIdleAnimation();
 	}
