@@ -1,35 +1,30 @@
 package roadfighter.objects;
 
-import java.io.File;
-import java.nio.file.Paths;
 
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.media.AudioClip;
-import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
-import javafx.util.Duration;
-import roadfighter.utils.GameObjectBuilder;
 
 public class Obstacle extends Item{
 	
 	// si hay varios obstaculos diferentes habria que hacer mas clases
 	// o meterle mas cosas al constructor para que tengan diferentes sprites/hitboxes
-	private final double WIDTH = 25;
-	private final double HEIGHT = 25;
+	private final double WIDTH = 50;
+	private final double HEIGHT = 50;
 	
 	private Rectangle hitbox;
 	private Image sprite;
 	private ImageView render;
 	private MediaPlayer mediaPlayer;
 
-	public Obstacle(double x, double y) {
+	public Obstacle(double x, double y,String path) {
 		visible = true;
-		initImages();
+		initImages(path);
 		setCoordinate(new Coordinate(x, y));
 		render = new ImageView(sprite);
 		//render.relocate(x - WIDTH / 2, y - HEIGHT / 2);
@@ -42,9 +37,9 @@ public class Obstacle extends Item{
 		render.setTranslateY(getCoordinate().getY() - HEIGHT / 2);
 	}
 	
-	private void initImages() {
+	private void initImages(String path) {
 		//si tiene animacion supongo que va aca
-		sprite = new Image("file:src/resources/images/ObstacleSprite.png");
+		sprite = new Image(path,WIDTH,HEIGHT,true,true);
 	}
 	
 	@Override

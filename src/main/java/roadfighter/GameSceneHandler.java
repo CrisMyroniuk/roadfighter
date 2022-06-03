@@ -106,7 +106,7 @@ public class GameSceneHandler extends SceneHandler {
 			players.add(new Player(new CarPlayer(1000, 750.0),keysPlayerTwo));
 		}
 		
-		obstacles.add(new Obstacle(825.0, 200.0));
+		obstacles.add(new Obstacle(825.0, 200.0,"file:src/resources/images/ObstacleSprite.png"));
 
 		enemy = new BadDriver(990.0, 0.0, Direction.UP);
 		spawnTimer = 1;
@@ -197,7 +197,7 @@ public class GameSceneHandler extends SceneHandler {
 		spawnTimer -= delta;
 		if (spawnTimer <= 0) {
 			ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
-			gameObjects.add(new Obstacle(random.nextDouble(515, 990), -50));
+			gameObjects.add(new Obstacle(random.nextDouble(515, 990), -50,"file:src/resources/images/ObstacleSprite.png"));
 			gameObjects.add(new BadDriver(random.nextDouble(515, 990), -50, Direction.UP));
 			GOBuilder.add(gameObjects);
 
@@ -211,7 +211,6 @@ public class GameSceneHandler extends SceneHandler {
 	}
 
 	private void checkCollisions() {
-		// copie el codigo de flappy bird porque no entendi muy bien la logica de esto
 		List<Collidator> collidators = GOBuilder.getCollidators();
 		List<Collideable> collideables = GOBuilder.getCollideables();
 
