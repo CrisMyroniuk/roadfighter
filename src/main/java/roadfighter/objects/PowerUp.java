@@ -18,7 +18,7 @@ public class PowerUp extends Item{
 	private Image sprite;
 	private ImageView render;
 	
-	public PowerUp(double x, double y, int p) {
+	public PowerUp(double x, double y, int p,String path) {
 		setCoordinate(new Coordinate(x,y));
 		setModel(null);
 		setPoints(p);
@@ -28,14 +28,14 @@ public class PowerUp extends Item{
 		hitbox.setFill(null);
 		hitbox.setStroke(Color.MEDIUMSEAGREEN);
 		
-		initImages();
+		initImages(path);
 		render = new ImageView(sprite);
 		render.setTranslateX(getCoordinate().getX() - WIDTH / 2);
 		render.setTranslateY(getCoordinate().getY() - HEIGHT / 2);
 	}
 	
-	private void initImages() {
-		sprite = new Image("file:src/resources/images/ObstacleSprite.png");//place holder
+	private void initImages(String path) {
+		sprite = new Image(path,WIDTH,HEIGHT,true,true);//place holder
 	}
 	public int getPoints() {
 		return points;

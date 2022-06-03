@@ -66,10 +66,6 @@ public class GoodDriver extends Enemy implements Collidator, Renderable{
 		}
 	}
 	
-	@Override
-	public void destroy() {
-		System.out.println("good destruido: " + id);
-	}
 
 	@Override
 	public Shape getCollider() {

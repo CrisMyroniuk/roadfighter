@@ -21,7 +21,7 @@ public class PowerDown extends Item{
 		return speedDown;
 	}
 	
-	public PowerDown(double x, double y) {
+	public PowerDown(double x, double y,String path) {
 		setCoordinate(new Coordinate(x, y));
 		visible=true;
 		
@@ -29,14 +29,14 @@ public class PowerDown extends Item{
 		hitbox.setFill(null);
 		hitbox.setStroke(Color.INDIANRED);
 		
-		initImages();
+		initImages(path);
 		render = new ImageView(sprite);
 		render.setTranslateX(getCoordinate().getX() - WIDTH / 2);
 		render.setTranslateY(getCoordinate().getY() - HEIGHT / 2);
 	}
 	
-	private void initImages() {
-		sprite = new Image("file:src/resources/images/ObstacleSprite.png");//place holder
+	private void initImages(String path) {
+		sprite = new Image(path,WIDTH,HEIGHT,true,true);//place holder
 	}
 
 	@Override
