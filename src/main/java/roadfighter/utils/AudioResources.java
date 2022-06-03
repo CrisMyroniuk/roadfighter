@@ -10,4 +10,8 @@ public class AudioResources {
 	public static AudioClip getExplosionAudio() {
 		return new AudioClip("file:src/resources/sound/explosion.mp3");
 	}
+	
+	public static AudioClip getCoinAudio() {
+		return new AudioClip("file:src/resources/sound/takeCoin.wav");
+	}
 }

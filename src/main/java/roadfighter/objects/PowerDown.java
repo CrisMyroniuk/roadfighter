@@ -6,13 +6,14 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
+import roadfighter.objects_menu.PointsText;
 import roadfighter.utils.GameObjectBuilder;
 
 public class PowerDown extends Item{
 
 	private final double speedDown = 100;
-	private final double WIDTH = 25;
-	private final double HEIGHT = 25;
+	private final double WIDTH = 40;
+	private final double HEIGHT = 40;
 	
 	private Image sprite;
 	private ImageView render;
@@ -27,7 +28,7 @@ public class PowerDown extends Item{
 		
 		hitbox = new Rectangle(x, y, WIDTH, HEIGHT);
 		hitbox.setFill(null);
-		hitbox.setStroke(Color.INDIANRED);
+		hitbox.setStroke(Color.TRANSPARENT);
 		
 		initImages(path);
 		render = new ImageView(sprite);
@@ -43,6 +44,8 @@ public class PowerDown extends Item{
 	public void effectPlayer(CarPlayer cp) {
 		// Baja la velocidad del auto
 		cp.changeSpeed(10,Action.SPEED_DOWN);
+		GameObjectBuilder builder = GameObjectBuilder.getInstance();
+		builder.remove(this);
 	}
 
 	public void desaparecer() {

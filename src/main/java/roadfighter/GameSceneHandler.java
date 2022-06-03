@@ -116,7 +116,7 @@ public class GameSceneHandler extends SceneHandler {
 			players.add(new Player(new CarPlayer(1000, 750.0),keysPlayerTwo));
 		}
 		
-		obstacles.add(new Obstacle(825.0, 200.0,"file:src/resources/images/ObstacleSprite.png"));
+		//obstacles.add(new Obstacle(825.0, 200.0,"file:src/resources/images/ObstacleSprite.png"));
 
 		enemy = new BadDriver(990.0, 0.0, Direction.UP);
 		spawnTimer = 1;
@@ -210,10 +210,10 @@ public class GameSceneHandler extends SceneHandler {
 		if (spawnTimer <= 0) {
 			//ahora se eliminan solos cuando su coordenada en Y llega a la altura de la pantalla + 500
 			ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
-			gameObjects.add(new Obstacle(random.nextDouble(515, 990), -50,"file:src/resources/images/trashbag.png"));
+			gameObjects.add(new Obstacle(random.nextDouble(515, 990), -50,"file:src/resources/images/Conito.png"));
 			gameObjects.add(new BadDriver(random.nextDouble(515, 990), -50, Direction.UP));
-			gameObjects.add(new PowerUp(random.nextDouble(515, 990), -50.0, 100,"file:src/resources/images/trashbag.png"));
-			gameObjects.add(new PowerDown(random.nextDouble(515, 990), -50.0,"file:src/resources/images/trashbag.png"));
+			gameObjects.add(new PowerUp(random.nextDouble(515, 990), -50.0, 100,"file:src/resources/images/coin.png"));
+			gameObjects.add(new PowerDown(random.nextDouble(515, 990), -50.0,"file:src/resources/images/velocityDown.png"));
 			
 			GOBuilder.add(gameObjects);
 

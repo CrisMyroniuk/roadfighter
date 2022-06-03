@@ -44,7 +44,7 @@ public class CarPlayer extends Vehicle implements Collidator, Renderable{
 	private boolean pickedUpPoints = false;
 	
 	private AudioClip explosionAudio;
-	
+	private AudioClip coinAudio;
 	/*private boolean turbo;
 	private static double turboDuration = 100;
 	private static double turboExtraSpeed = 50; // +50
@@ -171,6 +171,7 @@ public class CarPlayer extends Vehicle implements Collidator, Renderable{
 
 	private void initAudios() {
 		explosionAudio = AudioResources.getExplosionAudio();
+		coinAudio =  AudioResources.getCoinAudio();
 	}
 	// endregion
 
@@ -178,6 +179,10 @@ public class CarPlayer extends Vehicle implements Collidator, Renderable{
 
 	public AudioClip getExplosionAudio() {
 		return explosionAudio;
+	}
+	
+	public AudioClip getCoinAudio() {
+		return coinAudio;
 	}
 
 	public void addPoints(int p) {
