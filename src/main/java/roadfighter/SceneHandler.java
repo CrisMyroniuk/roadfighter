@@ -54,7 +54,7 @@ public abstract class SceneHandler {
 	
 	protected void unload() {
 		GameObjectBuilder.getInstance().removeAll();
-		//gameTimer.stop();
+		gameTimer.stop();
 		removeInputEvents();
 	}
 	

@@ -12,18 +12,14 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import roadfighter.interfaces.Collidator;
 import roadfighter.interfaces.Collideable;
 import roadfighter.objects.Background;
-import roadfighter.objects.CarPlayer;
-import roadfighter.objects.ColliderTop;
-import roadfighter.objects.Direction;
-import roadfighter.objects.Enemy;
-import roadfighter.objects.GoodDriver;
-import roadfighter.objects.Player;
 import roadfighter.objects_menu.ButtonMenu;
+import roadfighter.objects_menu.EffectsVolumeSlider;
+import roadfighter.objects_menu.MasterVolumeSlider;
+import roadfighter.objects_menu.MusicVolumeSlider;
 import roadfighter.objects_menu.Title;
 import roadfighter.utils.GameObject;
 import roadfighter.utils.GameObjectBuilder;
@@ -33,22 +29,15 @@ public class OptionsSceneHandler extends SceneHandler{
 	private AudioClip audioGame;
 	private Background background;
 	private ArrayList<GameObject> gameObjects=new ArrayList<GameObject>();
-	//private Ground ground;
 	private Title title;
-	private ButtonMenu boton1Player;
-	private ButtonMenu boton2Player;
-	//private CarPlayerFX player;
-	private Player player;
-	private CarPlayer car;
-	private Rectangle colliderBottom;
-	private EventHandler<ActionEvent> onPressHandlerOnePlayer;
-	private EventHandler<ActionEvent> onPressHandlerTwoPlayer;
-	private ColliderTop colliderTop;
 	private GameObjectBuilder gameOB;
-	private Enemy enemy1;
-	private Enemy enemy2;
-	private Enemy enemy3;
-	private Enemy enemy4;
+	
+	private MasterVolumeSlider master;
+	private EffectsVolumeSlider effects;
+	private MusicVolumeSlider music;
+	private ButtonMenu back;
+	
+	private EventHandler<ActionEvent> onPressHandlerBack;
 	
 	public OptionsSceneHandler(RoadFighterGame g) {
 		super(g);
@@ -73,12 +62,8 @@ public class OptionsSceneHandler extends SceneHandler{
 			@Override
 			public void handle(KeyEvent e) {
 				switch (e.getCode()) {
-				case ENTER:
-					g.startGame(true);
-					break;
-				case Q:
 				case ESCAPE:
-					System.exit(0);
+					g.startMenu(true);
 					break;
 				default:
 					break;
@@ -86,19 +71,11 @@ public class OptionsSceneHandler extends SceneHandler{
 			}
 		};
 		
-		onPressHandlerOnePlayer = new EventHandler<ActionEvent>() {
-
+		onPressHandlerBack = new EventHandler<ActionEvent>() {
+			
 			@Override
-			public void handle(ActionEvent event) {
-				g.startGame(true);
-			}
-		};
-		
-		onPressHandlerTwoPlayer = new EventHandler<ActionEvent>() {
-
-			@Override
-			public void handle(ActionEvent event) {
-				g.startGame(false);
+			public void handle(ActionEvent e) {
+				g.startMenu(true);
 			}
 		};
 	}
@@ -111,18 +88,22 @@ public class OptionsSceneHandler extends SceneHandler{
 		rootGroup.getChildren().add(baseGroup);
 		String src = "file:src/resources/sounds/menuSound.mp3";
 		
+		gameOB = GameObjectBuilder.getInstance();
+		gameOB.setRootNode(baseGroup);
+		
 		audioGame = new AudioClip(src);
 		audioGame.play();
 		background = new Background();
 
 		title = new Title();
 		
+		master = new MasterVolumeSlider(500, Config.baseHeight * 3 / 5);
+		effects = new EffectsVolumeSlider(500, Config.baseHeight * 3 / 5 + 50);
+		music = new MusicVolumeSlider(500, Config.baseHeight * 3 / 5 + 100);
+		back = new ButtonMenu("BACK", Config.baseHeight * 3 / 5 + 150);
 		
-//		boton1Player = new ButtonMenu("1 PLAYER",Config.baseHeight * 3 / 5);
-//		boton2Player = new ButtonMenu("2 PLAYERS",(Config.baseHeight * 3 / 5) + 100);
-
-		gameOB = GameObjectBuilder.getInstance();
-		gameOB.setRootNode(baseGroup);
+		gameOB.add(master, effects, music, back);
+		
 		gameObjects.add(background);
 		gameObjects.add(title);
 		gameOB.add(gameObjects);
@@ -151,14 +132,12 @@ public class OptionsSceneHandler extends SceneHandler{
 	
 	protected void addInputEvents() {
 		super.addInputEvents();
-		boton1Player.setOnAction(onPressHandlerOnePlayer);
-		boton2Player.setOnAction(onPressHandlerTwoPlayer);
+		back.setOnAction(onPressHandlerBack);
 	}
 	
 	protected void removeInputEvents() {
 		super.removeInputEvents();
-		boton1Player.removeOnAction(onPressHandlerOnePlayer);
-		boton2Player.setOnAction(onPressHandlerTwoPlayer);
+		back.removeOnAction(onPressHandlerBack);
 	}
 	
 	private void checkCollisions() {
