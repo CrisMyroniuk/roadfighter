@@ -25,6 +25,7 @@ import roadfighter.objects.BottomLimit;
 import roadfighter.objects.CarPlayer;
 import roadfighter.objects.Coordinate;
 import roadfighter.objects.Direction;
+import roadfighter.objects.GoodDriver;
 import roadfighter.objects.LeftLimit;
 import roadfighter.objects.Obstacle;
 import roadfighter.objects.Player;
