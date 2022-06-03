@@ -81,6 +81,7 @@ public class GameSceneHandler extends SceneHandler {
 		
 		AudioClip audioGame = new AudioClip(src);
 		
+		audioGame.setVolume(Config.masterVolumeModifier * Config.musicVolumeModifier);
 		audioGame.play();
 		
 		Group rootGroup = new Group();

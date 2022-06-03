@@ -7,6 +7,7 @@ import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
+import roadfighter.Config;
 import roadfighter.interfaces.Collidator;
 import roadfighter.interfaces.Collideable;
 import roadfighter.interfaces.Renderable;
@@ -171,6 +172,7 @@ public class CarPlayer extends Vehicle implements Collidator, Renderable{
 
 	private void initAudios() {
 		explosionAudio = AudioResources.getExplosionAudio();
+		explosionAudio.setVolume(Config.masterVolumeModifier * Config.effectsVolumeModifier);
 	}
 	// endregion
 

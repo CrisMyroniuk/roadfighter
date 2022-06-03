@@ -90,9 +90,10 @@ public class OptionsSceneHandler extends SceneHandler{
 		
 		gameOB = GameObjectBuilder.getInstance();
 		gameOB.setRootNode(baseGroup);
+
+//		audioGame = new AudioClip(src);
+//		audioGame.play();
 		
-		audioGame = new AudioClip(src);
-		audioGame.play();
 		background = new Background();
 
 		title = new Title();
@@ -124,7 +125,7 @@ public class OptionsSceneHandler extends SceneHandler{
 
 	public void unload() {
 		
-		audioGame.stop();
+//		audioGame.stop();
 		
 		rootGroup.getChildren().remove(0);
 		super.unload();

@@ -138,6 +138,7 @@ public class MenuSceneHandler extends SceneHandler {
 		
 		audioGame = new AudioClip(src);
 		
+		audioGame.setVolume(Config.masterVolumeModifier * Config.musicVolumeModifier);
 		audioGame.play();
 		
 		//player = new FlappyBird(Config.baseWidth - 75, Config.baseHeight / 3, null);
