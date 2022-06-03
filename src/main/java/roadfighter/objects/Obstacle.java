@@ -6,6 +6,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
+import roadfighter.utils.GameObjectBuilder;
 
 public class Obstacle extends Item{
 	
@@ -14,7 +15,6 @@ public class Obstacle extends Item{
 	private final double WIDTH = 25;
 	private final double HEIGHT = 25;
 	
-	private Rectangle hitbox;
 	private Image sprite;
 	private ImageView render;
 
@@ -47,13 +47,17 @@ public class Obstacle extends Item{
 		render.setTranslateY(getCoordinate().getY() - HEIGHT / 2);
 		hitbox.setX(this.getCoordinate().getX() - WIDTH / 2);
 		hitbox.setY(this.getCoordinate().getY() - HEIGHT / 2);
+		
+		if (this.getCoordinate().getY() >= bottomLimit) {
+			GameObjectBuilder.getInstance().remove(this);
+		}
 	}
 
 	@Override
 	public void effectPlayer(CarPlayer cp) {
-		System.out.println("chocado");
-		cp.changeSpeed(0,Action.STOP);
-		cp.move(0, 5);
+		if (this.getCoordinate().getY() + this.WIDTH <= cp.getCoordinate().getY())
+			cp.move(0, 5);
+		//cp.changeSpeed(0,Action.STOP);
 	}
 	
 	@Override

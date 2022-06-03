@@ -5,8 +5,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
+import roadfighter.utils.GameObjectBuilder;
 
 public class BadDriver extends Enemy {
+	
+	private static int cantidad = 0;
+	private int id;
 	
 	private Coordinate objective;
 	private double timer;
@@ -28,6 +32,8 @@ public class BadDriver extends Enemy {
 		hitbox = new Rectangle(x - WIDTH / 2, y - HEIGHT / 2, WIDTH, HEIGHT);
 		hitbox.setFill(null);
 		hitbox.setStroke(Color.FUCHSIA);
+		
+		id = cantidad++;
 	}
 	
 	private void initImages() {
@@ -47,6 +53,14 @@ public class BadDriver extends Enemy {
 	public void update(double delta) {
 		super.update(delta);
 		//moveTowardsObjective(delta);
+		if (this.getCoordinate().getY() >= bottomLimit) {
+			GameObjectBuilder.getInstance().remove(this);
+		}
+	}
+	
+	@Override
+	public void destroy() {
+		System.out.println("bad destruido: " + id);
 	}
 	
 	public void moveTowardsObjective(double deltaTime) {

@@ -64,6 +64,10 @@ public class Coordinate {
 	
 	@Override
 	public String toString() {
-		return "(" + x + ", " + y + ")";
+		return "(" + String.format("%.2f", x) + ", " + String.format("%.2f", x) + ")";
+	}
+	
+	public static Coordinate calculateDirection(Coordinate origen, Coordinate destino) {
+		return new Coordinate(destino.getX() - origen.getX(),destino.getY() - origen.getY());
 	}
 }

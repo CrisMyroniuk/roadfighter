@@ -31,7 +31,13 @@ public class CarPlayer extends Vehicle implements Collidator, Renderable{
 	private final int HEIGHT = 140;
 	private Rectangle hitbox;
 
-
+	private boolean control = true;
+	private double controlOffTimer;
+	private final double controlOffTimerMax = 0.75;
+	private double controlLossSpeed;
+	private double controlLossX;
+	private double controlLossY;
+	
 	/*private boolean turbo;
 	private static double turboDuration = 100;
 	private static double turboExtraSpeed = 50; // +50
@@ -147,6 +153,9 @@ public class CarPlayer extends Vehicle implements Collidator, Renderable{
 		hitbox = new Rectangle(x - WIDTH / 2, y - HEIGHT / 2, WIDTH, HEIGHT);
 		hitbox.setFill(null);
 		hitbox.setStroke(Color.FUCHSIA);
+		
+		controlOffTimer = controlOffTimerMax;
+		controlLossSpeed = getSpeed() / 3;
 	}
 	
 	private void initImages() {
@@ -203,31 +212,26 @@ public class CarPlayer extends Vehicle implements Collidator, Renderable{
 			break;
 		
 		}
-		//move(10,0);
 	}
 	
 	public void setDirectionRight() {
 		setDirection(Direction.RIGHT);
 		setRight(true);
-		//move(10,0);
 	}
 
 	public void setDirectionLeft() {
 		setDirection(Direction.LEFT);
 		setLeft(true);
-		//move(-10,0);
 	}
 
 	public void setDirectionUp() {
 		setDirection(Direction.UP);
 		setUp(true);
-		//move(0,10);
 	}
 
 	public void setDirectionDown() {
 		setDirection(Direction.DOWN);
 		setDown(true);
-		//move(0,-10);
 	}
 	
 	public void activateTurbo() {
@@ -256,23 +260,34 @@ public class CarPlayer extends Vehicle implements Collidator, Renderable{
 		double translateX = 0;
 		double translateY = 0;
 		
-		if (!isLeft() || !isRight()) {
-			if (isLeft()) {
-				translateX = -horizontalSpeed;
-			} else if (isRight()) {
-				translateX = horizontalSpeed;
+		if (control) {			
+			if (!isLeft() || !isRight()) {
+				if (isLeft()) {
+					translateX = -horizontalSpeed;
+				} else if (isRight()) {
+					translateX = horizontalSpeed;
+				}
+			}
+			if (!isUp()|| !isDown()) {
+				if (isUp()) {
+					translateY = -getSpeed();
+				} else if (isDown()) {
+					translateY = getSpeed();
+				}
+			}
+			
+			move(translateX * delta, translateY * delta);
+			
+		}
+		else {
+			if (controlOffTimer <= 0) {
+				control = true;
+			}
+			else {
+				controlOffTimer -= delta;
+				move(controlLossSpeed * controlLossX * delta, controlLossSpeed * controlLossY * delta);
 			}
 		}
-		if (!isUp()|| !isDown()) {
-			if (isUp()) {
-				translateY = -getSpeed();
-			} else if (isDown()) {
-				translateY = getSpeed();
-			}
-		}
-		
-		move(translateX * delta, translateY * delta);
-		
 		render.setTranslateX(getCoordinate().getX() - WIDTH / 2);
 		render.setTranslateY(getCoordinate().getY() - HEIGHT / 2);
 		hitbox.setX(this.getCoordinate().getX() - WIDTH / 2);
@@ -296,8 +311,20 @@ public class CarPlayer extends Vehicle implements Collidator, Renderable{
 	}
 
 	@Override
-	public void effectPlayer(CarPlayer source) {
-		// aca supongo que podriamos poner los efectos cuando 2 jugadores se chocan entre si
+	public void effectPlayer(CarPlayer other) {
+		
+		this.loseControl(Coordinate.calculateDirection(other.getCoordinate(), this.getCoordinate()).normalize());
+	}
+	
+	public void loseControl(Coordinate direction) {
+		controlLossX = direction.getX();
+		controlLossY = direction.getY();
+		control = false;
+		controlOffTimer = controlOffTimerMax;
+	}
+	
+	public double getHorizontalSpeed() {
+		return horizontalSpeed;
 	}
 
 	@Override
@@ -305,5 +332,7 @@ public class CarPlayer extends Vehicle implements Collidator, Renderable{
 		// TODO Auto-generated method stub
 		
 	}
+	
+	
 
 }

@@ -22,7 +22,7 @@ class PowerDownTest {
 	void efectoPowerDown() {
 		int speedDecrease = 10;
 		int initialSpeed = 10;
-		PowerDown powerDown = new PowerDown(1, 1, 1, 1, speedDecrease);
+		PowerDown powerDown = new PowerDown(1, 1);
 		
 		car.setSpeed(initialSpeed);
 		powerDown.effectPlayer(car);
@@ -31,7 +31,7 @@ class PowerDownTest {
 	}
 	
 	void desaparecer() {
-		PowerDown powerDown = new PowerDown(1, 1, 1, 1, 1);
+		PowerDown powerDown = new PowerDown(1, 1);
 		powerDown.desaparecer();
 		
 		assertFalse(powerDown.isVisible());

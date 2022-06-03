@@ -9,8 +9,12 @@ import javafx.scene.shape.Shape;
 import roadfighter.interfaces.Collidator;
 import roadfighter.interfaces.Collideable;
 import roadfighter.interfaces.Renderable;
+import roadfighter.utils.GameObjectBuilder;
 
 public class GoodDriver extends Enemy implements Collidator, Renderable{
+	
+	private static int cantidad = 0;
+	private int id;
 
 	private ImageView render;
 	private Image sprite;
@@ -55,11 +59,20 @@ public class GoodDriver extends Enemy implements Collidator, Renderable{
 		render.setTranslateY(getCoordinate().getY() - HEIGHT / 2);
 		hitbox.setX(this.getCoordinate().getX() - WIDTH / 2);
 		hitbox.setY(this.getCoordinate().getY() - HEIGHT / 2);
+	
+		if (this.getCoordinate().getY() >= bottomLimit) {
+			GameObjectBuilder.getInstance().remove(this);
+		}
+	}
+	
+	@Override
+	public void destroy() {
+		System.out.println("good destruido: " + id);
 	}
 
 	@Override
 	public void collide(Collideable collideable) {
-		System.out.println("colision");
+		//System.out.println("colision");
 		collideable.effectEnemy(this);
 	}
 
@@ -76,10 +89,8 @@ public class GoodDriver extends Enemy implements Collidator, Renderable{
 
 	@Override
 	public Node getRender() {
-		// TODO Auto-generated method stub
 		return render;
 	}
-
 
 	@Override
 	public void effectEnemy(GoodDriver source) {
