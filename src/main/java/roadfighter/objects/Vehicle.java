@@ -22,5 +22,5 @@ public abstract class Vehicle extends MapObject implements Updatable, Renderable
 	
 	public abstract void move(double x, double y);
 	
-	
+	public abstract void effectPlayer(CarPlayer cp);
 }

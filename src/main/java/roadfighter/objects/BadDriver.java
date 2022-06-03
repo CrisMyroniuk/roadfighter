@@ -2,6 +2,7 @@ package roadfighter.objects;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
@@ -86,7 +87,11 @@ public class BadDriver extends Enemy {
 
 	@Override
 	public void effectPlayer(CarPlayer source) {
-		// TODO Auto-generated method stub
+		
+		String src = "file:src/resources/sound/explosion.mp3";
+		AudioClip audioClip = new AudioClip(src);
+		audioClip.setVolume(0.6);
+		audioClip.play();
 		
 	}
 

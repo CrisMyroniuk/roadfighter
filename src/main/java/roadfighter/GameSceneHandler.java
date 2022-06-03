@@ -195,8 +195,9 @@ public class GameSceneHandler extends SceneHandler {
 
 			spawnTimer = random.nextDouble(1, 3);
 		}
-
+		
 		checkCollisions();
+		
 		// aca va cualquier cosa que no se haga en el metodo update()
 		// de los updateables
 	}

@@ -3,6 +3,7 @@ package roadfighter.objects;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
@@ -58,32 +59,45 @@ public class GoodDriver extends Enemy implements Collidator, Renderable{
 	}
 
 	@Override
-	public void collide(Collideable collideable) {
-		System.out.println("colision");
-		collideable.effectEnemy(this);
-	}
-
-	@Override
 	public Shape getCollider() {
 		return hitbox;
 	}
 
 	@Override
 	public void effectPlayer(CarPlayer source) {
-		// TODO Auto-generated method stub
+
+		String src = "file:src/resources/sound/explosion.mp3";
+		AudioClip audioClip = new AudioClip(src);
+		audioClip.setVolume(0.6);
+		audioClip.play();
+	
 		
 	}
-
+	
+	@Override
+	public void destroy() {
+		
+		
+		/*GameObjectBuilder g = GameObjectBuilder.getInstance();
+		g.remove(this);*/
+	}
+	
 	@Override
 	public Node getRender() {
 		// TODO Auto-generated method stub
 		return render;
 	}
 
+	@Override
+	public void collide(Collideable collideable) {
+		// TODO Auto-generated method stub
+		
+	}
 
 	@Override
 	public void effectEnemy(GoodDriver source) {
 		// TODO Auto-generated method stub
 		
 	}
+
 }

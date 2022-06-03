@@ -1,11 +1,19 @@
 package roadfighter.objects;
 
+import java.io.File;
+import java.nio.file.Paths;
+
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.media.AudioClip;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
+import javafx.util.Duration;
+import roadfighter.utils.GameObjectBuilder;
 
 public class Obstacle extends Item{
 	
@@ -17,6 +25,7 @@ public class Obstacle extends Item{
 	private Rectangle hitbox;
 	private Image sprite;
 	private ImageView render;
+	private MediaPlayer mediaPlayer;
 
 	public Obstacle(double x, double y) {
 		visible = true;
@@ -47,20 +56,25 @@ public class Obstacle extends Item{
 		render.setTranslateY(getCoordinate().getY() - HEIGHT / 2);
 		hitbox.setX(this.getCoordinate().getX() - WIDTH / 2);
 		hitbox.setY(this.getCoordinate().getY() - HEIGHT / 2);
+	
 	}
 
 	@Override
 	public void effectPlayer(CarPlayer cp) {
 		System.out.println("chocado");
+		
+		//por alguna razon si meto la explosion en una carpeta, da error la ruta.
+
+		String src = "file:src/resources/sound/explosion.mp3";
+		AudioClip audioClip = new AudioClip(src);
+		audioClip.setVolume(0.6);
+		audioClip.play();
 		cp.changeSpeed(0,Action.STOP);
 		cp.move(0, 5);
+		cp.changeSpeed(100,Action.SPEED_UP);
+		destroy();
 	}
 	
-	@Override
-	public void effectEnemy(GoodDriver source) {
-		// TODO Auto-generated method stub
-		
-	}
 	
 	@Override
 	public Shape getCollider() {
@@ -74,6 +88,13 @@ public class Obstacle extends Item{
 	
 	@Override
 	public void destroy() {
-		// capas haya que cortar audio
+		/*GameObjectBuilder g = GameObjectBuilder.getInstance();
+		g.remove(this);*/
+	}
+
+	@Override
+	public void effectEnemy(GoodDriver source) {
+		// TODO Auto-generated method stub
+		
 	}
 }

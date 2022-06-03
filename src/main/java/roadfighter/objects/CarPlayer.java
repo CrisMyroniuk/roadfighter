@@ -3,6 +3,7 @@ package roadfighter.objects;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
@@ -292,6 +293,7 @@ public class CarPlayer extends Vehicle implements Collidator, Renderable{
 	@Override
 	public void collide(Collideable collideable) {
 		System.out.println("colision");
+
 		collideable.effectPlayer(this);
 	}
 
@@ -302,7 +304,6 @@ public class CarPlayer extends Vehicle implements Collidator, Renderable{
 
 	@Override
 	public void effectEnemy(GoodDriver source) {
-		// TODO Auto-generated method stub
 		
 	}
 
