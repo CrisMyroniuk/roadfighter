@@ -12,8 +12,8 @@ import roadfighter.utils.GameObjectBuilder;
 public class PowerUp extends Item{
 
 	private int points;
-	private final double WIDTH = 25;
-	private final double HEIGHT = 25;
+	private final double WIDTH = 70;
+	private final double HEIGHT = 70;
 	
 	private Image sprite;
 	private ImageView render;
@@ -49,6 +49,7 @@ public class PowerUp extends Item{
 	public void effectPlayer(CarPlayer cp) {
 		// TODO Agregamos los puntos al jugador
 		cp.addPoints(points);
+		cp.getCoinAudio().play();
 		GameObjectBuilder builder = GameObjectBuilder.getInstance();
 		builder.add(new PointsText(points, getCoordinate()));
 		builder.remove(this);
