@@ -31,6 +31,8 @@ public class CarPlayer extends Vehicle implements Collidator, Renderable{
 	
 	private final int WIDTH = 80;
 	private final int HEIGHT = 140;
+	private final double XMAX = 1056.00;
+	private final double XMIN = 447.00;
 	private Rectangle hitbox;
 
 	private boolean control = true;
@@ -283,7 +285,18 @@ public class CarPlayer extends Vehicle implements Collidator, Renderable{
 
 	@Override
 	public void move(double x, double y) {
-		getCoordinate().setX(getCoordinate().getX()+x);
+		Coordinate actualCoordinate = getCoordinate();
+		double actualX = actualCoordinate.getX();
+		if(x < 0) {
+			if(actualX > XMIN) {
+				getCoordinate().setX(getCoordinate().getX()+x);
+			}
+		}else {
+			if(actualX < XMAX) {
+				getCoordinate().setX(getCoordinate().getX()+x);
+			}
+		}
+		//getCoordinate().setX(getCoordinate().getX()+x);
 		getCoordinate().setY(getCoordinate().getY()+y);
 	}
 
