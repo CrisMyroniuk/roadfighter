@@ -62,8 +62,6 @@ public class MenuSceneHandler extends SceneHandler {
 	private Enemy enemy3;
 	private Enemy enemy4;
 	
-	private GenericText texto;
-	
 	private ButtonMenu buttonOptions;
 	private EventHandler<ActionEvent> onPressHandlerOptions;
 	
@@ -175,11 +173,6 @@ public class MenuSceneHandler extends SceneHandler {
 		gameObjects.add(boton1Player);
 		gameObjects.add(boton2Player);
 		
-		gameObjects.add(new MasterVolumeSlider(250, 250));
-		
-		texto = new GenericText(new Coordinate(250, 150));
-		gameObjects.add(texto);
-		
 		gameOB.add(gameObjects);
 
 		if (fullStart) {
@@ -192,7 +185,6 @@ public class MenuSceneHandler extends SceneHandler {
 	public void update(double delta) {
 		super.update(delta);
 		checkCollisions();
-		texto.setText(Double.toString(Config.masterVolumeModifier));
 		//aca va cualquier cosa que no se haga en el metodo update()
 		//de los updateables
 	}
