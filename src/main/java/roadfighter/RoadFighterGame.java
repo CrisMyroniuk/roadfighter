@@ -2,6 +2,7 @@ package roadfighter;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class RoadFighterGame extends Application {
@@ -32,7 +33,7 @@ public class RoadFighterGame extends Application {
 		menuSceneHandler = new MenuSceneHandler(this);
 		Scene scene = menuSceneHandler.getScene();
 		stage.setScene(scene);
-
+		
 		menuSceneHandler.load();
 		
 		// XXX patron state para controlar paso de escenas?
@@ -45,8 +46,9 @@ public class RoadFighterGame extends Application {
 		// scale.setY(scene.getHeight() / HEIGHT);
 		// images.getTransforms().add(scale);
 
-		//stage.getIcons().add(new Image("file:src/main/resources/ico/logo.png"));
+		stage.getIcons().add(new Image("file:src/resources/images/flag-race.jpg"));
 		stage.setTitle("Road Fighter");
+		stage.setResizable(false);
 		stage.show();
 		
 	}
