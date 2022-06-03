@@ -14,7 +14,6 @@ public class CarPlayer extends Vehicle implements Collidator, Renderable{
 
 	// region Variables
 	private double acceleration;
-	private Integer point;
 	private double speedLimit;
 	private Turbo turbo;
 	
@@ -38,6 +37,9 @@ public class CarPlayer extends Vehicle implements Collidator, Renderable{
 	private double controlLossX;
 	private double controlLossY;
 	
+	private Integer point;
+	private boolean pickedUpPoints = false;
+	
 	/*private boolean turbo;
 	private static double turboDuration = 100;
 	private static double turboExtraSpeed = 50; // +50
@@ -47,7 +49,6 @@ public class CarPlayer extends Vehicle implements Collidator, Renderable{
 	// endregion
 
 	// region Properties
-	
 	
 	public double getAceleration() {
 		return acceleration;
@@ -168,10 +169,20 @@ public class CarPlayer extends Vehicle implements Collidator, Renderable{
 
 	public void addPoints(int p) {
 		setPoint(getPoint() + p);
+		pickedUpPoints = true;
 	}
 
 	public void removePoints(int p) {
 		setPoint(getPoint() - p);
+	}
+	
+	public boolean hasPickedUpPoints() {
+		return pickedUpPoints;
+	}
+	
+	public int readPoints() {
+		pickedUpPoints = false;
+		return point;
 	}
 
 	public void changeSpeed(double sp, Action ac) {

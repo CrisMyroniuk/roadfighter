@@ -6,6 +6,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
+import roadfighter.objects_menu.PointsText;
 import roadfighter.utils.GameObjectBuilder;
 
 public class PowerUp extends Item{
@@ -48,6 +49,9 @@ public class PowerUp extends Item{
 	public void effectPlayer(CarPlayer cp) {
 		// TODO Agregamos los puntos al jugador
 		cp.addPoints(points);
+		GameObjectBuilder builder = GameObjectBuilder.getInstance();
+		builder.add(new PointsText(points, getCoordinate()));
+		builder.remove(this);
 	}
 	
 	public void desaparecer() {

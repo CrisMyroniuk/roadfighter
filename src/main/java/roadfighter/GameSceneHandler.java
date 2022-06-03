@@ -28,6 +28,7 @@ import roadfighter.objects.Player;
 import roadfighter.objects.PowerDown;
 import roadfighter.objects.PowerUp;
 import roadfighter.objects_menu.GenericText;
+import roadfighter.objects_menu.ScoreText;
 import roadfighter.utils.GameObject;
 import roadfighter.utils.GameObjectBuilder;
 
@@ -115,7 +116,7 @@ public class GameSceneHandler extends SceneHandler {
 			gameObjects.add(p.getCarPlayer());
 		}
 		
-		score = new GenericText("testo", new Coordinate(100, 100), 30);
+		score = new ScoreText(players, new Coordinate(50, 50));
 		gameObjects.add(score);
 		
 		gameObjects.add(enemy);
@@ -200,8 +201,6 @@ public class GameSceneHandler extends SceneHandler {
 			GOBuilder.add(gameObjects);
 
 			spawnTimer = random.nextDouble(1, 3);
-			
-			score.setText(players.get(0).getCarPlayer().getCoordinate().toString());
 		}
 
 		checkCollisions();

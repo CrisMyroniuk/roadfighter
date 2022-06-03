@@ -22,7 +22,7 @@ public class GenericText extends GameObject implements Renderable {
 	//private final Duration translateDuration = Duration.millis(1000);
 
 	private Text text;
-	private VBox render;
+	protected VBox render;
 
 	public GenericText(String inicialText, Coordinate coordinate, double size) {
 		text = new Text(inicialText);
