@@ -15,6 +15,13 @@ public class Config {
 	public final static int playerCenter = baseWidth / 3;
 	
 	public static int maxScore = 0;
+	
+	public static double masterVolumeModifier = 0.5;
+	public static double effectsVolumeModifier = 0.5;
+	public static double musicVolumeModifier = 0.5;
+	
+	public static boolean music = true;
+	public static boolean effects = true;
 
 	private Config() {
 	}

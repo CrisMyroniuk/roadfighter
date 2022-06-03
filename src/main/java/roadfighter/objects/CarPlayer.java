@@ -38,6 +38,7 @@ public class CarPlayer extends Vehicle implements Collidator, Renderable{
 	private double controlLossX;
 	private double controlLossY;
 	
+	private boolean alive = true;
 	private Integer point;
 	private boolean pickedUpPoints = false;
 	
@@ -345,6 +346,12 @@ public class CarPlayer extends Vehicle implements Collidator, Renderable{
 		
 	}
 	
+	public void die() {
+		alive = false;
+	}
 	
+	public boolean isAlive() {
+		return alive;
+	}
 
 }

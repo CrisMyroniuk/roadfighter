@@ -21,13 +21,17 @@ import roadfighter.interfaces.Collidator;
 import roadfighter.interfaces.Collideable;
 import roadfighter.objects.Background;
 import roadfighter.objects.BadDriver;
+import roadfighter.objects.BottomLimit;
 import roadfighter.objects.CarPlayer;
 import roadfighter.objects.Coordinate;
 import roadfighter.objects.Direction;
+import roadfighter.objects.LeftLimit;
 import roadfighter.objects.Obstacle;
 import roadfighter.objects.Player;
 import roadfighter.objects.PowerDown;
 import roadfighter.objects.PowerUp;
+import roadfighter.objects.RightLimit;
+import roadfighter.objects.TopLimit;
 import roadfighter.objects_menu.GenericText;
 import roadfighter.objects_menu.ScoreText;
 import roadfighter.utils.GameObject;
@@ -126,6 +130,11 @@ public class GameSceneHandler extends SceneHandler {
 		
 		score = new ScoreText(players, new Coordinate(50, 50));
 		gameObjects.add(score);
+		
+		gameObjects.add(new TopLimit());
+		gameObjects.add(new BottomLimit());
+		gameObjects.add(new LeftLimit());
+		gameObjects.add(new RightLimit());
 		
 		gameObjects.add(enemy);
 		for (Obstacle obstacle : obstacles) {

@@ -23,14 +23,14 @@ class PowerUpTest {
 	@Test
 	void efectoPowerUp() {
 		int puntos = 10;
-		PowerUp powerUp = new PowerUp(1, 1, puntos);
+		PowerUp powerUp = new PowerUp(1, 1, puntos, null);
 		
 		powerUp.effectPlayer(car);
 		assertEquals(puntos, player.getCarPlayer().getPoint());
 	}
 	
 	void desaparecer() {
-		PowerUp powerUp = new PowerUp(1, 1, 1);
+		PowerUp powerUp = new PowerUp(1, 1, 1, null);
 		powerUp.desaparecer();
 		
 		assertFalse(powerUp.isVisible());
