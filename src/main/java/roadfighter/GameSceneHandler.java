@@ -1,5 +1,6 @@
 package roadfighter;
 
+import javafx.scene.media.AudioClip;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -59,6 +60,13 @@ public class GameSceneHandler extends SceneHandler {
 	}
 
 	public void load() {
+		
+		String src = "file:src/resources/sounds/gameSound.mp3";
+		
+		AudioClip audioGame = new AudioClip(src);
+		
+		audioGame.play();
+		
 		Group rootGroup = new Group();
 		scene.setRoot(rootGroup);
 
