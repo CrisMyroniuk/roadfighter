@@ -1,13 +1,42 @@
 package roadfighter.objects;
 
 import javafx.scene.Node;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
+import roadfighter.objects_menu.PointsText;
+import roadfighter.utils.GameObjectBuilder;
 
 public class PowerUp extends Item{
 
-	int points;
+	private int points;
+	private final double WIDTH = 25;
+	private final double HEIGHT = 25;
 	
+	private Image sprite;
+	private ImageView render;
 	
+	public PowerUp(double x, double y, int p) {
+		setCoordinate(new Coordinate(x,y));
+		setModel(null);
+		setPoints(p);
+		visible=true;
+		
+		hitbox = new Rectangle(x, y, WIDTH, HEIGHT);
+		hitbox.setFill(null);
+		hitbox.setStroke(Color.MEDIUMSEAGREEN);
+		
+		initImages();
+		render = new ImageView(sprite);
+		render.setTranslateX(getCoordinate().getX() - WIDTH / 2);
+		render.setTranslateY(getCoordinate().getY() - HEIGHT / 2);
+	}
+	
+	private void initImages() {
+		sprite = new Image("file:src/resources/images/ObstacleSprite.png");//place holder
+	}
 	public int getPoints() {
 		return points;
 	}
@@ -16,19 +45,13 @@ public class PowerUp extends Item{
 		this.points = points;
 	}
 
-	public PowerUp(int x, int y,double h, double w,int p) {
-		setCoordinate(new Coordinate(x,y));
-		setHeight(h);
-		setWidth(w);
-		setModel(null);
-		setPoints(p);
-		visible=true;
-	}
-
 	@Override
 	public void effectPlayer(CarPlayer cp) {
 		// TODO Agregamos los puntos al jugador
 		cp.addPoints(points);
+		GameObjectBuilder builder = GameObjectBuilder.getInstance();
+		builder.add(new PointsText(points, getCoordinate()));
+		builder.remove(this);
 	}
 	
 	public void desaparecer() {
@@ -43,14 +66,12 @@ public class PowerUp extends Item{
 
 	@Override
 	public Shape getCollider() {
-		// TODO Auto-generated method stub
-		return null;
+		return hitbox;
 	}
 
 	@Override
 	public Node getRender() {
-		// TODO Auto-generated method stub
-		return null;
+		return render;
 	}
 
 	@Override
@@ -60,9 +81,17 @@ public class PowerUp extends Item{
 	}
 
 	@Override
-	public void update(double deltaTime) {
-		// TODO Auto-generated method stub
+	public void update(double delta) {
+		getCoordinate().setY(getCoordinate().getY() + 150 * delta);
 		
+		render.setTranslateX(getCoordinate().getX() - WIDTH / 2);
+		render.setTranslateY(getCoordinate().getY() - HEIGHT / 2);
+		hitbox.setX(this.getCoordinate().getX() - WIDTH / 2);
+		hitbox.setY(this.getCoordinate().getY() - HEIGHT / 2);
+		
+		if (this.getCoordinate().getY() >= bottomLimit) {
+			GameObjectBuilder.getInstance().remove(this);
+		}
 	}
 
 }

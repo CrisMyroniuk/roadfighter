@@ -9,6 +9,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
+import roadfighter.utils.GameObjectBuilder;
 
 public class Obstacle extends Item{
 	
@@ -17,7 +18,6 @@ public class Obstacle extends Item{
 	private final double WIDTH = 50;
 	private final double HEIGHT = 50;
 	
-	private Rectangle hitbox;
 	private Image sprite;
 	private ImageView render;
 	private MediaPlayer mediaPlayer;
@@ -51,11 +51,18 @@ public class Obstacle extends Item{
 		render.setTranslateY(getCoordinate().getY() - HEIGHT / 2);
 		hitbox.setX(this.getCoordinate().getX() - WIDTH / 2);
 		hitbox.setY(this.getCoordinate().getY() - HEIGHT / 2);
+		
+		if (this.getCoordinate().getY() >= bottomLimit) {
+			GameObjectBuilder.getInstance().remove(this);
+		}
 	
 	}
 
 	@Override
 	public void effectPlayer(CarPlayer cp) {
+		if (this.getCoordinate().getY() + this.WIDTH <= cp.getCoordinate().getY())
+			cp.move(0, 5);
+		//cp.changeSpeed(0,Action.STOP);
 		System.out.println("chocado");
 		
 		//por alguna razon si meto la explosion en una carpeta, da error la ruta.

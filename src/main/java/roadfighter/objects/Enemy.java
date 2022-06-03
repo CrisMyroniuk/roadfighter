@@ -4,6 +4,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import roadfighter.Config;
 import roadfighter.interfaces.Collidator;
 import roadfighter.interfaces.Renderable;
 
@@ -18,6 +19,7 @@ public abstract class Enemy extends Vehicle{
 	protected int HEIGHT;
 	
 	protected Rectangle hitbox;
+	protected final double bottomLimit = Config.baseHeight + 500;
 	
 	public Direction getDirection() {
 		return direction;

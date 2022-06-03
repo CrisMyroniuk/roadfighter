@@ -22,9 +22,14 @@ import roadfighter.interfaces.Collideable;
 import roadfighter.objects.Background;
 import roadfighter.objects.BadDriver;
 import roadfighter.objects.CarPlayer;
+import roadfighter.objects.Coordinate;
 import roadfighter.objects.Direction;
 import roadfighter.objects.Obstacle;
 import roadfighter.objects.Player;
+import roadfighter.objects.PowerDown;
+import roadfighter.objects.PowerUp;
+import roadfighter.objects_menu.GenericText;
+import roadfighter.objects_menu.ScoreText;
 import roadfighter.utils.GameObject;
 import roadfighter.utils.GameObjectBuilder;
 
@@ -41,6 +46,7 @@ public class GameSceneHandler extends SceneHandler {
 	 */
 
 	private Background background;
+	private GenericText score;
 
 	private ArrayList<Player> players = new ArrayList<Player>();
 	private ArrayList<Obstacle> obstacles = new ArrayList<Obstacle>();
@@ -118,6 +124,9 @@ public class GameSceneHandler extends SceneHandler {
 			gameObjects.add(p.getCarPlayer());
 		}
 		
+		score = new ScoreText(players, new Coordinate(50, 50));
+		gameObjects.add(score);
+		
 		gameObjects.add(enemy);
 		for (Obstacle obstacle : obstacles) {
 			gameObjects.add(obstacle);
@@ -188,17 +197,15 @@ public class GameSceneHandler extends SceneHandler {
 	public void update(double delta) {
 		super.update(delta);
 
-		// TODO esto no elimina nada, era para probar si funciona, habria que meterlo en
-		// una clase aparte que spawnee enemigos
-		// para eliminarlos podemos meter algo como el ColliderTop para que cuando
-		// salgan de la pantalla se eliminen,
-		// o que en el update() de los obstaculos/enemigos pregunte por la coordenada en
-		// Y y se destruya solo cuando este fuera de la pantalla
 		spawnTimer -= delta;
 		if (spawnTimer <= 0) {
+			//ahora se eliminan solos cuando su coordenada en Y llega a la altura de la pantalla + 500
 			ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
 			gameObjects.add(new Obstacle(random.nextDouble(515, 990), -50,"file:src/resources/images/ObstacleSprite.png"));
 			gameObjects.add(new BadDriver(random.nextDouble(515, 990), -50, Direction.UP));
+			gameObjects.add(new PowerUp(random.nextDouble(515, 990), -50.0, 100));
+			gameObjects.add(new PowerDown(random.nextDouble(515, 990), -50.0));
+			
 			GOBuilder.add(gameObjects);
 
 			spawnTimer = random.nextDouble(1, 3);

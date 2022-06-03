@@ -174,7 +174,14 @@ public class Player extends GameObject {
 	public PlayerState getState() {
 		return state;
 	}
-
+	
+	public boolean hasPickedUpPoints() {
+		return this.car.hasPickedUpPoints();
+	}
+	
+	public Integer readPoints() {
+		return this.car.readPoints();
+	}
 
 	@Override
 	public void destroy() {

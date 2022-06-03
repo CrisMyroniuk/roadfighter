@@ -74,6 +74,37 @@ public class GameObjectBuilder {
 			}
 		}
 	}
+	
+	public void add(GameObject... gameObjects) {
+		checkRootNode();
+
+		for (GameObject gameObject : gameObjects) {
+			allGameObjects.add(gameObject);
+
+			if (Updatable.class.isAssignableFrom(gameObject.getClass())) {
+				updatables.add((Updatable) gameObject);
+			}
+
+			if (Renderable.class.isAssignableFrom(gameObject.getClass())) {
+				Renderable renderableGameObject = (Renderable) gameObject;
+				renderables.add(renderableGameObject);
+
+				objectsGroup.getChildren().add(renderableGameObject.getRender());
+			}
+
+			if (Collidator.class.isAssignableFrom(gameObject.getClass())) {
+				Collidator collidatorGameObject = (Collidator) gameObject;
+				collidators.add(collidatorGameObject);
+
+				collidersGroup.getChildren().add(collidatorGameObject.getCollider());
+			} else if (Collideable.class.isAssignableFrom(gameObject.getClass())) {
+				Collideable collideableGameObject = (Collideable) gameObject;
+				collideables.add(collideableGameObject);
+
+				collidersGroup.getChildren().add(collideableGameObject.getCollider());
+			}
+		}
+	}
 
 	public void remove(GameObject... gameObjects) {
 		//checkRootNode();
