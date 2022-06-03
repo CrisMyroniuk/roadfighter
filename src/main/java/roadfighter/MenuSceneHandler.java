@@ -15,6 +15,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
@@ -38,6 +39,7 @@ import roadfighter.utils.GameObjectBuilder;
 public class MenuSceneHandler extends SceneHandler {
 	
 	private Group rootGroup;
+	private AudioClip audioGame;
 	private Background background;
 	private ArrayList<GameObject> gameObjects=new ArrayList<GameObject>();
 	//private Ground ground;
@@ -115,6 +117,11 @@ public class MenuSceneHandler extends SceneHandler {
 		//(siempre va al menu desde la escena del juego, si cambia eso hay que pasarle un boolean)
 		Group baseGroup = new Group();
 		rootGroup.getChildren().add(baseGroup);
+		String src = "file:src/resources/sounds/menuSound.mp3";
+		
+		audioGame = new AudioClip(src);
+		
+		audioGame.play();
 		
 		//player = new FlappyBird(Config.baseWidth - 75, Config.baseHeight / 3, null);
 		
@@ -163,6 +170,9 @@ public class MenuSceneHandler extends SceneHandler {
 	}
 
 	public void unload() {
+		
+		audioGame.stop();
+		
 		rootGroup.getChildren().remove(0);
 		super.unload();
 	}
