@@ -25,12 +25,15 @@ import roadfighter.objects.Background;
 import roadfighter.objects.CarPlayer;
 //import roadfighter.objects.CarPlayerFX;
 import roadfighter.objects.ColliderTop;
+import roadfighter.objects.Coordinate;
 import roadfighter.objects.Direction;
 import roadfighter.objects.Enemy;
 import roadfighter.objects.GoodDriver;
 //import roadfighter.objects.Obstacle;
 import roadfighter.objects.Player;
 import roadfighter.objects_menu.ButtonMenu;
+import roadfighter.objects_menu.GenericText;
+import roadfighter.objects_menu.MasterVolumeSlider;
 import roadfighter.objects_menu.Title;
 import roadfighter.utils.GameObject;
 import roadfighter.utils.GameObjectBuilder;
@@ -58,6 +61,12 @@ public class MenuSceneHandler extends SceneHandler {
 	private Enemy enemy2;
 	private Enemy enemy3;
 	private Enemy enemy4;
+	
+	private GenericText texto;
+	
+	private ButtonMenu buttonOptions;
+	private EventHandler<ActionEvent> onPressHandlerOptions;
+	
 	public MenuSceneHandler(RoadFighterGame g) {
 		super(g);	
 	}
@@ -109,6 +118,14 @@ public class MenuSceneHandler extends SceneHandler {
 				g.startGame(false);
 			}
 		};
+		
+		onPressHandlerOptions = new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent event) {
+				g.startOptions();
+			}
+		};
 	}
 
 	public void load() {
@@ -130,6 +147,9 @@ public class MenuSceneHandler extends SceneHandler {
 		//fpsInfo = new FpsInfo(fps);
 
 		title = new Title();
+		
+		buttonOptions = new ButtonMenu("OPTIONS", Config.baseHeight * 3 / 5 + 200);
+		gameObjects.add(buttonOptions);
 		
 		boton1Player = new ButtonMenu("1 PLAYER",Config.baseHeight * 3 / 5);
 		boton2Player = new ButtonMenu("2 PLAYERS",(Config.baseHeight * 3 / 5) + 100);
@@ -153,6 +173,12 @@ public class MenuSceneHandler extends SceneHandler {
 		gameObjects.add(title);
 		gameObjects.add(boton1Player);
 		gameObjects.add(boton2Player);
+		
+		gameObjects.add(new MasterVolumeSlider(250, 250));
+		
+		texto = new GenericText(new Coordinate(250, 150));
+		gameObjects.add(texto);
+		
 		gameOB.add(gameObjects);
 
 		if (fullStart) {
@@ -165,6 +191,7 @@ public class MenuSceneHandler extends SceneHandler {
 	public void update(double delta) {
 		super.update(delta);
 		checkCollisions();
+		texto.setText(Double.toString(Config.masterVolumeModifier));
 		//aca va cualquier cosa que no se haga en el metodo update()
 		//de los updateables
 	}
@@ -181,12 +208,14 @@ public class MenuSceneHandler extends SceneHandler {
 		super.addInputEvents();
 		boton1Player.setOnAction(onPressHandlerOnePlayer);
 		boton2Player.setOnAction(onPressHandlerTwoPlayer);
+		buttonOptions.setOnAction(onPressHandlerOptions);
 	}
 	
 	protected void removeInputEvents() {
 		super.removeInputEvents();
 		boton1Player.removeOnAction(onPressHandlerOnePlayer);
-		boton2Player.setOnAction(onPressHandlerTwoPlayer);
+		boton2Player.removeOnAction(onPressHandlerTwoPlayer);
+		buttonOptions.removeOnAction(onPressHandlerOptions);
 	}
 	
 	private void checkCollisions() {

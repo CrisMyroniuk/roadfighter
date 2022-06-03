@@ -12,6 +12,8 @@ public class RoadFighterGame extends Application {
 
 	private GameSceneHandler gameSceneHandler;
 	
+	private OptionsSceneHandler optionsSceneHandler;
+	
 	@Override
 	public void start(Stage stage) throws Exception {
 		/*Group root = new Group();
@@ -62,12 +64,23 @@ public class RoadFighterGame extends Application {
 		gameSceneHandler.load();
 	}
 	
-	public void startMenu() {
-		gameSceneHandler.unload();
+	public void startMenu(boolean fromOptions) {
+		if (fromOptions)
+			optionsSceneHandler.unload();
+		else
+			gameSceneHandler.unload();
 		menuSceneHandler = new MenuSceneHandler(this);
 		Scene scene = menuSceneHandler.getScene();
 		stage.setScene(scene);
 		menuSceneHandler.load();
+	}
+	
+	public void startOptions() {
+		menuSceneHandler.unload();
+		optionsSceneHandler = new OptionsSceneHandler(this);
+		Scene scene = optionsSceneHandler.getScene();
+		stage.setScene(scene);
+		optionsSceneHandler.load();
 	}
 
 }
