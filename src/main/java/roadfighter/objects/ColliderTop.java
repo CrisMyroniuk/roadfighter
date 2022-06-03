@@ -24,8 +24,8 @@ public class ColliderTop extends Item{
 		render = new ImageView(sprite);
 		render.relocate(x - WIDTH / 2, y - HEIGHT / 2);
 		
-		hitbox = new Rectangle(0,-200, 500, 25);
-		hitbox.setFill(null);
+		hitbox = new Rectangle(500,-200, 500, 25);
+		hitbox.setFill(Color.FUCHSIA);
 		hitbox.setStroke(Color.FUCHSIA);
 	}
 	

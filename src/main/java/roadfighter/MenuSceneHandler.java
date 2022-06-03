@@ -55,6 +55,7 @@ public class MenuSceneHandler extends SceneHandler {
 	private Enemy enemy1;
 	private Enemy enemy2;
 	private Enemy enemy3;
+	private Enemy enemy4;
 	public MenuSceneHandler(RoadFighterGame g) {
 		super(g);	
 	}
@@ -125,7 +126,6 @@ public class MenuSceneHandler extends SceneHandler {
 		
 		boton1Player = new ButtonMenu("1 PLAYER",Config.baseHeight * 3 / 5);
 		boton2Player = new ButtonMenu("2 PLAYERS",(Config.baseHeight * 3 / 5) + 100);
-		player = new Player(new CarPlayer(515.0, 1100));
 		colliderTop = new ColliderTop(100.0, 200.0);
 		//R1 515 
 		//R2 675
@@ -134,14 +134,15 @@ public class MenuSceneHandler extends SceneHandler {
 		enemy1 = new GoodDriver(675.0, 1300.0,Direction.UP,"file:src/resources/images/Enemy1.png");
 		enemy2 = new GoodDriver(825.0, 1500,Direction.UP,"file:src/resources/images/Enemy2.png");
 		enemy3 = new GoodDriver(990.0, 1500,Direction.UP,"file:src/resources/images/Enemy2.png");
+		enemy4 = new GoodDriver(515.0, 1200,Direction.UP,"file:src/resources/images/Player.png");
 		 gameOB = GameObjectBuilder.getInstance();
 		gameOB.setRootNode(baseGroup);
 		gameObjects.add(background);
-		gameObjects.add(player.getCarPlayer());
 		gameObjects.add(colliderTop);
 		gameObjects.add(enemy1);
 		gameObjects.add(enemy2);
 		gameObjects.add(enemy3);
+		gameObjects.add(enemy4);
 		gameObjects.add(title);
 		gameObjects.add(boton1Player);
 		gameObjects.add(boton2Player);
