@@ -9,6 +9,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
+import roadfighter.objects_menu.PointsText;
 import roadfighter.utils.GameObjectBuilder;
 
 public class Obstacle extends Item{
@@ -64,17 +65,13 @@ public class Obstacle extends Item{
 			cp.move(0, 5);
 		//cp.changeSpeed(0,Action.STOP);
 		System.out.println("chocado");
-		
-		//por alguna razon si meto la explosion en una carpeta, da error la ruta.
-
-		String src = "file:src/resources/sound/explosion.mp3";
-		AudioClip audioClip = new AudioClip(src);
-		audioClip.setVolume(0.6);
-		audioClip.play();
+		cp.getExplosionAudio().play();
 		cp.changeSpeed(0,Action.STOP);
 		cp.move(0, 5);
 		cp.changeSpeed(100,Action.SPEED_UP);
-		destroy();
+		
+		GameObjectBuilder builder = GameObjectBuilder.getInstance();
+		builder.remove(this);
 	}
 	
 	
@@ -90,8 +87,7 @@ public class Obstacle extends Item{
 	
 	@Override
 	public void destroy() {
-		/*GameObjectBuilder g = GameObjectBuilder.getInstance();
-		g.remove(this);*/
+		
 	}
 
 	@Override

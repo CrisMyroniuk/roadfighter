@@ -10,6 +10,7 @@ import javafx.scene.shape.Shape;
 import roadfighter.interfaces.Collidator;
 import roadfighter.interfaces.Collideable;
 import roadfighter.interfaces.Renderable;
+import roadfighter.utils.AudioResources;
 
 public class CarPlayer extends Vehicle implements Collidator, Renderable{
 
@@ -41,6 +42,8 @@ public class CarPlayer extends Vehicle implements Collidator, Renderable{
 	private boolean alive = true;
 	private Integer point;
 	private boolean pickedUpPoints = false;
+	
+	private AudioClip explosionAudio;
 	
 	/*private boolean turbo;
 	private static double turboDuration = 100;
@@ -150,6 +153,7 @@ public class CarPlayer extends Vehicle implements Collidator, Renderable{
 		this.setHorizontalSpeed(100);
 		
 		initImages();
+		initAudios();
 		render = new ImageView(sprite);
 		//render.relocate(x - WIDTH / 2, y - HEIGHT / 2);
 		
@@ -165,9 +169,16 @@ public class CarPlayer extends Vehicle implements Collidator, Renderable{
 		sprite = new Image("file:src/resources/images/Player.png", WIDTH, HEIGHT, false, false);
 	}
 
+	private void initAudios() {
+		explosionAudio = AudioResources.getExplosionAudio();
+	}
 	// endregion
 
 	// region Metodos
+
+	public AudioClip getExplosionAudio() {
+		return explosionAudio;
+	}
 
 	public void addPoints(int p) {
 		setPoint(getPoint() + p);

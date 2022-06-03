@@ -102,11 +102,10 @@ public class BadDriver extends Enemy {
 	@Override
 	public void effectPlayer(CarPlayer source) {
 		
-		String src = "file:src/resources/sound/explosion.mp3";
-		AudioClip audioClip = new AudioClip(src);
-		audioClip.setVolume(0.6);
-		audioClip.play();
+		source.getExplosionAudio().play();
 		
+		GameObjectBuilder builder = GameObjectBuilder.getInstance();
+		builder.remove(this);
 	}
 
 	@Override
