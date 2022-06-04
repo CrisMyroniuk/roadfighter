@@ -46,6 +46,12 @@ public class CarPlayer extends Vehicle implements Collidator, Renderable{
 	private Integer point;
 	private boolean pickedUpPoints = false;
 	
+	private PlayerState playerState;
+	
+	public PlayerState getPlayerState() {
+		return playerState;
+	}
+
 	private AudioClip explosionAudio;
 	private AudioClip coinAudio;
 	/*private boolean turbo;
@@ -166,6 +172,12 @@ public class CarPlayer extends Vehicle implements Collidator, Renderable{
 		
 		controlOffTimer = controlOffTimerMax;
 		controlLossSpeed = getSpeed() / 3;
+		
+		playerState = PlayerState.PLAYER_LIVE;
+	}
+	
+	public void changeStateDeath() {
+		playerState = PlayerState.PLAYER_DEATH;
 	}
 	
 	private void initImages() {

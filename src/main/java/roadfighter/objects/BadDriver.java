@@ -114,6 +114,8 @@ public class BadDriver extends Enemy {
 		
 		GameObjectBuilder builder = GameObjectBuilder.getInstance();
 		builder.remove(this);
+		
+		source.changeStateDeath();
 	}
 
 	@Override

@@ -29,6 +29,7 @@ import roadfighter.objects.GoodDriver;
 import roadfighter.objects.LeftLimit;
 import roadfighter.objects.Obstacle;
 import roadfighter.objects.Player;
+import roadfighter.objects.PlayerState;
 import roadfighter.objects.PowerDown;
 import roadfighter.objects.PowerUp;
 import roadfighter.objects.RightLimit;
@@ -230,7 +231,11 @@ public class GameSceneHandler extends SceneHandler {
 	@Override
 	public void update(double delta) {
 		super.update(delta);
-	
+		if(players.get(0).getCarPlayer().getPlayerState() == PlayerState.PLAYER_DEATH && singlePlayer) {
+			audioGame.stop();
+			g.startMenu(false);
+			g.startGame(singlePlayer);
+		}
 		spawnTimer -= delta;
 		if (spawnTimer <= 0) {
 			//ahora se eliminan solos cuando su coordenada en Y llega a la altura de la pantalla + 500
