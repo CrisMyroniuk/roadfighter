@@ -47,6 +47,8 @@ public class CarPlayer extends Vehicle implements Collidator, Renderable{
 	private boolean pickedUpPoints = false;
 	
 	private PlayerState playerState;
+	private double crashTimer = 0;
+	private double crashTimerMax = 0.25;
 	
 	public PlayerState getPlayerState() {
 		return playerState;
@@ -213,6 +215,10 @@ public class CarPlayer extends Vehicle implements Collidator, Renderable{
 		pickedUpPoints = true;
 	}
 	
+	public boolean canCrash() {
+		return crashTimer <= 0;
+	}
+	
 	public boolean hasPickedUpPoints() {
 		return pickedUpPoints;
 	}
@@ -318,6 +324,12 @@ public class CarPlayer extends Vehicle implements Collidator, Renderable{
 	public void update(double delta) {
 		double translateX = 0;
 		double translateY = 0;
+		
+		if (crashTimer > 0)
+			crashTimer -= delta;
+		else
+			crashTimer = crashTimerMax;
+			
 		
 		if (control) {			
 			if (!isLeft() || !isRight()) {

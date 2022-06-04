@@ -5,7 +5,7 @@ import roadfighter.Config;
 public class MasterVolumeSlider extends SoundSlider {
 
 	public MasterVolumeSlider(double x, double y) {
-		super("General", x, y);
+		super("General", x, y, Config.masterVolumeModifier);
 		
 	}
 
