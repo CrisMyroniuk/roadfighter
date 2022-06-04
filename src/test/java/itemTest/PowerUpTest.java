@@ -17,7 +17,7 @@ class PowerUpTest {
 	@BeforeEach
 	void init() {
 		
-		Player player = new Player(new CarPlayer(0, 0));
+		Player player = new Player(new CarPlayer(0, 0,"test"));
 	}
 	
 	@Test

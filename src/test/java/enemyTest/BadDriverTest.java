@@ -18,7 +18,7 @@ class BadDriverTest {
 	void obstruyeAlPlayer() {
 		double unSegundo = 1;
 		BadDriver badDriver = new BadDriver(20, 20, Direction.UP);
-		Player player = new Player(new CarPlayer(0, 0));
+		Player player = new Player(new CarPlayer(0, 0,"test"));
 		
 		badDriver.setSpeed(20);
 		badDriver.obstructPath(player.getCarPlayer());
@@ -32,7 +32,7 @@ class BadDriverTest {
 	void seMueveUnaSolaVez() {
 		double tresSegundos = 3;
 		BadDriver badDriver = new BadDriver(40, 20, Direction.UP);
-		Player player = new Player(new CarPlayer(0, 0));
+		Player player = new Player(new CarPlayer(0, 0,"test"));
 		
 		badDriver.setSpeed(10);
 		badDriver.obstructPath(player.getCarPlayer());

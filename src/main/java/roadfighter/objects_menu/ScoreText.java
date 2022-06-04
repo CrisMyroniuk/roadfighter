@@ -20,8 +20,10 @@ public class ScoreText extends GenericText implements Updatable {
 			points.add(0);
 
 		String newText = "";
+		int player = 1;
 		for (Integer score : points) {
-			newText = newText + score + "\n";
+			newText = newText + "Player "+player+": "+score + "\n";
+			player++;
 		}
 		this.setText(newText);
 	}
@@ -41,8 +43,10 @@ public class ScoreText extends GenericText implements Updatable {
 		
 		if(changeText) {
 			String newText = "";
+			int numPLayer = 1;
 			for (Integer score : points) {
-				newText = newText + score + "\n";
+				newText = newText + "Player "+numPLayer+": "+score + "\n";
+				numPLayer++;
 			}
 			this.setText(newText);
 		}

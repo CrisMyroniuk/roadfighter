@@ -26,7 +26,7 @@ class TurboTest {
 	
 	@BeforeEach
 	public void setUp() {
-		Player player = new Player(new CarPlayer(0, 0));
+		Player player = new Player(new CarPlayer(0, 0,"test"));
 		//prevSpeed = cp.getSpeed();
 		prevAceleration = cp.getAceleration();
 		prevMaxSpeed = cp.getSpeedLimit();
