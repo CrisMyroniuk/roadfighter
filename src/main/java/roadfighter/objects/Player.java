@@ -44,7 +44,7 @@ public class Player extends GameObject {
 	}
 
 	public Integer getPoint() {
-		return points;
+		return car.getPoint();
 	}
 
 	public CarPlayer getCarPlayer() {

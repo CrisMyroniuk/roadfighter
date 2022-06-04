@@ -69,7 +69,11 @@ public class GameSceneHandler extends SceneHandler {
 	private EventHandler<KeyEvent> keyReleasedHandler;
 
 	private GameObjectBuilder GOBuilder;
+	private Group rootGroup;
 	private AudioClip audioGame;
+	
+	private boolean winnerExists = false;
+	private String winner = "nadie (algo salio mal)";
 
 	public GameSceneHandler(RoadFighterGame g,boolean singlePlayer) {
 		super(g);
@@ -87,7 +91,7 @@ public class GameSceneHandler extends SceneHandler {
 		audioGame.setVolume(Config.masterVolumeModifier * Config.musicVolumeModifier);
 		audioGame.play();
 		
-		Group rootGroup = new Group();
+		rootGroup = new Group();
 		scene.setRoot(rootGroup);
 
 		background = new Background();
@@ -166,12 +170,12 @@ public class GameSceneHandler extends SceneHandler {
 				
 				if(e.getCode() == KeyCode.ESCAPE) {
 					audioGame.stop();
-					g.startMenu(false);
+					g.startMenu();
 				}
 				
 				if(e.getCode() == KeyCode.R) {
 					audioGame.stop();
-					g.startMenu(false);
+					g.startMenu();
 					g.startGame(singlePlayer);
 				}
 				
@@ -194,12 +198,12 @@ public class GameSceneHandler extends SceneHandler {
 				
 				if(e.getCode() == KeyCode.ESCAPE) {
 					audioGame.stop();
-					g.startMenu(false);
+					g.startMenu();
 				}
 				
 				if(e.getCode() == KeyCode.R) {
 				audioGame.stop();
-				g.startMenu(false);
+				g.startMenu();
 				g.startGame(singlePlayer);
 			}
 				
@@ -264,6 +268,18 @@ public class GameSceneHandler extends SceneHandler {
 		
 		checkCollisions();
 		
+		for (int i = 0; i < players.size(); i++) {
+			if (players.get(i).getPoint() >= Config.maxScore) {
+				winnerExists = true;
+				winner = "PLAYER " + (i + 1);//los player podrian tener un nombre eventualmente
+				break;
+			}
+		}
+		
+		if (winnerExists) {
+			g.startWin(winner, singlePlayer);
+		}
+		
 		// aca va cualquier cosa que no se haga en el metodo update()
 		// de los updateables
 	}
@@ -302,5 +318,12 @@ public class GameSceneHandler extends SceneHandler {
 				}
 			}
 		}
+	}
+
+	public void unload() {
+		audioGame.stop();
+		
+		rootGroup.getChildren().remove(0);
+		super.unload();
 	}
 }

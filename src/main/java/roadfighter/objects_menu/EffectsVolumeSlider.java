@@ -5,7 +5,8 @@ import roadfighter.Config;
 public class EffectsVolumeSlider extends SoundSlider {
 
 	public EffectsVolumeSlider(double x, double y) {
-		super("Efectos", x, y);
+		super("Efectos", x, y, Config.effectsVolumeModifier);
+		
 	}
 
 	@Override

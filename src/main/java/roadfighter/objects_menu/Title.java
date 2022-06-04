@@ -51,6 +51,11 @@ public class Title extends GameObject implements Renderable {
 		
 		idleAnimation = initIdleAnimation();
 	}
+	
+	public Title(String titleText) {
+		this();
+		text.setText(titleText);
+	}
 
 	@Override
 	public Node getRender() {
