@@ -168,10 +168,11 @@ public class GameSceneHandler extends SceneHandler {
 					g.startMenu(false);
 				}
 				
-//				if(e.getCode() == KeyCode.R) {
-//					audioGame.stop();
-//					g.startGame(singlePlayer);
-//				}
+				if(e.getCode() == KeyCode.R) {
+					audioGame.stop();
+					g.startMenu(false);
+					g.startGame(singlePlayer);
+				}
 				
 				for(Player p : players) {
 					p.eventPressed(e);
@@ -195,10 +196,11 @@ public class GameSceneHandler extends SceneHandler {
 					g.startMenu(false);
 				}
 				
-//				if(e.getCode() == KeyCode.R) {
-//				audioGame.stop();
-//				g.startGame(singlePlayer);
-//			}
+				if(e.getCode() == KeyCode.R) {
+				audioGame.stop();
+				g.startMenu(false);
+				g.startGame(singlePlayer);
+			}
 				
 				for(Player p : players) {
 					p.eventReleased(e);
