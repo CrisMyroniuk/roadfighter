@@ -101,15 +101,16 @@ public class WinSceneHandler extends SceneHandler {
 		gameOB = GameObjectBuilder.getInstance();
 		gameOB.setRootNode(baseGroup);
 
-//		audioGame = new AudioClip(src);
-//		audioGame.play();
+		audioGame = new AudioClip(src);
+		audioGame.setVolume(Config.masterVolumeModifier * Config.musicVolumeModifier);
+		audioGame.play();
 		
 		background = new Background();
 
 		title = new Title(winner + "WINS!");
 		
 		restartButton = new ButtonMenu("RESTART", Config.baseHeight * 3 / 5);
-		menuButton = new ButtonMenu("MENU", Config.baseHeight * 3 / 5 + 50);
+		menuButton = new ButtonMenu("MENU", Config.baseHeight * 3 / 5 + 100);
 		
 		gameOB.add(restartButton, menuButton);
 		

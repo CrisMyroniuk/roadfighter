@@ -68,6 +68,7 @@ public class GameSceneHandler extends SceneHandler {
 	private EventHandler<KeyEvent> keyReleasedHandler;
 
 	private GameObjectBuilder GOBuilder;
+	private Group rootGroup;
 	private AudioClip audioGame;
 	
 	private boolean winnerExists = false;
@@ -89,7 +90,7 @@ public class GameSceneHandler extends SceneHandler {
 		audioGame.setVolume(Config.masterVolumeModifier * Config.musicVolumeModifier);
 		audioGame.play();
 		
-		Group rootGroup = new Group();
+		rootGroup = new Group();
 		scene.setRoot(rootGroup);
 
 		background = new Background();
@@ -312,5 +313,12 @@ public class GameSceneHandler extends SceneHandler {
 				}
 			}
 		}
+	}
+
+	public void unload() {
+		audioGame.stop();
+		
+		rootGroup.getChildren().remove(0);
+		super.unload();
 	}
 }
