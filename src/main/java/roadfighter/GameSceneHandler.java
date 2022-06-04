@@ -240,7 +240,7 @@ public class GameSceneHandler extends SceneHandler {
 		if (spawnTimer <= 0) {
 			//ahora se eliminan solos cuando su coordenada en Y llega a la altura de la pantalla + 500
 			ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
-			int selecGO = random.nextInt(1,4);
+			int selecGO = random.nextInt(1,5);
 			switch(selecGO) {
 				case 1:
 					gameObjects.add(new Obstacle(random.nextDouble(515, 990), -50,"file:src/resources/images/Conito.png"));

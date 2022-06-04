@@ -210,6 +210,7 @@ public class CarPlayer extends Vehicle implements Collidator, Renderable{
 
 	public void removePoints(int p) {
 		setPoint(getPoint() - p);
+		pickedUpPoints = true;
 	}
 	
 	public boolean hasPickedUpPoints() {

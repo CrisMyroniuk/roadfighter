@@ -71,6 +71,15 @@ public class Obstacle extends Item{
 		
 		GameObjectBuilder builder = GameObjectBuilder.getInstance();
 		builder.remove(this);
+		
+		if(cp.getPoint()>0) {
+
+			cp.removePoints(80);
+			if(cp.getPoint()<0) {
+				cp.setPoint(0);
+			}
+			builder.add(new PointsText(80, new Coordinate(500, 500)));
+		}
 	}
 	
 	

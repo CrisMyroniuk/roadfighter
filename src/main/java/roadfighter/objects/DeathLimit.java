@@ -20,9 +20,17 @@ public abstract class DeathLimit extends GameObject implements Collideable{
 	
 	@Override
 	public void effectPlayer(CarPlayer source) {
-		GameObjectBuilder builder = GameObjectBuilder.getInstance();
-		builder.add(new PointsText((int)hitbox.getX(), new Coordinate(500, 500)));
-		source.die();
+		
+		if(source.getPoint()>0) {
+			GameObjectBuilder builder = GameObjectBuilder.getInstance();
+			source.removePoints(1);
+			if(source.getPoint()<0) {
+				source.setPoint(0);
+			}
+			builder.add(new PointsText(1, new Coordinate(500, 500)));
+			source.die();
+		}
+		
 	}
 
 	@Override
