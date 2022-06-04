@@ -29,8 +29,8 @@ public class CarPlayer extends Vehicle implements Collidator, Renderable{
 	private ImageView render;
 	private Image sprite;
 	
-	private final int WIDTH = 80;
-	private final int HEIGHT = 140;
+	private final int WIDTH = 70;
+	private final int HEIGHT = 160;
 	private final double XMAX = 1056.00;
 	private final double XMIN = 447.00;
 	private Rectangle hitbox;
@@ -181,7 +181,7 @@ public class CarPlayer extends Vehicle implements Collidator, Renderable{
 	}
 	
 	private void initImages(String image) {
-		sprite = new Image(image, WIDTH, HEIGHT, false, false);
+		sprite = new Image(image, WIDTH, HEIGHT, true, true);
 	}
 
 	private void initAudios() {

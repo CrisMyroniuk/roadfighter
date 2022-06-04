@@ -20,8 +20,8 @@ public class GoodDriver extends Enemy implements Collidator, Renderable{
 	private ImageView render;
 	private Image sprite;
 	
-	private final int WIDTH = 84;
-	private final int HEIGHT = 134;
+	private final double WIDTH = 90;
+	private final double HEIGHT = 160;
 	private Rectangle hitbox;
 	
 	public GoodDriver(double x, double y,Direction d,String image) {
@@ -41,7 +41,7 @@ public class GoodDriver extends Enemy implements Collidator, Renderable{
 	}
 	
 	private void initImages(String image) {
-		sprite = new Image(image,80,140.0,false,false);
+		sprite = new Image(image,WIDTH,HEIGHT,true,true);
 	}
 	
 	public void update(double delta) {
