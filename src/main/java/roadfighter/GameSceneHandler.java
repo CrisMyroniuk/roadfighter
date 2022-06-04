@@ -237,7 +237,7 @@ public class GameSceneHandler extends SceneHandler {
 		super.update(delta);
 		if(players.get(0).getCarPlayer().getPlayerState() == PlayerState.PLAYER_DEATH && singlePlayer) {
 			audioGame.stop();
-			g.startMenu(false);
+			g.startMenu();
 			g.startGame(singlePlayer);
 		}
 		spawnTimer -= delta;
