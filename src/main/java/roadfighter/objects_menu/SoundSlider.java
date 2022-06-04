@@ -19,8 +19,8 @@ public abstract class SoundSlider extends GameObject implements Renderable{
 	EventHandler<DragEvent> onStartDrag;
 	EventHandler<DragEvent> onEndDrag;
 	
-	public SoundSlider(String text, double x, double y) {
-		slider = new Slider(0.0, 1.0, 0.5);
+	public SoundSlider(String text, double x, double y, double defaultValue) {
+		slider = new Slider(0.0, 1.0, defaultValue);
 		label = new Label(text);
 		render = new HBox(label, slider);
 		render.setTranslateX(x);

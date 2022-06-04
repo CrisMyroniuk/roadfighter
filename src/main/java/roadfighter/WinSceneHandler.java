@@ -17,30 +17,32 @@ import roadfighter.interfaces.Collidator;
 import roadfighter.interfaces.Collideable;
 import roadfighter.objects.Background;
 import roadfighter.objects_menu.ButtonMenu;
-import roadfighter.objects_menu.EffectsVolumeSlider;
-import roadfighter.objects_menu.MasterVolumeSlider;
-import roadfighter.objects_menu.MusicVolumeSlider;
 import roadfighter.objects_menu.Title;
 import roadfighter.utils.GameObject;
 import roadfighter.utils.GameObjectBuilder;
 
-public class OptionsSceneHandler extends SceneHandler{
+public class WinSceneHandler extends SceneHandler {
+
 	private Group rootGroup;
 	private AudioClip audioGame;
 	private Background background;
-	private ArrayList<GameObject> gameObjects=new ArrayList<GameObject>();
+	private ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
 	private Title title;
 	private GameObjectBuilder gameOB;
 	
-	private MasterVolumeSlider master;
-	private EffectsVolumeSlider effects;
-	private MusicVolumeSlider music;
-	private ButtonMenu back;
+	private ButtonMenu restartButton;
+	private ButtonMenu menuButton;
 	
-	private EventHandler<ActionEvent> onPressHandlerBack;
+	private String winner;
+	private boolean singlePlayer;
 	
-	public OptionsSceneHandler(RoadFighterGame g) {
+	private EventHandler<ActionEvent> onPressHandlerRestart;
+	private EventHandler<ActionEvent> onPressHandlerMenu;
+	
+	public WinSceneHandler(RoadFighterGame g, String winner, boolean singlePlayer) {
 		super(g);
+		this.singlePlayer = singlePlayer;
+		this.winner = winner;
 	}
 
 	protected void prepareScene() {
@@ -71,7 +73,15 @@ public class OptionsSceneHandler extends SceneHandler{
 			}
 		};
 		
-		onPressHandlerBack = new EventHandler<ActionEvent>() {
+		onPressHandlerRestart = new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent e) {
+				g.startGame(singlePlayer);
+			}
+		};
+		
+		onPressHandlerMenu = new EventHandler<ActionEvent>() {
 			
 			@Override
 			public void handle(ActionEvent e) {
@@ -96,14 +106,12 @@ public class OptionsSceneHandler extends SceneHandler{
 		
 		background = new Background();
 
-		title = new Title();
+		title = new Title(winner + "WINS!");
 		
-		master = new MasterVolumeSlider(500, Config.baseHeight * 3 / 5);
-		effects = new EffectsVolumeSlider(500, Config.baseHeight * 3 / 5 + 50);
-		music = new MusicVolumeSlider(500, Config.baseHeight * 3 / 5 + 100);
-		back = new ButtonMenu("BACK", Config.baseHeight * 3 / 5 + 150);
+		restartButton = new ButtonMenu("RESTART", Config.baseHeight * 3 / 5);
+		menuButton = new ButtonMenu("MENU", Config.baseHeight * 3 / 5 + 50);
 		
-		gameOB.add(master, effects, music, back);
+		gameOB.add(restartButton, menuButton);
 		
 		gameObjects.add(background);
 		gameObjects.add(title);
@@ -125,7 +133,7 @@ public class OptionsSceneHandler extends SceneHandler{
 
 	public void unload() {
 		
-//		audioGame.stop();
+		audioGame.stop();
 		
 		rootGroup.getChildren().remove(0);
 		super.unload();
@@ -133,12 +141,14 @@ public class OptionsSceneHandler extends SceneHandler{
 	
 	protected void addInputEvents() {
 		super.addInputEvents();
-		back.setOnAction(onPressHandlerBack);
+		restartButton.setOnAction(onPressHandlerRestart);
+		menuButton.setOnAction(onPressHandlerMenu);
 	}
 	
 	protected void removeInputEvents() {
 		super.removeInputEvents();
-		back.removeOnAction(onPressHandlerBack);
+		restartButton.removeOnAction(onPressHandlerRestart);
+		menuButton.removeOnAction(onPressHandlerMenu);
 	}
 	
 	private void checkCollisions() {

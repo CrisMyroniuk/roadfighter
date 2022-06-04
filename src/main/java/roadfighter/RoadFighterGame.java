@@ -8,12 +8,16 @@ import javafx.stage.Stage;
 public class RoadFighterGame extends Application {
 	
 	private Stage stage;
+	
+	private SceneHandler currentSceneHandler;
 
 	private MenuSceneHandler menuSceneHandler;
 
 	private GameSceneHandler gameSceneHandler;
 	
 	private OptionsSceneHandler optionsSceneHandler;
+	
+	private WinSceneHandler winSceneHandler;
 	
 	@Override
 	public void start(Stage stage) throws Exception {
@@ -31,6 +35,7 @@ public class RoadFighterGame extends Application {
 		this.stage = stage;
 
 		menuSceneHandler = new MenuSceneHandler(this);
+		currentSceneHandler = menuSceneHandler;
 		Scene scene = menuSceneHandler.getScene();
 		stage.setScene(scene);
 		
@@ -58,31 +63,44 @@ public class RoadFighterGame extends Application {
 	}
 	
 	public void startGame(boolean singlePlayer) {
-		System.out.println("started");
-		menuSceneHandler.unload();
+		//menuSceneHandler.unload();
+		currentSceneHandler.unload();
 		gameSceneHandler = new GameSceneHandler(this,singlePlayer);
+		currentSceneHandler = gameSceneHandler;
 		Scene scene = gameSceneHandler.getScene();
 		stage.setScene(scene);
 		gameSceneHandler.load();
 	}
 	
-	public void startMenu(boolean fromOptions) {
-		if (fromOptions)
-			optionsSceneHandler.unload();
-		else
-			gameSceneHandler.unload();
+	public void startMenu() {
+//		if (fromOptions)
+//			optionsSceneHandler.unload();
+//		else
+//			gameSceneHandler.unload();
+		currentSceneHandler.unload();
 		menuSceneHandler = new MenuSceneHandler(this);
+		currentSceneHandler = menuSceneHandler;
 		Scene scene = menuSceneHandler.getScene();
 		stage.setScene(scene);
 		menuSceneHandler.load();
 	}
 	
 	public void startOptions() {
-		menuSceneHandler.unload();
+		currentSceneHandler.unload();
 		optionsSceneHandler = new OptionsSceneHandler(this);
+		currentSceneHandler = optionsSceneHandler;
 		Scene scene = optionsSceneHandler.getScene();
 		stage.setScene(scene);
 		optionsSceneHandler.load();
+	}
+	
+	public void startWin(String winner, boolean singlePlayer) {
+		currentSceneHandler.unload();
+		winSceneHandler = new WinSceneHandler(this, winner, singlePlayer);
+		currentSceneHandler = winSceneHandler;
+		Scene scene = winSceneHandler.getScene();
+		stage.setScene(scene);
+		winSceneHandler.load();
 	}
 
 }
