@@ -20,7 +20,7 @@ public class GoodDriver extends Enemy implements Collidator, Renderable{
 	private ImageView render;
 	private Image sprite;
 	
-	private final double WIDTH = 90;
+	private final double WIDTH = 70;
 	private final double HEIGHT = 160;
 	private Rectangle hitbox;
 	
