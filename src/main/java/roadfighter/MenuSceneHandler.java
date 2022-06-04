@@ -148,7 +148,7 @@ public class MenuSceneHandler extends SceneHandler {
 		title = new Title();
 		
 		buttonOptions = new ButtonMenu("OPTIONS", Config.baseHeight * 3 / 5 + 200);
-		gameObjects.add(buttonOptions);
+		
 		
 		boton1Player = new ButtonMenu("1 PLAYER",Config.baseHeight * 3 / 5);
 		boton2Player = new ButtonMenu("2 PLAYERS",(Config.baseHeight * 3 / 5) + 100);
@@ -172,7 +172,7 @@ public class MenuSceneHandler extends SceneHandler {
 		gameObjects.add(title);
 		gameObjects.add(boton1Player);
 		gameObjects.add(boton2Player);
-		
+		gameObjects.add(buttonOptions);
 		gameOB.add(gameObjects);
 
 		if (fullStart) {
