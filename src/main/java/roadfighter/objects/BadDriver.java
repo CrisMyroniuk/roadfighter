@@ -1,5 +1,8 @@
 package roadfighter.objects;
 
+import java.util.ArrayList;
+import java.util.Random;
+
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.media.AudioClip;
@@ -18,6 +21,8 @@ public class BadDriver extends Enemy {
 	
 	private final int WIDTH = 80;
 	private final int HEIGHT = 140;
+	
+	private Random random = new Random();
 	
 	public BadDriver(double x, double y, Direction d) {
 		setCoordinate(new Coordinate(x, y));
@@ -38,7 +43,10 @@ public class BadDriver extends Enemy {
 	}
 	
 	private void initImages() {
-		sprite = new Image("file:src/resources/images/Enemy2.png", WIDTH, HEIGHT, false, false);
+		ArrayList<String> imagenesDrivers = new ArrayList<String>();
+		imagenesDrivers.add("file:src/resources/images/Enemy1.png");
+		imagenesDrivers.add("file:src/resources/images/Enemy2.png");
+		sprite = new Image(imagenesDrivers.get(random.nextInt(0,2)), WIDTH, HEIGHT, false, false);
 	}
 	
 	public void obstructPath(CarPlayer player) {
