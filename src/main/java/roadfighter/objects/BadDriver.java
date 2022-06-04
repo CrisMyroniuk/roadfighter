@@ -19,8 +19,8 @@ public class BadDriver extends Enemy {
 	private Coordinate objective;
 	private double timer;
 	
-	private final int WIDTH = 80;
-	private final int HEIGHT = 140;
+	private final int WIDTH = 70;
+	private final int HEIGHT = 160;
 	
 	private Random random = new Random();
 	
@@ -46,7 +46,9 @@ public class BadDriver extends Enemy {
 		ArrayList<String> imagenesDrivers = new ArrayList<String>();
 		imagenesDrivers.add("file:src/resources/images/Enemy1.png");
 		imagenesDrivers.add("file:src/resources/images/Enemy2.png");
-		sprite = new Image(imagenesDrivers.get(random.nextInt(0,2)), WIDTH, HEIGHT, false, false);
+		imagenesDrivers.add("file:src/resources/images/Enemy3.png");
+		imagenesDrivers.add("file:src/resources/images/Enemy4.png");
+		sprite = new Image(imagenesDrivers.get(random.nextInt(0,4)), WIDTH, HEIGHT, true, true);
 	}
 	
 	public void obstructPath(CarPlayer player) {
