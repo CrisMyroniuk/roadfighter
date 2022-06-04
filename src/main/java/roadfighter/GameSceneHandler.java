@@ -268,15 +268,22 @@ public class GameSceneHandler extends SceneHandler {
 		
 		checkCollisions();
 		
+		int alivePlayers = 0;
+		
 		for (int i = 0; i < players.size(); i++) {
-			if (players.get(i).getPoint() >= Config.maxScore) {
+			Player current = players.get(i);
+			if (current.isAlive()) {
+				alivePlayers++;
+				winner = "PLAYER " + (i + 1);
+			}
+			if (current.getPoint() >= Config.maxScore) {
 				winnerExists = true;
 				winner = "PLAYER " + (i + 1);//los player podrian tener un nombre eventualmente
 				break;
 			}
 		}
 		
-		if (winnerExists) {
+		if (winnerExists || (alivePlayers == 1 && !singlePlayer)) {
 			g.startWin(winner, singlePlayer);
 		}
 		

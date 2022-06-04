@@ -190,6 +190,10 @@ public class Player extends GameObject {
 
 	}
 
+	public boolean isAlive() {
+		return car.isAlive();
+	}
+
 	// endregion
 
 	/*

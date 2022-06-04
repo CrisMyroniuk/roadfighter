@@ -28,7 +28,6 @@ public abstract class DeathLimit extends GameObject implements Collideable{
 				source.setPoint(0);
 			}
 			builder.add(new PointsText(-1, source.getCoordinate()));
-			source.die();
 		}
 		
 	}

@@ -404,12 +404,8 @@ public class CarPlayer extends Vehicle implements Collidator, Renderable{
 		
 	}
 	
-	public void die() {
-		alive = false;
-	}
-	
 	public boolean isAlive() {
-		return alive;
+		return playerState == PlayerState.PLAYER_LIVE;
 	}
 
 }
