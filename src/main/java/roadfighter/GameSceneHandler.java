@@ -228,19 +228,31 @@ public class GameSceneHandler extends SceneHandler {
 	@Override
 	public void update(double delta) {
 		super.update(delta);
-
+	
 		spawnTimer -= delta;
 		if (spawnTimer <= 0) {
 			//ahora se eliminan solos cuando su coordenada en Y llega a la altura de la pantalla + 500
 			ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
-			gameObjects.add(new Obstacle(random.nextDouble(515, 990), -50,"file:src/resources/images/Conito.png"));
-			gameObjects.add(new BadDriver(random.nextDouble(515, 990), -50, Direction.UP));
-			gameObjects.add(new PowerUp(random.nextDouble(515, 990), -50.0, 100,"file:src/resources/images/coin.png"));
-			gameObjects.add(new PowerDown(random.nextDouble(515, 990), -50.0,"file:src/resources/images/velocityDown.png"));
+			int selecGO = random.nextInt(1,4);
+			switch(selecGO) {
+				case 1:
+					gameObjects.add(new Obstacle(random.nextDouble(515, 990), -50,"file:src/resources/images/Conito.png"));
+					break;
+				case 2:
+					gameObjects.add(new BadDriver(random.nextDouble(515, 990), -50, Direction.UP));
+					break;
+				case 3:
+					gameObjects.add(new PowerUp(random.nextDouble(515, 990), -50.0, 100,"file:src/resources/images/coin.png"));
+					break;
+				case 4:
+					gameObjects.add(new PowerDown(random.nextDouble(515, 990), -50.0,"file:src/resources/images/velocityDown.png"));
+					break;
+			}
 			
+	
 			GOBuilder.add(gameObjects);
 
-			spawnTimer = random.nextDouble(1, 3);
+			spawnTimer = random.nextDouble(0.5, 1.5);
 		}
 		
 		checkCollisions();
