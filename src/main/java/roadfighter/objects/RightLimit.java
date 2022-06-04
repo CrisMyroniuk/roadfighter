@@ -5,6 +5,6 @@ import roadfighter.Config;
 public class RightLimit extends DeathLimit {
 	
 	public RightLimit() {
-		super(Config.baseWidth - 425, -10, 10, Config.baseHeight + 20);
+		super(Config.baseWidth - 410, -10, 10, Config.baseHeight + 20);
 	}
 }
