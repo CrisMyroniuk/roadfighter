@@ -78,7 +78,7 @@ public class Obstacle extends Item{
 			if(cp.getPoint()<0) {
 				cp.setPoint(0);
 			}
-			builder.add(new PointsText(80, new Coordinate(500, 500)));
+			builder.add(new PointsText(80, cp.getCoordinate()));
 		}
 	}
 	
