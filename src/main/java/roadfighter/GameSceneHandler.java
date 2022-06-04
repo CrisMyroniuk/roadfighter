@@ -67,6 +67,7 @@ public class GameSceneHandler extends SceneHandler {
 	private EventHandler<KeyEvent> keyReleasedHandler;
 
 	private GameObjectBuilder GOBuilder;
+	private AudioClip audioGame;
 
 	public GameSceneHandler(RoadFighterGame g,boolean singlePlayer) {
 		super(g);
@@ -79,7 +80,7 @@ public class GameSceneHandler extends SceneHandler {
 		
 		String src = "file:src/resources/sounds/gameSound.mp3";
 		
-		AudioClip audioGame = new AudioClip(src);
+		audioGame = new AudioClip(src);
 		
 		audioGame.setVolume(Config.masterVolumeModifier * Config.musicVolumeModifier);
 		audioGame.play();
@@ -161,6 +162,16 @@ public class GameSceneHandler extends SceneHandler {
 			@Override
 			public void handle(KeyEvent e) {
 				
+				if(e.getCode() == KeyCode.ESCAPE) {
+					audioGame.stop();
+					g.startMenu(false);
+				}
+				
+//				if(e.getCode() == KeyCode.R) {
+//					audioGame.stop();
+//					g.startGame(singlePlayer);
+//				}
+				
 				for(Player p : players) {
 					p.eventPressed(e);
 				}
@@ -177,6 +188,16 @@ public class GameSceneHandler extends SceneHandler {
 		keyReleasedHandler = new EventHandler<KeyEvent>() {
 			@Override
 			public void handle(KeyEvent e) {
+				
+				if(e.getCode() == KeyCode.ESCAPE) {
+					audioGame.stop();
+					g.startMenu(false);
+				}
+				
+//				if(e.getCode() == KeyCode.R) {
+//				audioGame.stop();
+//				g.startGame(singlePlayer);
+//			}
 				
 				for(Player p : players) {
 					p.eventReleased(e);
