@@ -66,8 +66,6 @@ public class Obstacle extends Item{
 		//cp.changeSpeed(0,Action.STOP);
 		System.out.println("chocado");
 		cp.getExplosionAudio().play();
-		cp.changeSpeed(0,Action.STOP);
-		cp.changeSpeed(100,Action.SPEED_UP);
 		
 		GameObjectBuilder builder = GameObjectBuilder.getInstance();
 		builder.remove(this);

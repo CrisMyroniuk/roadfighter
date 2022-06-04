@@ -43,7 +43,8 @@ public class PowerDown extends Item{
 	@Override
 	public void effectPlayer(CarPlayer cp) {
 		// Baja la velocidad del auto
-		cp.changeSpeed(10,Action.SPEED_DOWN);
+		cp.changeSpeed(0,Action.STOP);
+		cp.changeSpeed(100,Action.SPEED_UP);
 		GameObjectBuilder builder = GameObjectBuilder.getInstance();
 		builder.remove(this);
 	}
