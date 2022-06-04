@@ -104,7 +104,7 @@ public class GameSceneHandler extends SceneHandler {
 		
 		//tecla poder jugador 1
 		keysPlayerOne.add(KeyCode.C);
-		players.add(new Player(new CarPlayer(515.0, 750.0),keysPlayerOne));
+		players.add(new Player(new CarPlayer(515.0, 750.0, "file:src/resources/images/Player.png"),keysPlayerOne));
 		
 		//si son dos jugadores
 		if(!singlePlayer) {
@@ -117,7 +117,7 @@ public class GameSceneHandler extends SceneHandler {
 			//tecla poder jugador 2
 			keysPlayerTwo.add(KeyCode.L);
 			
-			players.add(new Player(new CarPlayer(1000, 750.0),keysPlayerTwo));
+			players.add(new Player(new CarPlayer(1000, 750.0,"file:src/resources/images/Player2.png"),keysPlayerTwo));
 		}
 		
 		//obstacles.add(new Obstacle(825.0, 200.0,"file:src/resources/images/ObstacleSprite.png"));

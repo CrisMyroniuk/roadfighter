@@ -148,7 +148,7 @@ public class CarPlayer extends Vehicle implements Collidator, Renderable{
 
 	// region Constructor
 
-	public CarPlayer(double x, double y) {
+	public CarPlayer(double x, double y, String image) {
 
 		
 		this.acceleration = 20;
@@ -161,7 +161,7 @@ public class CarPlayer extends Vehicle implements Collidator, Renderable{
 		this.setSpeed(250);
 		this.setHorizontalSpeed(100);
 		
-		initImages();
+		initImages(image);
 		initAudios();
 		render = new ImageView(sprite);
 		//render.relocate(x - WIDTH / 2, y - HEIGHT / 2);
@@ -180,8 +180,8 @@ public class CarPlayer extends Vehicle implements Collidator, Renderable{
 		playerState = PlayerState.PLAYER_DEATH;
 	}
 	
-	private void initImages() {
-		sprite = new Image("file:src/resources/images/Player.png", WIDTH, HEIGHT, false, false);
+	private void initImages(String image) {
+		sprite = new Image(image, WIDTH, HEIGHT, false, false);
 	}
 
 	private void initAudios() {
