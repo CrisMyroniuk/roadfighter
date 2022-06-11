@@ -108,7 +108,7 @@ public class GameSceneHandler extends SceneHandler {
 		
 		//tecla poder jugador 1
 		keysPlayerOne.add(KeyCode.C);
-		players.add(new Player(new CarPlayer(515.0, 750.0, "file:src/resources/images/Player.png"),keysPlayerOne));
+		players.add(new Player(new CarPlayer(515.0, 750.0, "file:src/resources/images/CarPink.png"),keysPlayerOne));
 		
 		//si son dos jugadores
 		if(!singlePlayer) {
