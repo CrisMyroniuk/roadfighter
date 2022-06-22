@@ -5,6 +5,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
+import roadfighter.Config;
 import roadfighter.interfaces.Renderable;
 import roadfighter.interfaces.Updatable;
 import roadfighter.utils.GameObject;
@@ -39,7 +40,7 @@ public class Background extends GameObject implements Updatable, Renderable{
 	}
 
 	public void update(double deltaTime) {
-		posY += 250 * deltaTime;
+		posY += Config.roadSpeed * deltaTime;
 		render.setTranslateY((posY % forestHeight) -1000 );
 		
 	}

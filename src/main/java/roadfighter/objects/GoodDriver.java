@@ -7,6 +7,7 @@ import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
+import roadfighter.Config;
 import roadfighter.interfaces.Collidator;
 import roadfighter.interfaces.Collideable;
 import roadfighter.interfaces.Renderable;
@@ -29,7 +30,7 @@ public class GoodDriver extends Enemy implements Collidator, Renderable{
 		setDirection(d);
 		setOriginalCoordinate(new Coordinate(x, y));
 		//this.direction = Direction.UP;
-		this.setSpeed(250);
+		this.setSpeed(Config.roadSpeed - Config.enemySpeed);
 		
 		initImages(image);
 		render = new ImageView(sprite);

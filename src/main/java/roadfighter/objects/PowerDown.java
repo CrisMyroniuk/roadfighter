@@ -6,6 +6,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
+import roadfighter.Config;
 import roadfighter.objects_menu.PointsText;
 import roadfighter.utils.GameObjectBuilder;
 
@@ -77,7 +78,7 @@ public class PowerDown extends Item{
 
 	@Override
 	public void update(double delta) {
-		getCoordinate().setY(getCoordinate().getY() + 150 * delta);
+		getCoordinate().setY(getCoordinate().getY() + Config.roadSpeed * delta);
 		
 		render.setTranslateX(getCoordinate().getX() - WIDTH / 2);
 		render.setTranslateY(getCoordinate().getY() - HEIGHT / 2);

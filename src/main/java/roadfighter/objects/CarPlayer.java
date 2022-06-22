@@ -152,7 +152,6 @@ public class CarPlayer extends Vehicle implements Collidator, Renderable{
 
 	public CarPlayer(double x, double y, String image) {
 
-		
 		this.acceleration = 20;
 		this.speedLimit = 200;
 		this.turbo = new Turbo(false); //inicializamos el turbo en desactivado.
@@ -160,8 +159,8 @@ public class CarPlayer extends Vehicle implements Collidator, Renderable{
 		setCoordinate(new Coordinate(x, y));
 		setOriginalCoordinate(new Coordinate(x, y));
 		this.direction = Direction.UP;
-		this.setSpeed(250);
-		this.setHorizontalSpeed(100);
+		this.setSpeed(Config.carVerticalSpeed);
+		this.setHorizontalSpeed(Config.carHorizontalSpeed);
 		
 		initImages(image);
 		initAudios();
@@ -331,7 +330,7 @@ public class CarPlayer extends Vehicle implements Collidator, Renderable{
 			crashTimer = crashTimerMax;
 			
 		
-		if (control) {			
+		if (control) {
 			if (!isLeft() || !isRight()) {
 				if (isLeft()) {
 					translateX = -horizontalSpeed;

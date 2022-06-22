@@ -9,6 +9,7 @@ import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
+import roadfighter.Config;
 import roadfighter.utils.GameObjectBuilder;
 
 public class BadDriver extends Enemy {
@@ -27,7 +28,7 @@ public class BadDriver extends Enemy {
 	public BadDriver(double x, double y, Direction d) {
 		setCoordinate(new Coordinate(x, y));
 		setDirection(d);
-		this.setSpeed(100);
+		this.setSpeed(Config.roadSpeed - Config.enemySpeed);
 
 		objective = this.getCoordinate();
 		timer = 3;
