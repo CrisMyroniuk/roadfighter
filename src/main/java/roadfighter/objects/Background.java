@@ -15,13 +15,9 @@ public class Background extends GameObject implements Updatable, Renderable{
 	private VBox render;
 	private double posY = 0;
 
-//	private final int cityWidth = 500;
-//	private final int cityHeight = 795;
 	private final int forestWidth=1500;
 	private final int forestHeight=1000;
-//	private final int roadWidth=750;
-//	private final int roadHeight=1000;
-	private Rectangle colliderTop;
+	
 	public Background() {
 		Image backgroundImage = new Image("file:src/resources/images/background.png", forestWidth, forestHeight, false, false);
 		ImagePattern image_pattern = new ImagePattern(backgroundImage, forestWidth, forestHeight,forestWidth, forestHeight,false);

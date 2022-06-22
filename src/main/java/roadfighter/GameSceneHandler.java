@@ -12,9 +12,7 @@ import javafx.geometry.Bounds;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
-//import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-//import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
 import roadfighter.interfaces.Collidator;
@@ -25,7 +23,6 @@ import roadfighter.objects.BottomLimit;
 import roadfighter.objects.CarPlayer;
 import roadfighter.objects.Coordinate;
 import roadfighter.objects.Direction;
-import roadfighter.objects.GoodDriver;
 import roadfighter.objects.LeftLimit;
 import roadfighter.objects.Obstacle;
 import roadfighter.objects.Player;
@@ -40,16 +37,6 @@ import roadfighter.utils.GameObject;
 import roadfighter.utils.GameObjectBuilder;
 
 public class GameSceneHandler extends SceneHandler {
-	// private KeyCode playerOneUpKey = KeyCode.W;
-	// private KeyCode playerOneLeftKey = KeyCode.A;
-	// private KeyCode playerOneDownKey = KeyCode.S;
-	// private KeyCode playerOneRightKey = KeyCode.D;
-	/*
-	 * se podria hacer algo asi para poder configurar las teclas pero no se donde
-	 * poner estas variables y si lo hacemos asi hay que usar if-else porque no deja
-	 * poner las variables esas en los casos del switch por algun motivo que no
-	 * entendi muy bien
-	 */
 
 	private Background background;
 	private GenericText score;

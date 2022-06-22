@@ -4,8 +4,6 @@ package roadfighter.objects;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.media.AudioClip;
-import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
@@ -22,7 +20,6 @@ public class Obstacle extends Item{
 	
 	private Image sprite;
 	private ImageView render;
-	private MediaPlayer mediaPlayer;
 
 	public Obstacle(double x, double y,String path) {
 		visible = true;

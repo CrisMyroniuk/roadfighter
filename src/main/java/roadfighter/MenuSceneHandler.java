@@ -3,41 +3,27 @@ package roadfighter;
 import java.util.ArrayList;
 import java.util.List;
 
-import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Bounds;
-import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import roadfighter.interfaces.Collidator;
 import roadfighter.interfaces.Collideable;
 import roadfighter.objects.Background;
-import roadfighter.objects.CarPlayer;
-//import roadfighter.objects.CarPlayerFX;
 import roadfighter.objects.ColliderTop;
-import roadfighter.objects.Coordinate;
 import roadfighter.objects.Direction;
 import roadfighter.objects.Enemy;
 import roadfighter.objects.GoodDriver;
-//import roadfighter.objects.Obstacle;
-import roadfighter.objects.Player;
 import roadfighter.objects_menu.ButtonMenu;
-import roadfighter.objects_menu.GenericText;
-import roadfighter.objects_menu.MasterVolumeSlider;
 import roadfighter.objects_menu.Title;
 import roadfighter.utils.GameObject;
 import roadfighter.utils.GameObjectBuilder;
-//import javafx.scene.Scene;
 
 public class MenuSceneHandler extends SceneHandler {
 	
@@ -45,14 +31,9 @@ public class MenuSceneHandler extends SceneHandler {
 	private AudioClip audioGame;
 	private Background background;
 	private ArrayList<GameObject> gameObjects=new ArrayList<GameObject>();
-	//private Ground ground;
 	private Title title;
 	private ButtonMenu boton1Player;
 	private ButtonMenu boton2Player;
-	//private CarPlayerFX player;
-	private Player player;
-	private CarPlayer car;
-	private Rectangle colliderBottom;
 	private EventHandler<ActionEvent> onPressHandlerOnePlayer;
 	private EventHandler<ActionEvent> onPressHandlerTwoPlayer;
 	private ColliderTop colliderTop;

@@ -1,7 +1,5 @@
 package roadfighter.objects_menu;
 
-import javafx.animation.Animation;
-import javafx.animation.TranslateTransition;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.layout.VBox;
@@ -9,8 +7,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
-import javafx.util.Duration;
-import roadfighter.Config;
 import roadfighter.interfaces.Renderable;
 import roadfighter.objects.Coordinate;
 import roadfighter.utils.GameObject;

@@ -1,8 +1,6 @@
 package roadfighter.objects_menu;
 
 import java.util.ArrayList;
-import java.util.Collections;
-
 import roadfighter.interfaces.Updatable;
 import roadfighter.objects.Coordinate;
 import roadfighter.objects.Player;

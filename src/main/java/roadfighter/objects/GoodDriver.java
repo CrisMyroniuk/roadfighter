@@ -3,7 +3,6 @@ package roadfighter.objects;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
@@ -14,9 +13,6 @@ import roadfighter.interfaces.Renderable;
 import roadfighter.utils.GameObjectBuilder;
 
 public class GoodDriver extends Enemy implements Collidator, Renderable{
-	
-	private static int cantidad = 0;
-	private int id;
 
 	private ImageView render;
 	private Image sprite;
