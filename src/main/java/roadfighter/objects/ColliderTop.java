@@ -1,8 +1,5 @@
 package roadfighter.objects;
 
-import javafx.scene.Node;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
@@ -11,20 +8,16 @@ public class ColliderTop extends Item{
 	
 	// si hay varios obstaculos diferentes habria que hacer mas clases
 	// o meterle mas cosas al constructor para que tengan diferentes sprites/hitboxes
-	private final double WIDTH = 25;
+	private final double WIDTH = 500;
 	private final double HEIGHT = 25;
 	
 	private Rectangle hitbox;
-	private Image sprite;
-	private ImageView render;
 
 	public ColliderTop(double x, double y) {
 		visible = true;
 		setCoordinate(new Coordinate(x, y));
-		render = new ImageView(sprite);
-		render.relocate(x - WIDTH / 2, y - HEIGHT / 2);
 		
-		hitbox = new Rectangle(500,-200, 500, 25);
+		hitbox = new Rectangle(500,-200, WIDTH, HEIGHT);
 		hitbox.setFill(Color.FUCHSIA);
 		hitbox.setStroke(Color.FUCHSIA);
 	}
@@ -35,31 +28,18 @@ public class ColliderTop extends Item{
 	}
 	
 	@Override
-	public Node getRender() {
-		return render;
-	}
-	
-	@Override
-	public void destroy() {
-		// capas haya que cortar audio
-	}
+	public void destroy() {}
 
 	@Override
 	public void effectPlayer(CarPlayer cp) {
 		cp.setCoordinate(new Coordinate(cp.getOriginalCoordinate().getX(),cp.getOriginalCoordinate().getY()));
-		
 	}
 	
 	@Override
 	public void effectEnemy(GoodDriver e) {
-		System.out.print("HOLA");
 		e.setCoordinate(new Coordinate(e.getOriginalCoordinate().getX(),e.getOriginalCoordinate().getY()));
-		
 	}
 
 	@Override
-	public void update(double deltaTime) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void update(double deltaTime) {}
 }

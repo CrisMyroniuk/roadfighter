@@ -1,19 +1,12 @@
 package roadfighter.objects;
 
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
+
 import javafx.scene.shape.Rectangle;
 import roadfighter.Config;
-import roadfighter.interfaces.Collidator;
-import roadfighter.interfaces.Renderable;
 
 public abstract class Enemy extends Vehicle{
 	private Direction direction;
 	private boolean visible;
-	
-	protected Image sprite;
-	protected ImageView render;
 	
 	protected int WIDTH;
 	protected int HEIGHT;
@@ -73,8 +66,6 @@ public abstract class Enemy extends Vehicle{
 		
 		move(0, translateY);
 		
-		render.setTranslateX(getCoordinate().getX() - WIDTH / 2);
-		render.setTranslateY(getCoordinate().getY() - HEIGHT / 2);
 		hitbox.setX(this.getCoordinate().getX() - WIDTH / 2);
 		hitbox.setY(this.getCoordinate().getY() - HEIGHT / 2);
 	}

@@ -5,7 +5,7 @@ import java.util.List;
 
 import roadfighter.interfaces.Collidator;
 import roadfighter.interfaces.Collideable;
-import roadfighter.interfaces.Renderable;
+//import roadfighter.interfaces.Renderable;
 import roadfighter.interfaces.Updatable;
 import javafx.scene.Group;
 
@@ -16,7 +16,7 @@ public class GameObjectBuilder {
 
 	private List<GameObject> allGameObjects = new ArrayList<GameObject>();
 	private List<Updatable> updatables = new ArrayList<Updatable>();
-	private List<Renderable> renderables = new ArrayList<Renderable>();
+	//private List<Renderable> renderables = new ArrayList<Renderable>();
 	private List<Collideable> collideables = new ArrayList<Collideable>();
 	private List<Collidator> collidators = new ArrayList<Collidator>();
 
@@ -54,12 +54,12 @@ public class GameObjectBuilder {
 				updatables.add((Updatable) gameObject);
 			}
 
-			if (Renderable.class.isAssignableFrom(gameObject.getClass())) {
-				Renderable renderableGameObject = (Renderable) gameObject;
-				renderables.add(renderableGameObject);
-
-				objectsGroup.getChildren().add(renderableGameObject.getRender());
-			}
+//			if (Renderable.class.isAssignableFrom(gameObject.getClass())) {
+//				Renderable renderableGameObject = (Renderable) gameObject;
+//				renderables.add(renderableGameObject);
+//
+//				objectsGroup.getChildren().add(renderableGameObject.getRender());
+//			}
 
 			if (Collidator.class.isAssignableFrom(gameObject.getClass())) {
 				Collidator collidatorGameObject = (Collidator) gameObject;
@@ -85,12 +85,12 @@ public class GameObjectBuilder {
 				updatables.add((Updatable) gameObject);
 			}
 
-			if (Renderable.class.isAssignableFrom(gameObject.getClass())) {
-				Renderable renderableGameObject = (Renderable) gameObject;
-				renderables.add(renderableGameObject);
-
-				objectsGroup.getChildren().add(renderableGameObject.getRender());
-			}
+//			if (Renderable.class.isAssignableFrom(gameObject.getClass())) {
+//				Renderable renderableGameObject = (Renderable) gameObject;
+//				renderables.add(renderableGameObject);
+//
+//				objectsGroup.getChildren().add(renderableGameObject.getRender());
+//			}
 
 			if (Collidator.class.isAssignableFrom(gameObject.getClass())) {
 				Collidator collidatorGameObject = (Collidator) gameObject;
@@ -116,12 +116,12 @@ public class GameObjectBuilder {
 				updatables.remove((Updatable) gameObject);
 			}
 
-			if (Renderable.class.isAssignableFrom(gameObject.getClass())) {
-				Renderable renderableGameObject = (Renderable) gameObject;
-				renderables.remove(renderableGameObject);
-
-				objectsGroup.getChildren().remove(renderableGameObject.getRender());
-			}
+//			if (Renderable.class.isAssignableFrom(gameObject.getClass())) {
+//				Renderable renderableGameObject = (Renderable) gameObject;
+//				renderables.remove(renderableGameObject);
+//
+//				objectsGroup.getChildren().remove(renderableGameObject.getRender());
+//			}
 
 			if (Collidator.class.isAssignableFrom(gameObject.getClass())) {
 				Collidator collidatorGameObject = (Collidator) gameObject;

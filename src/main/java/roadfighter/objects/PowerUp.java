@@ -1,13 +1,9 @@
 package roadfighter.objects;
 
-import javafx.scene.Node;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import roadfighter.Config;
-import roadfighter.objects_menu.PointsText;
 import roadfighter.utils.GameObjectBuilder;
 
 public class PowerUp extends Item{
@@ -15,9 +11,6 @@ public class PowerUp extends Item{
 	private int points;
 	private final double WIDTH = 70;
 	private final double HEIGHT = 70;
-	
-	private Image sprite;
-	private ImageView render;
 	
 	public PowerUp(double x, double y, int p,String path) {
 		setCoordinate(new Coordinate(x,y));
@@ -28,16 +21,8 @@ public class PowerUp extends Item{
 		hitbox = new Rectangle(x, y, WIDTH, HEIGHT);
 		hitbox.setFill(null);
 		hitbox.setStroke(Color.MEDIUMSEAGREEN);
-		
-		initImages(path);
-		render = new ImageView(sprite);
-		render.setTranslateX(getCoordinate().getX() - WIDTH / 2);
-		render.setTranslateY(getCoordinate().getY() - HEIGHT / 2);
 	}
 	
-	private void initImages(String path) {
-		sprite = new Image(path,WIDTH,HEIGHT,true,true);//place holder
-	}
 	public int getPoints() {
 		return points;
 	}
@@ -50,9 +35,7 @@ public class PowerUp extends Item{
 	public void effectPlayer(CarPlayer cp) {
 		// TODO Agregamos los puntos al jugador
 		cp.addPoints(points);
-		cp.getCoinAudio().play();
 		GameObjectBuilder builder = GameObjectBuilder.getInstance();
-		builder.add(new PointsText(points, getCoordinate()));
 		builder.remove(this);
 	}
 	
@@ -72,11 +55,6 @@ public class PowerUp extends Item{
 	}
 
 	@Override
-	public Node getRender() {
-		return render;
-	}
-
-	@Override
 	public void effectEnemy(GoodDriver source) {
 		// TODO Auto-generated method stub
 		
@@ -86,8 +64,6 @@ public class PowerUp extends Item{
 	public void update(double delta) {
 		getCoordinate().setY(getCoordinate().getY() + Config.roadSpeed * delta);
 		
-		render.setTranslateX(getCoordinate().getX() - WIDTH / 2);
-		render.setTranslateY(getCoordinate().getY() - HEIGHT / 2);
 		hitbox.setX(this.getCoordinate().getX() - WIDTH / 2);
 		hitbox.setY(this.getCoordinate().getY() - HEIGHT / 2);
 		

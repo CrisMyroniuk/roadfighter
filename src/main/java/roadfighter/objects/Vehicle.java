@@ -1,10 +1,9 @@
 package roadfighter.objects;
 
 import roadfighter.interfaces.Collideable;
-import roadfighter.interfaces.Renderable;
 import roadfighter.interfaces.Updatable;
 
-public abstract class Vehicle extends MapObject implements Updatable, Renderable, Collideable {
+public abstract class Vehicle extends MapObject implements Updatable, Collideable {
 	private double speed;
 	protected double horizontalSpeed;
 

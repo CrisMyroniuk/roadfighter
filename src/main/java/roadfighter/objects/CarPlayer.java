@@ -1,19 +1,13 @@
 package roadfighter.objects;
 
-import javafx.scene.Node;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import roadfighter.Config;
 import roadfighter.interfaces.Collidator;
 import roadfighter.interfaces.Collideable;
-import roadfighter.interfaces.Renderable;
-import roadfighter.utils.AudioResources;
 
-public class CarPlayer extends Vehicle implements Collidator, Renderable{
+public class CarPlayer extends Vehicle implements Collidator{
 
 	// region Variables
 	private double acceleration;
@@ -25,9 +19,6 @@ public class CarPlayer extends Vehicle implements Collidator, Renderable{
 	private boolean down;
 	private boolean left;
 	private boolean right;
-	
-	private ImageView render;
-	private Image sprite;
 	
 	private final int WIDTH = 70;
 	private final int HEIGHT = 160;
@@ -42,7 +33,7 @@ public class CarPlayer extends Vehicle implements Collidator, Renderable{
 	private double controlLossX;
 	private double controlLossY;
 	
-	private boolean alive = true;
+	//private boolean alive = true;
 	private Integer point;
 	private boolean pickedUpPoints = false;
 	
@@ -53,16 +44,6 @@ public class CarPlayer extends Vehicle implements Collidator, Renderable{
 	public PlayerState getPlayerState() {
 		return playerState;
 	}
-
-	private AudioClip explosionAudio;
-	private AudioClip coinAudio;
-	/*private boolean turbo;
-	private static double turboDuration = 100;
-	private static double turboExtraSpeed = 50; // +50
-	private static double turboExtraAceleration = 2; // x2
-	private static double turboSpeedLimit = 100; // +100
-	*/
-	// endregion
 
 	// region Properties
 	
@@ -134,20 +115,6 @@ public class CarPlayer extends Vehicle implements Collidator, Renderable{
 		return turbo;
 	}
 
-	// public Enum getDirection() {
-	// return direction;
-	// }
-	// public void setDirection(Enum direction) {
-	// this.direction = direction;
-	// }
-	// public Movement getMovement() {
-	// return movement;
-	// }
-	// public void setMovement(Movement movement) {
-	// this.movement = movement;
-	// }
-	// endregion
-
 	// region Constructor
 
 	public CarPlayer(double x, double y, String image) {
@@ -162,10 +129,6 @@ public class CarPlayer extends Vehicle implements Collidator, Renderable{
 		this.setSpeed(Config.carVerticalSpeed);
 		this.setHorizontalSpeed(Config.carHorizontalSpeed);
 		
-		initImages(image);
-		initAudios();
-		render = new ImageView(sprite);
-		//render.relocate(x - WIDTH / 2, y - HEIGHT / 2);
 		
 		hitbox = new Rectangle(x - WIDTH / 2, y - HEIGHT / 2, WIDTH, HEIGHT);
 		hitbox.setFill(null);
@@ -180,29 +143,9 @@ public class CarPlayer extends Vehicle implements Collidator, Renderable{
 	public void changeStateDeath() {
 		playerState = PlayerState.PLAYER_DEATH;
 	}
-	
-	private void initImages(String image) {
-		sprite = new Image(image, WIDTH, HEIGHT, true, true);
-	}
-
-	private void initAudios() {
-		explosionAudio = AudioResources.getExplosionAudio();
-		explosionAudio.setVolume(Config.masterVolumeModifier * Config.effectsVolumeModifier);
-
-		coinAudio =  AudioResources.getCoinAudio();
-		coinAudio.setVolume(Config.masterVolumeModifier * Config.effectsVolumeModifier);
-	}
 	// endregion
 
 	// region Metodos
-
-	public AudioClip getExplosionAudio() {
-		return explosionAudio;
-	}
-	
-	public AudioClip getCoinAudio() {
-		return coinAudio;
-	}
 
 	public void addPoints(int p) {
 		setPoint(getPoint() + p);
@@ -358,15 +301,8 @@ public class CarPlayer extends Vehicle implements Collidator, Renderable{
 				move(controlLossSpeed * controlLossX * delta, controlLossSpeed * controlLossY * delta);
 			}
 		}
-		render.setTranslateX(getCoordinate().getX() - WIDTH / 2);
-		render.setTranslateY(getCoordinate().getY() - HEIGHT / 2);
 		hitbox.setX(this.getCoordinate().getX() - WIDTH / 2);
 		hitbox.setY(this.getCoordinate().getY() - HEIGHT / 2);
-	}
-
-	@Override
-	public Node getRender() {
-		return render;
 	}
 
 	@Override
@@ -376,8 +312,6 @@ public class CarPlayer extends Vehicle implements Collidator, Renderable{
 
 	@Override
 	public void collide(Collideable collideable) {
-		System.out.println("colision");
-
 		collideable.effectPlayer(this);
 	}
 

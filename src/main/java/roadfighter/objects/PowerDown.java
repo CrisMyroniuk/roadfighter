@@ -1,13 +1,9 @@
 package roadfighter.objects;
 
-import javafx.scene.Node;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import roadfighter.Config;
-import roadfighter.objects_menu.PointsText;
 import roadfighter.utils.GameObjectBuilder;
 
 public class PowerDown extends Item{
@@ -15,9 +11,6 @@ public class PowerDown extends Item{
 	private final double speedDown = 100;
 	private final double WIDTH = 40;
 	private final double HEIGHT = 40;
-	
-	private Image sprite;
-	private ImageView render;
 	
 	public double getSpeedDown() {
 		return speedDown;
@@ -30,15 +23,6 @@ public class PowerDown extends Item{
 		hitbox = new Rectangle(x, y, WIDTH, HEIGHT);
 		hitbox.setFill(null);
 		hitbox.setStroke(Color.TRANSPARENT);
-		
-		initImages(path);
-		render = new ImageView(sprite);
-		render.setTranslateX(getCoordinate().getX() - WIDTH / 2);
-		render.setTranslateY(getCoordinate().getY() - HEIGHT / 2);
-	}
-	
-	private void initImages(String path) {
-		sprite = new Image(path,WIDTH,HEIGHT,true,true);//place holder
 	}
 
 	@Override
@@ -66,11 +50,6 @@ public class PowerDown extends Item{
 	}
 
 	@Override
-	public Node getRender() {
-		return render;
-	}
-
-	@Override
 	public void effectEnemy(GoodDriver source) {
 		// TODO Auto-generated method stub
 		
@@ -79,9 +58,7 @@ public class PowerDown extends Item{
 	@Override
 	public void update(double delta) {
 		getCoordinate().setY(getCoordinate().getY() + Config.roadSpeed * delta);
-		
-		render.setTranslateX(getCoordinate().getX() - WIDTH / 2);
-		render.setTranslateY(getCoordinate().getY() - HEIGHT / 2);
+
 		hitbox.setX(this.getCoordinate().getX() - WIDTH / 2);
 		hitbox.setY(this.getCoordinate().getY() - HEIGHT / 2);
 		

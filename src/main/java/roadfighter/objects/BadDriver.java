@@ -1,11 +1,5 @@
 package roadfighter.objects;
 
-import java.util.ArrayList;
-import java.util.Random;
-
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
@@ -23,8 +17,6 @@ public class BadDriver extends Enemy {
 	private final int WIDTH = 70;
 	private final int HEIGHT = 160;
 	
-	private Random random = new Random();
-	
 	public BadDriver(double x, double y, Direction d) {
 		setCoordinate(new Coordinate(x, y));
 		setDirection(d);
@@ -33,23 +25,11 @@ public class BadDriver extends Enemy {
 		objective = this.getCoordinate();
 		timer = 3;
 		
-		initImages();
-		render = new ImageView(sprite);
-		
 		hitbox = new Rectangle(x - WIDTH / 2, y - HEIGHT / 2, WIDTH, HEIGHT);
 		hitbox.setFill(null);
 		hitbox.setStroke(Color.FUCHSIA);
 		
 		id = cantidad++;
-	}
-	
-	private void initImages() {
-		ArrayList<String> imagenesDrivers = new ArrayList<String>();
-		imagenesDrivers.add("file:src/resources/images/Enemy1.png");
-		imagenesDrivers.add("file:src/resources/images/Enemy2.png");
-		imagenesDrivers.add("file:src/resources/images/Enemy3.png");
-		imagenesDrivers.add("file:src/resources/images/Enemy4.png");
-		sprite = new Image(imagenesDrivers.get(random.nextInt(0,4)), WIDTH, HEIGHT, true, true);
 	}
 	
 	public void obstructPath(CarPlayer player) {
@@ -104,17 +84,9 @@ public class BadDriver extends Enemy {
 	public Shape getCollider() {
 		return hitbox;
 	}
-	
-	@Override
-	public ImageView getRender() {
-		return render;
-	}
 
 	@Override
 	public void effectPlayer(CarPlayer source) {
-		
-		source.getExplosionAudio().play();
-		
 		GameObjectBuilder builder = GameObjectBuilder.getInstance();
 		builder.remove(this);
 		

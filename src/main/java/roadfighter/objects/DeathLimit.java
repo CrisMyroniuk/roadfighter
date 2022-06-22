@@ -4,9 +4,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import roadfighter.interfaces.Collideable;
-import roadfighter.objects_menu.PointsText;
 import roadfighter.utils.GameObject;
-import roadfighter.utils.GameObjectBuilder;
 
 public abstract class DeathLimit extends GameObject implements Collideable{
 
@@ -22,12 +20,10 @@ public abstract class DeathLimit extends GameObject implements Collideable{
 	public void effectPlayer(CarPlayer source) {
 		
 		if(source.getPoint() > 0 && source.canCrash()) {
-			GameObjectBuilder builder = GameObjectBuilder.getInstance();
 			source.removePoints(1);
 			if(source.getPoint() < 0) {
 				source.setPoint(0);
 			}
-			builder.add(new PointsText(-1, source.getCoordinate()));
 		}
 		
 	}

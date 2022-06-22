@@ -3,10 +3,9 @@ package roadfighter.objects;
 import javafx.scene.shape.Rectangle;
 import roadfighter.Config;
 import roadfighter.interfaces.Collideable;
-import roadfighter.interfaces.Renderable;
 import roadfighter.interfaces.Updatable;
 
-public abstract class Item extends MapObject implements Collideable, Renderable, Updatable{
+public abstract class Item extends MapObject implements Collideable, Updatable{
 	
 	protected Rectangle hitbox;
 	protected boolean visible;
