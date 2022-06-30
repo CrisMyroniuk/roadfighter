@@ -35,6 +35,7 @@ import roadfighter.objects.PowerUp;
 import roadfighter.objects.RightLimit;
 import roadfighter.objects.TopLimit;
 import roadfighter.objects_menu.GenericText;
+import roadfighter.objects_menu.Lifes;
 import roadfighter.objects_menu.ScoreText;
 import roadfighter.utils.GameObject;
 import roadfighter.utils.GameObjectBuilder;
@@ -53,6 +54,8 @@ public class GameSceneHandler extends SceneHandler {
 
 	private Background background;
 	private GenericText score;
+	
+	private Lifes lifes;
 
 	private ArrayList<Player> players = new ArrayList<Player>();
 	private ArrayList<Obstacle> obstacles = new ArrayList<Obstacle>();
@@ -136,7 +139,30 @@ public class GameSceneHandler extends SceneHandler {
 			gameObjects.add(p.getCarPlayer());
 		}
 		
+		lifes = new Lifes("file:src/resources/images/life-transparent.png",290,50,players.get(0),1);
 		score = new ScoreText(players, new Coordinate(50, 50));
+		
+		gameObjects.add(lifes);
+		lifes = new Lifes("file:src/resources/images/life-transparent.png",340,50,players.get(0),2);
+		
+		gameObjects.add(lifes);
+		
+		lifes = new Lifes("file:src/resources/images/life-transparent.png",390,50,players.get(0),3);
+		gameObjects.add(lifes);
+		
+		
+		if(!singlePlayer) {
+			lifes = new Lifes("file:src/resources/images/life-transparent.png",290,90,players.get(1),1);
+			
+			gameObjects.add(lifes);
+			lifes = new Lifes("file:src/resources/images/life-transparent.png",340,90,players.get(1),2);
+			
+			gameObjects.add(lifes);
+			
+			lifes = new Lifes("file:src/resources/images/life-transparent.png",390,90,players.get(1),3);
+			gameObjects.add(lifes);
+		}
+		
 		gameObjects.add(score);
 		
 		gameObjects.add(new TopLimit());
