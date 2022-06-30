@@ -41,6 +41,17 @@ public class CarPlayer extends Vehicle implements Collidator{
 	private double crashTimer = 0;
 	private double crashTimerMax = 0.25;
 	
+	private int cantLifes;
+	
+	
+	public int getCantLifes() {
+		return cantLifes;
+	}
+
+	public void setCantLifes(int cantLifes) {
+		this.cantLifes = cantLifes;
+	}
+
 	public PlayerState getPlayerState() {
 		return playerState;
 	}
@@ -138,10 +149,14 @@ public class CarPlayer extends Vehicle implements Collidator{
 		controlLossSpeed = getSpeed() / 3;
 		
 		playerState = PlayerState.PLAYER_LIVE;
+		cantLifes = 3;
 	}
 	
 	public void changeStateDeath() {
-		playerState = PlayerState.PLAYER_DEATH;
+		cantLifes--;
+		if(cantLifes == 0) {
+			playerState = PlayerState.PLAYER_DEATH;
+		}
 	}
 	// endregion
 

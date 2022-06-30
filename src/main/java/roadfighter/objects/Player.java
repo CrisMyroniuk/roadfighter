@@ -8,9 +8,11 @@ import roadfighter.utils.GameObject;
 
 public class Player extends GameObject {
 
+	private Integer points;
 	private PlayerState state;
 	private CarPlayer car;
 	private ArrayList<KeyCode> keys;
+	private int lifesCant;
 //	private boolean up;
 //	private boolean down;
 //	private boolean left;
@@ -24,12 +26,16 @@ public class Player extends GameObject {
 		keys.add(KeyCode.D);
 		car = carPlayer;
 		state = state.PLAYER_LIVE;
+		points = 0;
+		lifesCant = 3;
 	}
 
 	public Player(CarPlayer carPlayer,ArrayList<KeyCode> kc) {
 		car = carPlayer;
 		setKeys(kc);
 		state = state.PLAYER_LIVE;
+		points = 0;
+		lifesCant = 3;
 	}
 
 	public ArrayList<KeyCode> getKeys() {
@@ -46,6 +52,22 @@ public class Player extends GameObject {
 
 	public CarPlayer getCarPlayer() {
 		return car;
+	}
+
+	public void setPoint(Integer point) {
+		this.points = point;
+	}
+
+	public int getCantLifes() {
+		return car.getCantLifes();
+	}
+	
+	public void addPoints(int p) {
+		setPoint(getPoint() + p);
+	}
+
+	public void removePoints(int p) {
+		setPoint(getPoint() - p);
 	}
 
 	public void eventPressed(KeyEvent e) {
