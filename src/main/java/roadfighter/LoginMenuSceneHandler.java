@@ -3,6 +3,8 @@ package roadfighter;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.net.Socket;
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 
 import com.google.gson.Gson;
@@ -18,28 +20,28 @@ import roadfighter.client.utils.Message;
 import roadfighter.client.utils.MessageType;
 import roadfighter.objects.Background;
 import roadfighter.objects_menu.ButtonMenu;
-import roadfighter.objects_menu.MenuComboBox;
 import roadfighter.objects_menu.MenuTextField;
 import roadfighter.objects_menu.Title;
 import roadfighter.utils.GameObject;
 import roadfighter.utils.GameObjectBuilder;
 
-public class LobbyCreatorSceneHandler extends SceneHandler {
+public class LoginMenuSceneHandler extends SceneHandler {
 	private Group rootGroup;
 	private Background background;
-	private ArrayList<GameObject> gameObjects=new ArrayList<GameObject>();
+	private ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
 	private Title title;
 	private GameObjectBuilder gameOB;
 	
-	private MenuTextField nameTextField;
-	private MenuComboBox maxPlayersComboBox;
-	private ButtonMenu create;
+	private MenuTextField ipAdress;
+	private MenuTextField port;
+	private MenuTextField userName;
+	private ButtonMenu login;
 	private ButtonMenu back;
-		
-	private EventHandler<ActionEvent> onPressHandlerCreate;
+
+	private EventHandler<ActionEvent> onPressHandlerLogin;
 	private EventHandler<ActionEvent> onPressHandlerBack;
 	
-	public LobbyCreatorSceneHandler(RoadFighterGame g) {
+	public LoginMenuSceneHandler(RoadFighterGame g) {
 		super(g);
 	}
 
@@ -63,7 +65,7 @@ public class LobbyCreatorSceneHandler extends SceneHandler {
 			public void handle(KeyEvent e) {
 				switch (e.getCode()) {
 				case ESCAPE:
-					g.startOnlineMenu(g.getInput(), g.getOutput());
+					g.startMenu();
 					break;
 				default:
 					break;
@@ -71,11 +73,11 @@ public class LobbyCreatorSceneHandler extends SceneHandler {
 			}
 		};
 		
-		onPressHandlerCreate = new EventHandler<ActionEvent>() {
+		onPressHandlerLogin = new EventHandler<ActionEvent>() {
 			
 			@Override
 			public void handle(ActionEvent e) {
-				attemptCreateLobby();
+				tryToConnect();
 			}
 		};
 		
@@ -83,30 +85,41 @@ public class LobbyCreatorSceneHandler extends SceneHandler {
 			
 			@Override
 			public void handle(ActionEvent e) {
-				g.startOnlineMenu(g.getInput(), g.getOutput());
+				g.startMenu();
 			}
 		};
 	}
 	
-	private void attemptCreateLobby() {
-		DataOutputStream output = g.getOutput();
-		DataInputStream input = g.getInput();
-		
+	private void tryToConnect() {
+		Socket socket;
+		DataInputStream input;
+		DataOutputStream output;
 		try {
-			output.writeUTF(new Message(MessageType.LOBBY_NEW, maxPlayersComboBox.getValue().toString()).getJsonString());
-			output.writeUTF(new Message(MessageType.LOBBY_NEW, nameTextField.getText()).getJsonString());
-			Message response = new Gson().fromJson(input.readUTF(), Message.class);
-			if (response.getType().equals(MessageType.LOBBY_NEW)) {
-				if (response.getContent().equals("created"))
-					g.startLobbyScreen();
-				else if (response.getContent().equals("inUse"))
-					throw new Exception();
+			socket = new Socket(ipAdress.getText(), Integer.parseInt(port.getText()));
+			input = new DataInputStream(socket.getInputStream());
+			output = new DataOutputStream(socket.getOutputStream());
+			socket.setSoTimeout(5000);
+			output.writeUTF(new Message(MessageType.SESSION_LOGIN, userName.getText()).getJsonString());
+			String response = input.readUTF();
+			Message messageResponse = new Gson().fromJson(response, Message.class);
+			if (messageResponse.getType().equals(MessageType.SESSION_LOGIN) && messageResponse.getContent().equals("logedIn")) {
+				socket.setSoTimeout(0);
+				g.startOnlineMenu(input, output);
+			} else {
+				throw new Exception();
 			}
+		} catch (NumberFormatException e) {
+			userName.setText("ip o puerto invalido");
+			System.err.println("ip o puerto invalido");
+		} catch (SocketTimeoutException e) {
+			userName.setText("time out");
+			System.err.println("time out");
 		} catch (IOException e) {
-			System.err.println("ocurrio algun error");
+			userName.setText("fallo la conexion");
+			System.err.println("no se pudo conectar");
 		} catch (Exception e) {
-			nameTextField.setText("nombre en uso");
-			System.err.println("ya existe un lobby con el mismo nombre");
+			userName.setText("nombre de usuario en uso");
+			System.err.println("nombre de usuario en uso");
 		}
 	}
 
@@ -120,19 +133,14 @@ public class LobbyCreatorSceneHandler extends SceneHandler {
 		background = new Background();
 
 		title = new Title();
-				
-		nameTextField = new MenuTextField("Lobby name", 500, Config.baseHeight * 3 / 5);
 		
-		maxPlayersComboBox = new MenuComboBox("Max players", 500, Config.baseHeight * 3 / 5 + 100);
-		maxPlayersComboBox.addItem(2);
-		maxPlayersComboBox.addItem(3);
-		maxPlayersComboBox.addItem(4);
-		
-		create = new ButtonMenu("CREATE", Config.baseHeight * 3 / 5 + 200);
-	
+		ipAdress = new MenuTextField("ip", 500, Config.baseHeight * 3 / 5);
+		port = new MenuTextField("port", 500, Config.baseHeight * 3 / 5 + 50);
+		userName = new MenuTextField("UserName", 500, Config.baseHeight * 3 / 5 + 100);
+		login = new ButtonMenu("LOGIN", Config.baseHeight * 3 / 5 + 200);
 		back = new ButtonMenu("BACK", Config.baseHeight * 3 / 5 + 300);
 		
-		gameOB.add(nameTextField, maxPlayersComboBox, create, back);
+		gameOB.add(ipAdress, port, userName, login, back);
 		
 		gameObjects.add(background);
 		gameObjects.add(title);
@@ -154,13 +162,13 @@ public class LobbyCreatorSceneHandler extends SceneHandler {
 	
 	protected void addInputEvents() {
 		super.addInputEvents();
-		create.setOnAction(onPressHandlerCreate);
+		login.setOnAction(onPressHandlerLogin);
 		back.setOnAction(onPressHandlerBack);
 	}
 	
 	protected void removeInputEvents() {
 		super.removeInputEvents();
-		create.removeOnAction(onPressHandlerCreate);
+		login.removeOnAction(onPressHandlerLogin);
 		back.removeOnAction(onPressHandlerBack);
 	}
 }

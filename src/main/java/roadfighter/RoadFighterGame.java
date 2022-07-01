@@ -1,5 +1,9 @@
 package roadfighter;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.net.Socket;
+
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -17,43 +21,26 @@ public class RoadFighterGame extends Application {
 	private GameSceneHandler gameSceneHandler;
 	private WinSceneHandler winSceneHandler;
 	
+	private LoginMenuSceneHandler loginMenuSceneHandler;
 	private OnlineMenuSceneHandler onlineMenuSceneHandler;
 	private LobbyCreatorSceneHandler lobbyCreatorSceneHandler;
 	private LobbySelectorSceneHandler lobbySelectorSceneHandler;
 	private LobbySceneHandler lobbySceneHandler;
 
+	private Socket socket;
+	private DataInputStream input;
+	private DataOutputStream output;
 	
 	@Override
 	public void start(Stage stage) throws Exception {
-		/*Group root = new Group();
-		Scene currentScene = new Scene(root);
-		
-		Image background = new Image("file:background.png");
-		ImageView imageView = new ImageView(background);
-		root.getChildren().add(imageView);
-		
-		stage.setScene(currentScene);
-		stage.setTitle("Roadfighter");
-		stage.show();*/
 		
 		this.stage = stage;
-
 		menuSceneHandler = new MenuSceneHandler(this);
 		currentSceneHandler = menuSceneHandler;
 		Scene scene = menuSceneHandler.getScene();
 		stage.setScene(scene);
 		
 		menuSceneHandler.load();
-		
-		// XXX patron state para controlar paso de escenas?
-
-		// Scale
-		// TODO scale and fill to maintain proportion (also center)
-		// scale = new Scale();
-		// dinamico, cada vez que cambio el tamaÃ±o de ventana
-		// scale.setX(scene.getWidth() / WIDTH);
-		// scale.setY(scene.getHeight() / HEIGHT);
-		// images.getTransforms().add(scale);
 
 		stage.getIcons().add(new Image("file:src/resources/images/flag-race.jpg"));
 		stage.setTitle("Road Fighter");
@@ -67,7 +54,6 @@ public class RoadFighterGame extends Application {
 	}
 	
 	public void startGame(boolean singlePlayer) {
-		//menuSceneHandler.unload();
 		currentSceneHandler.unload();
 		gameSceneHandler = new GameSceneHandler(this,singlePlayer);
 		currentSceneHandler = gameSceneHandler;
@@ -77,10 +63,6 @@ public class RoadFighterGame extends Application {
 	}
 	
 	public void startMenu() {
-//		if (fromOptions)
-//			optionsSceneHandler.unload();
-//		else
-//			gameSceneHandler.unload();
 		currentSceneHandler.unload();
 		menuSceneHandler = new MenuSceneHandler(this);
 		currentSceneHandler = menuSceneHandler;
@@ -107,7 +89,19 @@ public class RoadFighterGame extends Application {
 		winSceneHandler.load();
 	}
 	
-	public void startOnlineMenu() {
+	public void startLoginMenu() {
+		currentSceneHandler.unload();
+		loginMenuSceneHandler = new LoginMenuSceneHandler(this);
+		currentSceneHandler = loginMenuSceneHandler;
+		Scene scene = loginMenuSceneHandler.getScene();
+		stage.setScene(scene);
+		loginMenuSceneHandler.load();
+	}
+	
+	public void startOnlineMenu(DataInputStream input, DataOutputStream output) {
+		this.input = input;
+		this.output = output;
+		
 		currentSceneHandler.unload();
 		onlineMenuSceneHandler = new OnlineMenuSceneHandler(this);
 		currentSceneHandler = onlineMenuSceneHandler;
@@ -142,5 +136,12 @@ public class RoadFighterGame extends Application {
 		stage.setScene(scene);
 		lobbySceneHandler.load();
 	}
-
+	
+	public DataInputStream getInput() {
+		return input;
+	}
+	
+	public DataOutputStream getOutput() {
+		return output;
+	}
 }

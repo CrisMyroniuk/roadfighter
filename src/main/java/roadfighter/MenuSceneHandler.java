@@ -113,7 +113,7 @@ public class MenuSceneHandler extends SceneHandler {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				g.startOnlineMenu();
+				g.startLoginMenu();
 			}
 		};
 	}

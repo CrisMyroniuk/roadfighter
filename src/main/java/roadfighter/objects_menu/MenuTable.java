@@ -2,8 +2,11 @@ package roadfighter.objects_menu;
 
 import java.util.HashMap;
 
+import javafx.event.WeakEventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellEditEvent;
+import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
@@ -33,7 +36,13 @@ public class MenuTable extends GameObject implements Renderable {
 		stateColumn.setCellValueFactory(new PropertyValueFactory<>("playing"));
 		stateColumn.setSortable(false);
 		
-		table.getItems().add(new Lobby(1, "nyan", 3));
+//		table.getItems().add(new Lobby(1, "nyan", 3));
+//		nameColumn.setOnEditStart((CellEditEvent<Lobby, String> event) -> {
+//			TablePosition<Lobby, String> pos = event.getTablePosition();
+//			
+//			event.getTableView().getItems().get(pos.getRow()).setCurrentPlayers(1);
+//		}); 
+		//no entiendo esta mierda y me esta volviendo loco
 		
 		render = new HBox(table);
 		render.setTranslateX(x);

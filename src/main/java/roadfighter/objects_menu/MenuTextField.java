@@ -32,5 +32,9 @@ public class MenuTextField extends GameObject implements Renderable{
 
 	@Override
 	public void destroy() {}
+
+	public void setText(String string) {
+		textField.setText(string);
+	}
 	
 }
