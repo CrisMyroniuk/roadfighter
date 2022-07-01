@@ -20,13 +20,15 @@ public class Lobby extends Thread{
 	private HashMap<Client, Boolean> clients;
 	private LinkedBlockingQueue<Message> chatMessages;
 	
+	private String name;
 	private int capacity;
 	
-	public Lobby(Client creator, int capacity) {
+	public Lobby(String name, Client creator, int capacity) {
 		id = nextId;
 		nextId++;
 		
 		this.capacity = capacity > MAX_CAPACITY ? MAX_CAPACITY : capacity;
+		this.name = name;
 		
 		clients = new HashMap<Client, Boolean>();
 		clients.put(creator, false);
@@ -89,6 +91,10 @@ public class Lobby extends Thread{
 	
 	public Integer getInternalId() {
 		return id;
+	}
+	
+	public String getLobbyName() {
+		return name;
 	}
 
 	@Override

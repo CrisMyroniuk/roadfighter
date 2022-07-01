@@ -25,8 +25,9 @@ public class Client {
 		userName = name;
 		listener = thread;
 		salida = listener.getSalida();
-		
 		gson = new Gson();
+		
+		salida.writeUTF(gson.toJson(new Message(MessageType.SESSION_LOGIN, "logedIn")));
 	}
 	
 	public Client(String name) {
@@ -48,8 +49,8 @@ public class Client {
 		lobby.add(this);
 	}
 	
-	public Lobby createLobby(int max) {
-		lobby = new Lobby(this, max);
+	public Lobby createLobby(String name, int max) {
+		lobby = new Lobby(name, this, max);
 		notify(new Message(MessageType.LOBBY_NEW, "created"));
 		return lobby;
 	}

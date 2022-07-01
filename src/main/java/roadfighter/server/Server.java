@@ -40,10 +40,22 @@ public class Server {
 		}
 	}
 	
-	public synchronized Lobby createNewLobby(Client creator, int max) {
-		Lobby nuevo = creator.createLobby(max);
-		lobbies.put(nuevo.getInternalId(), nuevo);
-		nuevo.start();
+	public synchronized Lobby createNewLobby(Client creator, String name, int max) {
+		boolean create = true;
+		for (Lobby l : lobbies.values()) {
+			if (l.getName().equals(name)) {
+				create = false;
+				break;
+			}
+		}
+		Lobby nuevo = null;
+		if (create) {
+			nuevo = creator.createLobby(name, max);
+			lobbies.put(nuevo.getInternalId(), nuevo);
+			nuevo.start();
+		} else {
+			creator.notify(new Message(MessageType.LOBBY_NEW, "inUse"));
+		}
 		return nuevo;
 	}
 	

@@ -85,7 +85,11 @@ public class ClientListener extends Thread {
 				
 				switch(message.getType()) {
 				case LOBBY_NEW:
-					server.createNewLobby(client, Integer.parseInt(message.getContent()));
+					buffer = input.readUTF();
+					Message message2 = gson.fromJson(buffer, Message.class);
+					if (message2.getType().equals(MessageType.LOBBY_NEW)) {					
+						server.createNewLobby(client, message2.getContent(), Integer.parseInt(message.getContent()));
+					}
 					break;
 				case LOBBY_JOIN:
 					server.joinLobby(client, Integer.parseInt(message.getContent()));
