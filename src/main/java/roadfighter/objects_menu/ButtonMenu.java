@@ -16,7 +16,7 @@ public class ButtonMenu extends GameObject implements Renderable {
 	private VBox render;
 	private Button button;
 
-	public ButtonMenu(String title,double Y) {
+	public ButtonMenu(String title, double Y) {
 		button = new Button(title);
 		render = new VBox(button);
 		render.setAlignment(Pos.CENTER);

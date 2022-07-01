@@ -12,12 +12,16 @@ public class RoadFighterGame extends Application {
 	private SceneHandler currentSceneHandler;
 
 	private MenuSceneHandler menuSceneHandler;
+	private OptionsSceneHandler optionsSceneHandler;
 
 	private GameSceneHandler gameSceneHandler;
-	
-	private OptionsSceneHandler optionsSceneHandler;
-	
 	private WinSceneHandler winSceneHandler;
+	
+	private OnlineMenuSceneHandler onlineMenuSceneHandler;
+	private LobbyCreatorSceneHandler lobbyCreatorSceneHandler;
+	private LobbySelectorSceneHandler lobbySelectorSceneHandler;
+	private LobbySceneHandler lobbySceneHandler;
+
 	
 	@Override
 	public void start(Stage stage) throws Exception {
@@ -101,6 +105,42 @@ public class RoadFighterGame extends Application {
 		Scene scene = winSceneHandler.getScene();
 		stage.setScene(scene);
 		winSceneHandler.load();
+	}
+	
+	public void startOnlineMenu() {
+		currentSceneHandler.unload();
+		onlineMenuSceneHandler = new OnlineMenuSceneHandler(this);
+		currentSceneHandler = onlineMenuSceneHandler;
+		Scene scene = onlineMenuSceneHandler.getScene();
+		stage.setScene(scene);
+		onlineMenuSceneHandler.load();
+	}
+	
+	public void startLobbyCreatorMenu() {
+		currentSceneHandler.unload();
+		lobbyCreatorSceneHandler = new LobbyCreatorSceneHandler(this);
+		currentSceneHandler = lobbyCreatorSceneHandler;
+		Scene scene = lobbyCreatorSceneHandler.getScene();
+		stage.setScene(scene);
+		lobbyCreatorSceneHandler.load();
+	}
+	
+	public void startLobbySelectorMenu() {
+		currentSceneHandler.unload();
+		lobbySelectorSceneHandler = new LobbySelectorSceneHandler(this);
+		currentSceneHandler = lobbySelectorSceneHandler;
+		Scene scene = lobbySelectorSceneHandler.getScene();
+		stage.setScene(scene);
+		lobbySelectorSceneHandler.load();
+	}
+	
+	public void startLobbyScreen() {
+		currentSceneHandler.unload();
+		lobbySceneHandler = new LobbySceneHandler(this);
+		currentSceneHandler = lobbySceneHandler;
+		Scene scene = lobbySceneHandler.getScene();
+		stage.setScene(scene);
+		lobbySceneHandler.load();
 	}
 
 }

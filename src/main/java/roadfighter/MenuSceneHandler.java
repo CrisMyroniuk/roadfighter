@@ -30,7 +30,7 @@ public class MenuSceneHandler extends SceneHandler {
 	private Group rootGroup;
 	private AudioClip audioGame;
 	private Background background;
-	private ArrayList<GameObject> gameObjects=new ArrayList<GameObject>();
+	private ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
 	private Title title;
 	private ButtonMenu boton1Player;
 	private ButtonMenu boton2Player;
@@ -45,6 +45,9 @@ public class MenuSceneHandler extends SceneHandler {
 	
 	private ButtonMenu buttonOptions;
 	private EventHandler<ActionEvent> onPressHandlerOptions;
+	
+	private ButtonMenu buttonOnline;
+	private EventHandler<ActionEvent> onPressHandlerOnline;
 	
 	public MenuSceneHandler(RoadFighterGame g) {
 		super(g);	
@@ -105,6 +108,14 @@ public class MenuSceneHandler extends SceneHandler {
 				g.startOptions();
 			}
 		};
+		
+		onPressHandlerOnline = new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent event) {
+				g.startOnlineMenu();
+			}
+		};
 	}
 
 	public void load() {
@@ -128,8 +139,9 @@ public class MenuSceneHandler extends SceneHandler {
 
 		title = new Title();
 		
-		buttonOptions = new ButtonMenu("OPTIONS", Config.baseHeight * 3 / 5 + 200);
+		buttonOptions = new ButtonMenu("OPTIONS", Config.baseHeight * 3 / 5 + 300);
 		
+		buttonOnline = new ButtonMenu("ONLINE", Config.baseHeight * 3 / 5 + 200);
 		
 		boton1Player = new ButtonMenu("1 PLAYER",Config.baseHeight * 3 / 5);
 		boton2Player = new ButtonMenu("2 PLAYERS",(Config.baseHeight * 3 / 5) + 100);
@@ -153,6 +165,7 @@ public class MenuSceneHandler extends SceneHandler {
 		gameObjects.add(title);
 		gameObjects.add(boton1Player);
 		gameObjects.add(boton2Player);
+		gameObjects.add(buttonOnline);
 		gameObjects.add(buttonOptions);
 		gameOB.add(gameObjects);
 
@@ -183,6 +196,7 @@ public class MenuSceneHandler extends SceneHandler {
 		boton1Player.setOnAction(onPressHandlerOnePlayer);
 		boton2Player.setOnAction(onPressHandlerTwoPlayer);
 		buttonOptions.setOnAction(onPressHandlerOptions);
+		buttonOnline.setOnAction(onPressHandlerOnline);
 	}
 	
 	protected void removeInputEvents() {
@@ -190,6 +204,7 @@ public class MenuSceneHandler extends SceneHandler {
 		boton1Player.removeOnAction(onPressHandlerOnePlayer);
 		boton2Player.removeOnAction(onPressHandlerTwoPlayer);
 		buttonOptions.removeOnAction(onPressHandlerOptions);
+		buttonOnline.removeOnAction(onPressHandlerOnline);
 	}
 	
 	private void checkCollisions() {
