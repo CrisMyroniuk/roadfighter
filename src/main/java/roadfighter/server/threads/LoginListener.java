@@ -19,11 +19,15 @@ public class LoginListener extends Thread {
 	public void run() {
 		while(true) {
 			try {
+				System.out.println("esperando clientes(loginlistener linea 22)");
 				Socket socket = listener.accept();
+				System.out.println("entro alguien(loginlistener linea 24)");
 				
 				ClientListener nuevo = new ClientListener(socket, server);
+				nuevo.start();
 				
 			} catch (IOException e) {
+				System.err.println("no se pudo crear un hilo para un cliente nuevo.");
 				e.printStackTrace();
 			} 
 		}

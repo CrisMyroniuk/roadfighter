@@ -1,29 +1,34 @@
 package roadfighter.server.threads;
 
 import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import com.google.gson.Gson;
+
+import roadfighter.server.Lobby;
 import roadfighter.server.Server;
 import roadfighter.server.utils.Message;
 import roadfighter.server.utils.MessageType;
 
 public class ClientListener extends Thread {
 	
-	DataInputStream input;
-	Socket socket;
-	Server server;
+	private DataInputStream input;
+	private Socket socket;
+	private final Server server;
+	private Client client;
 	
 	public ClientListener(Socket socket, Server server) throws IOException {
-		input = new DataInputStream(socket.getInputStream());
 		this.socket = socket;
 		this.server = server;
+		input = new DataInputStream(socket.getInputStream());
 	}
 	
 	private boolean validate(Message request) {
 		if (request.getType() == MessageType.SESSION_LOGIN)
-			return !server.isConnected(request.getContent());
+			return !server.isConnected(new Client(request.getContent()));
 		return false;
 	}
 	
@@ -36,13 +41,14 @@ public class ClientListener extends Thread {
 			Message request = gson.fromJson(buffer, Message.class);
 			
 			if (validate(request)) {
-				server.add(new Client(request.getContent(), this));
+				client = new Client(request.getContent(), this);
+				server.add(client);
+				socket.setSoTimeout(0);
 				success = true;
 			}
 		} catch (SocketTimeoutException e) {
 			try {
 				socket.close();
-				return false;
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
@@ -54,11 +60,19 @@ public class ClientListener extends Thread {
 		return success;
 	}
 	
+	public Server getServer() {
+		return server;
+	}
+	
+	public DataOutputStream getSalida() throws IOException {
+		return new DataOutputStream(socket.getOutputStream());
+	}
+	
 	@Override
 	public void run() {
 		if (!initConnection())
 			return;
-		
+		System.out.println("se creo el cliente y eso (clientListener 73)");
 		String buffer;
 		Message message;
 		Gson gson = new Gson();
@@ -66,14 +80,36 @@ public class ClientListener extends Thread {
 		while (true) {
 			try {
 				buffer = input.readUTF();
+				System.out.println(buffer + "(clientListener 81)");
 				message = gson.fromJson(buffer, Message.class);
 				
 				switch(message.getType()) {
+				case LOBBY_NEW:
+					server.createNewLobby(client, Integer.parseInt(message.getContent()));
+					break;
+				case LOBBY_JOIN:
+					server.joinLobby(client, Integer.parseInt(message.getContent()));
+					break;
+				case LOBBY_CONTROL:
+					client.setReady(message.getContent());
+					break;
+				case LOBBY_QUIT:
+					client.quitLobby();
+					break;
+				case LOBBY_CHAT:
+					client.sendChatMessage(message.getContent());
+					break;
+				case SESSION_LOGOUT:
+					client.quitLobby();
+					server.removeClient(client);
 				default:
 					break;
 				}
 			} catch (IOException e) {
-				e.printStackTrace();
+				client.leaveCurrentLobby();
+				server.removeClient(client);
+				System.err.println("el cliente cerro la conexion inesperadamente.");
+				break;
 			}
 			
 		}
