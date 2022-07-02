@@ -1,6 +1,8 @@
 package roadfighter;
 
 import javafx.scene.media.AudioClip;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -27,6 +29,7 @@ import roadfighter.objects.Direction;
 import roadfighter.objects.LeftLimit;
 import roadfighter.objects.Obstacle;
 import roadfighter.objects.Player;
+import roadfighter.objects.PlayerOnline;
 import roadfighter.objects.PlayerState;
 import roadfighter.objects.PowerDown;
 import roadfighter.objects.PowerUp;
@@ -43,7 +46,6 @@ public class OnlineGameSceneHandler extends SceneHandler {
 	private Background background;
 	private GenericText score;
 
-	private ArrayList<Player> players = new ArrayList<Player>();
 	private ArrayList<Obstacle> obstacles = new ArrayList<Obstacle>();
 	private ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
 
@@ -58,6 +60,8 @@ public class OnlineGameSceneHandler extends SceneHandler {
 	private AudioClip audioGame;
 	
 	private ListenerThread servidor;
+	private PlayerOnline player1;
+	private PlayerOnline player2;
 
 	public OnlineGameSceneHandler(RoadFighterGame g, ListenerThread servidor) {
 		super(g);
@@ -91,47 +95,26 @@ public class OnlineGameSceneHandler extends SceneHandler {
 		
 		//tecla poder jugador 1
 		keysPlayerOne.add(KeyCode.C);
-		players.add(new Player(new CarPlayer(515.0, 750.0, "file:src/resources/images/CarPink.png"),keysPlayerOne));
 		
-		//teclas movimiento jugador 2
-		keysPlayerTwo.add(KeyCode.UP);
-		keysPlayerTwo.add(KeyCode.LEFT);
-		keysPlayerTwo.add(KeyCode.DOWN);
-		keysPlayerTwo.add(KeyCode.RIGHT);
-			
-		//tecla poder jugador 2
-		keysPlayerTwo.add(KeyCode.L);
-			
-		players.add(new Player(new CarPlayer(1000, 750.0,"file:src/resources/images/Player2.png"),keysPlayerTwo));
-		
+		player1 = new PlayerOnline(new CarPlayer(Double.parseDouble(servidor.pollGameMessage().getContent()), 750.0, "file:src/resources/images/CarPink.png"), g.getOutput());
+		player2 = new PlayerOnline(new CarPlayer(Double.parseDouble(servidor.pollGameMessage().getContent()), 750.0,"file:src/resources/images/Player2.png"), keysPlayerOne);
 		
 		//obstacles.add(new Obstacle(825.0, 200.0,"file:src/resources/images/ObstacleSprite.png"));
-
-		enemy = new BadDriver(990.0, 0.0, Direction.UP);
 
 		GOBuilder.setRootNode(rootGroup);
 		gameObjects.add(background);
 		
-		for(Player p : players) {
-			gameObjects.add(p.getCarPlayer());
-		}
-		
-		score = new ScoreText(players, new Coordinate(50, 50));
-		gameObjects.add(score);
+//		score = new ScoreText(new Coordinate(50, 50));
+//		gameObjects.add(score);
 		
 		gameObjects.add(new TopLimit());
 		gameObjects.add(new BottomLimit());
 		gameObjects.add(new LeftLimit());
 		gameObjects.add(new RightLimit());
+		GOBuilder.add(player1.getCarPlayer(), player2.getCarPlayer());
 		
-		gameObjects.add(enemy);
-		for (Obstacle obstacle : obstacles) {
-			gameObjects.add(obstacle);
-		}
 		GOBuilder.add(gameObjects);
 		
-		
-
 		addTimeEventsAnimationTimer();
 		addInputEvents();
 	}
@@ -148,8 +131,10 @@ public class OnlineGameSceneHandler extends SceneHandler {
 			@Override
 			public void handle(KeyEvent e) {
 				
-				for(Player p : players) {
-					p.eventPressed(e);
+				try {
+					player1.eventPressed(e);
+				} catch (IOException e1) {
+					e1.printStackTrace();
 				}
 				/*
 				 * switch (e.getCode()) { case W: player.getCarPlayer().setDirectionUp(); break;
@@ -165,8 +150,10 @@ public class OnlineGameSceneHandler extends SceneHandler {
 			@Override
 			public void handle(KeyEvent e) {
 				
-				for(Player p : players) {
-					p.eventReleased(e);
+				try {
+					player1.eventReleased(e);
+				} catch (IOException e1) {
+					e1.printStackTrace();
 				}
 				/*
 				 * switch (e.getCode()) { case W: System.out.println("dejo de acelerar");
@@ -192,13 +179,69 @@ public class OnlineGameSceneHandler extends SceneHandler {
 
 	@Override
 	public void update(double delta) {
-		Message message = servidor.pollGameMessage();
-		switch(message.getType()) {
-		case ITEM_NEW:
-			GOBuilder.add(new PowerUp(Double.parseDouble(message.getContent()), -50.0, 100, "file:src/resources/images/coin.png"));
-			break;
-		default:
-			break;
+		super.update(delta);
+		for (int i = 0; i < 10; i++) {
+			Message message = servidor.pollGameMessage();
+			if (message != null) {
+				switch(message.getType()) {
+				case ITEM_NEW:
+					GOBuilder.add(new PowerUp(Double.parseDouble(message.getContent()), -50.0, 100, "file:src/resources/images/coin.png"));
+					break;
+				case ENEMY_NEW:
+					GOBuilder.add(new BadDriver(Double.parseDouble(message.getContent()), -50.0, Direction.UP));
+					break;
+				case OBSTACLE_NEW:
+					GOBuilder.add(new Obstacle(Double.parseDouble(message.getContent()), -50.0, "file:src/resources/images/Conito.png"));
+					break;
+				case PDOWN_NEW:
+					GOBuilder.add(new PowerDown(Double.parseDouble(message.getContent()), -50.0, "file:src/resources/images/velocityDown.png"));
+					break;
+				case PLAYER_MOVE:
+					if (message.getContent().equals("up"))
+						player1.eventPressed(KeyCode.W);
+					else if (message.getContent().equals("left"))
+						player1.eventPressed(KeyCode.A);
+					else if (message.getContent().equals("down"))
+						player1.eventPressed(KeyCode.S);
+					else if (message.getContent().equals("right"))
+						player1.eventPressed(KeyCode.D);
+					break;
+				case PLAYER_STOP:
+					if (message.getContent().equals("up"))
+						player1.eventReleased(KeyCode.W);
+					else if (message.getContent().equals("left"))
+						player1.eventReleased(KeyCode.A);
+					else if (message.getContent().equals("down"))
+						player1.eventReleased(KeyCode.S);
+					else if (message.getContent().equals("right"))
+						player1.eventReleased(KeyCode.D);
+					break;
+				case PLAYER_OTHER:
+					break;
+				case PLAYER_OTHER_MOVE:
+					if (message.getContent().equals("up"))
+						player2.eventPressed(KeyCode.W);
+					else if (message.getContent().equals("left"))
+						player2.eventPressed(KeyCode.A);
+					else if (message.getContent().equals("down"))
+						player2.eventPressed(KeyCode.S);
+					else if (message.getContent().equals("right"))
+						player2.eventPressed(KeyCode.D);
+					break;
+				case PLAYER_OTHER_STOP:
+					if (message.getContent().equals("up"))
+						player2.eventReleased(KeyCode.W);
+					else if (message.getContent().equals("left"))
+						player2.eventReleased(KeyCode.A);
+					else if (message.getContent().equals("down"))
+						player2.eventReleased(KeyCode.S);
+					else if (message.getContent().equals("right"))
+						player2.eventReleased(KeyCode.D);
+					break;
+				default:
+					break;
+				}
+			}
 		}
 	}
 

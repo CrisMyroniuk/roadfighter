@@ -135,16 +135,19 @@ public class LobbySceneHandler extends SceneHandler {
 		if (message != null) {
 			switch(message.getType()) {
 			case LOBBY_CONTROL:
-				if (message.getContent().equals("ready")) {
-					chat.setReady(true);
-					readyState = true;
+				if (message.getContent().equals("start")) {
+					g.startOnlineGame(servidor);
 				}
-				else if (message.getContent().equals("notReady")) {
-					chat.setReady(false);					
-					readyState = false;
-				}
-				else 
-					chat.addUser(message.getContent());
+//				else if (message.getContent().equals("ready")) {
+//					chat.setReady(true);
+//					readyState = true;
+//				}
+//				else if (message.getContent().equals("notReady")) {
+//					chat.setReady(false);					
+//					readyState = false;
+//				}
+//				else 
+//					chat.addUser(message.getContent());
 				break;
 			default:
 				break;

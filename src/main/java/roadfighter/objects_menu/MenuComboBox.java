@@ -36,5 +36,9 @@ public class MenuComboBox extends GameObject implements Renderable{
 
 	@Override
 	public void destroy() {}
+
+	public void setDefaultValue() {
+		comboBox.setValue(comboBox.getItems().get(0));
+	}
 	
 }

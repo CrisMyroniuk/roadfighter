@@ -19,20 +19,22 @@ public class PlayerOnline extends GameObject {
 	private ListenerThread servidor;
 	private DataOutputStream output;
 
-	public PlayerOnline(CarPlayer carPlayer, ListenerThread servidor) {
+	public PlayerOnline(CarPlayer carPlayer, DataOutputStream output) {
 		setKeys(new ArrayList<KeyCode>());
 		keys.add(KeyCode.W);
 		keys.add(KeyCode.A);
 		keys.add(KeyCode.S);
 		keys.add(KeyCode.D);
 		car = carPlayer;
-		this.servidor = servidor;
-		
+//		this.servidor = servidor;
+		this.output = output;
 	}
 
 	public PlayerOnline(CarPlayer carPlayer,ArrayList<KeyCode> kc) {
 		car = carPlayer;
 		setKeys(kc);
+
+		this.output = output;
 	}
 
 	public ArrayList<KeyCode> getKeys() {
@@ -88,7 +90,37 @@ public class PlayerOnline extends GameObject {
 			//car.setDirectionNone(Direction.RIGHT);
 		}
 	}
-
+	
+	public void eventPressed(KeyCode e) {
+		if (e == getKeys().get(0)) {
+			car.setDirectionUp();
+			System.out.println("arriiba");
+		}
+		else if (e == getKeys().get(1)) {
+			car.setDirectionLeft();
+		}
+		else if (e == getKeys().get(2)) {
+			car.setDirectionDown();
+		}
+		else if (e == getKeys().get(3)) {
+			car.setDirectionRight();
+		}
+	}
+	
+	public void eventReleased(KeyCode e) {
+		if (e == getKeys().get(0)) {
+			car.setDirectionNone(Direction.UP);
+		}
+		else if (e == getKeys().get(1)) {
+			car.setDirectionNone(Direction.LEFT);
+		}
+		else if (e == getKeys().get(2)) {
+			car.setDirectionNone(Direction.DOWN);
+		}
+		else if (e == getKeys().get(3)) {
+			car.setDirectionNone(Direction.RIGHT);
+		}
+	}
 	public Coordinate myCoord() {
 		return car.getCoordinate();
 	}

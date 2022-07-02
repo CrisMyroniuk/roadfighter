@@ -85,6 +85,13 @@ public class ListenerThread extends Thread {
 				case LOBBY_JOIN:
 					online.offer(message);
 					break;
+				case PLAYER_MOVE:
+				case PLAYER_STOP:
+				case PLAYER_OTHER:
+				case PLAYER_OTHER_MOVE:
+				case PLAYER_OTHER_STOP:
+					game.offer(message);
+					break;
 				default:
 					break;
 				}

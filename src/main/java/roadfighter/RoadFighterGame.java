@@ -8,6 +8,7 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import roadfighter.threads.ListenerThread;
 
 public class RoadFighterGame extends Application {
 	
@@ -32,6 +33,8 @@ public class RoadFighterGame extends Application {
 	private DataOutputStream output;
 	
 	private String userName;
+
+	private OnlineGameSceneHandler onlineGameSceneHandler;
 	
 	@Override
 	public void start(Stage stage) throws Exception {
@@ -139,6 +142,15 @@ public class RoadFighterGame extends Application {
 		lobbySceneHandler.load();
 	}
 	
+	public void startOnlineGame(ListenerThread servidor) {
+		currentSceneHandler.unload();
+		onlineGameSceneHandler = new OnlineGameSceneHandler(this, servidor);
+		currentSceneHandler = onlineGameSceneHandler;
+		Scene scene = onlineGameSceneHandler.getScene();
+		stage.setScene(scene);
+		onlineGameSceneHandler.load();
+	}
+	
 	public DataInputStream getInput() {
 		return input;
 	}
@@ -154,4 +166,5 @@ public class RoadFighterGame extends Application {
 	public void setUserName(String name) {
 		userName = name;
 	}
+
 }

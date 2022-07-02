@@ -127,6 +127,7 @@ public class LobbyCreatorSceneHandler extends SceneHandler {
 		maxPlayersComboBox.addItem(2);
 		maxPlayersComboBox.addItem(3);
 		maxPlayersComboBox.addItem(4);
+		maxPlayersComboBox.setDefaultValue();
 		
 		create = new ButtonMenu("CREATE", Config.baseHeight * 3 / 5 + 200);
 	
