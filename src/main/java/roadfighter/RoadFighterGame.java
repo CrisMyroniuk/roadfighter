@@ -31,6 +31,8 @@ public class RoadFighterGame extends Application {
 	private DataInputStream input;
 	private DataOutputStream output;
 	
+	private String userName;
+	
 	@Override
 	public void start(Stage stage) throws Exception {
 		
@@ -143,5 +145,13 @@ public class RoadFighterGame extends Application {
 	
 	public DataOutputStream getOutput() {
 		return output;
+	}
+	
+	public String getUserName() {
+		return userName;
+	}
+	
+	public void setUserName(String name) {
+		userName = name;
 	}
 }

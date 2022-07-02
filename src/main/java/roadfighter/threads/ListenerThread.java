@@ -2,7 +2,6 @@ package roadfighter.threads;
 
 import java.io.DataInputStream;
 import java.io.IOException;
-import java.net.Socket;
 import java.net.SocketException;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -15,42 +14,53 @@ public class ListenerThread extends Thread {
 	private DataInputStream input;
 	private Gson gson;
 	
-	private LinkedBlockingQueue<String> lobby;
-	private LinkedBlockingQueue<String> online;
-	private LinkedBlockingQueue<String> chat;
-//	private LinkedBlickingQueue<String> game;
+	private LinkedBlockingQueue<Message> lobby;
+	private LinkedBlockingQueue<Message> online;
+	private LinkedBlockingQueue<Message> chat;
+	private LinkedBlockingQueue<Message> game;
 	
-	public ListenerThread(Socket socket) {
+	public ListenerThread(DataInputStream input) {
+		lobby = new LinkedBlockingQueue<Message>();
+		online = new LinkedBlockingQueue<Message>();
+		chat = new LinkedBlockingQueue<Message>();
+		game = new LinkedBlockingQueue<Message>();
+		
 		gson = new Gson();
-		try {
-			input = new DataInputStream(socket.getInputStream());
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		
+		this.input = input;
+//		try {
+//			input = new DataInputStream(socket.getInputStream());
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
 	}
 	
-	public String pollLobbyMessage() {
+	public Message pollLobbyMessage() {
 		return lobby.poll();
 	}
 	
-	public String takeLobbyMessage() throws InterruptedException {
+	public Message takeLobbyMessage() throws InterruptedException {
 		return lobby.take();
 	}
 
-	public String pollChatMessage() {
+	public Message pollChatMessage() {
 		return chat.poll();
 	}
 	
-	public String takeChatMessage() throws InterruptedException {
+	public Message takeChatMessage() throws InterruptedException {
 		return chat.take();
 	}
 
-	public String pollOnlineMessage() {
+	public Message pollOnlineMessage() {
 		return online.poll();
 	}
 	
-	public String takeOnlineMessage() throws InterruptedException {
+	public Message takeOnlineMessage() throws InterruptedException {
 		return online.take();
+	}
+	
+	public Message pollGameMessage() {
+		return game.poll();
 	}
 	
 	@Override
@@ -60,19 +70,20 @@ public class ListenerThread extends Thread {
 		while(true) {
 			try {
 				buffer = input.readUTF();
+				System.out.println(buffer + " (listenerThread 73)");
 				message = gson.fromJson(buffer, Message.class);
 				
 				switch(message.getType()) {
 				case LOBBY_QUIT:
 				case LOBBY_CONTROL:
-					lobby.offer(message.getContent());
+					lobby.offer(message);
 					break;
 				case LOBBY_CHAT:
-					chat.offer(message.getContent());
+					chat.offer(message);
 					break;
 				case LOBBY_NEW:
 				case LOBBY_JOIN:
-					online.offer(message.getContent());
+					online.offer(message);
 					break;
 				default:
 					break;

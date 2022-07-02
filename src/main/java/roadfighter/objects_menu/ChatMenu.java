@@ -53,7 +53,14 @@ public class ChatMenu extends GameObject implements Renderable{
 		render.setTranslateX(x);
 		render.setTranslateY(y);
 		
-		ready.setStyle("-fx-background-color: rgba(255,255,255,0)");
+		ready.setStyle("-fx-background-color: rgba(255,255,255,255)");
+	}
+	
+	public void setReady(boolean ready) {
+		if (ready)
+			this.ready.setStyle("-fx-background-color: rgba(50,255,50,255)");
+		else
+			this.ready.setStyle("-fx-background-color: rgba(255,50,50,255)");
 	}
 	
 	public void addChatMessage(String message) {

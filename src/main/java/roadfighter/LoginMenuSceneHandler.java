@@ -104,6 +104,7 @@ public class LoginMenuSceneHandler extends SceneHandler {
 			Message messageResponse = new Gson().fromJson(response, Message.class);
 			if (messageResponse.getType().equals(MessageType.SESSION_LOGIN) && messageResponse.getContent().equals("logedIn")) {
 				socket.setSoTimeout(0);
+				g.setUserName(userName.getText());
 				g.startOnlineMenu(input, output);
 			} else {
 				throw new Exception();
@@ -139,6 +140,10 @@ public class LoginMenuSceneHandler extends SceneHandler {
 		userName = new MenuTextField("UserName", 500, Config.baseHeight * 3 / 5 + 100);
 		login = new ButtonMenu("LOGIN", Config.baseHeight * 3 / 5 + 200);
 		back = new ButtonMenu("BACK", Config.baseHeight * 3 / 5 + 300);
+		
+		//default
+		ipAdress.setText("localhost");
+		port.setText("20000");
 		
 		gameOB.add(ipAdress, port, userName, login, back);
 		

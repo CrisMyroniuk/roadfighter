@@ -1,18 +1,14 @@
 package roadfighter.client.utils;
 
-import java.util.Objects;
-
 public class Lobby {
 	
-	private int id;
 	private String name;
 	private int currentPlayers;
 	private int maxPlayers;
 	private String currentPlayersString;
 	private boolean playing;
 	
-	public Lobby(int id, String name, int maxPlayers) {
-		this.id = id;
+	public Lobby(String name, int maxPlayers) {
 		this.name = name;
 		this.currentPlayers = 0;
 		this.maxPlayers = maxPlayers;
@@ -22,23 +18,6 @@ public class Lobby {
 
 	public int getCurrentPlayers() {
 		return currentPlayers;
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(id);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Lobby other = (Lobby) obj;
-		return id == other.id;
 	}
 
 	public void setCurrentPlayers(int currentPlayers) {
@@ -52,10 +31,6 @@ public class Lobby {
 
 	public void setPlaying(boolean playing) {
 		this.playing = playing;
-	}
-
-	public int getId() {
-		return id;
 	}
 
 	public String getName() {
