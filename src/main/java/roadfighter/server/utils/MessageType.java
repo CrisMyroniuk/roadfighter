@@ -24,6 +24,7 @@ public enum MessageType {
 	@SerializedName("17") PDOWN_NEW,
 	@SerializedName("18") PDOWN_DESTROY,
 	@SerializedName("19") PLAYER_OTHER_MOVE,
-	@SerializedName("20") PLAYER_OTHER_STOP
+	@SerializedName("20") PLAYER_OTHER_STOP,
+	@SerializedName("21") PLAYER
 	
 }

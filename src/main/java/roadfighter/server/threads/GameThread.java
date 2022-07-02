@@ -58,6 +58,7 @@ public class GameThread extends Thread {
 	
 	private Random random;
 	private double spawnTimer;
+	private double posTimer;
 
 	private GameObjectBuilder GOBuilder;
 	private Group rootGroup;
@@ -78,6 +79,7 @@ public class GameThread extends Thread {
 		GOBuilder = GameObjectBuilder.getInstance();
 	
 		spawnTimer = 1;
+		posTimer = 0.3;
 
 		rootGroup = new Group();
 		GOBuilder.setRootNode(rootGroup);
@@ -129,7 +131,6 @@ public class GameThread extends Thread {
 					player1.eventPressed(KeyCode.S);
 				else if (action.getContent().equals("right"))
 					player1.eventPressed(KeyCode.D);
-				player2.getClient().notify(new Message(MessageType.PLAYER_OTHER_MOVE, action.getContent()));
 				break;
 			case PLAYER_STOP:
 				if (action.getContent().equals("up"))
@@ -140,7 +141,6 @@ public class GameThread extends Thread {
 					player1.eventReleased(KeyCode.S);
 				else if (action.getContent().equals("right"))
 					player1.eventReleased(KeyCode.D);
-				player2.getClient().notify(new Message(MessageType.PLAYER_OTHER_STOP, action.getContent()));
 				break;
 			default:
 				break;
@@ -159,7 +159,6 @@ public class GameThread extends Thread {
 					player2.eventPressed(KeyCode.S);
 				else if (action.getContent().equals("right"))
 					player2.eventPressed(KeyCode.D);
-				player1.getClient().notify(new Message(MessageType.PLAYER_OTHER_MOVE, action.getContent()));
 				break;
 			case PLAYER_STOP:
 				if (action.getContent().equals("up"))
@@ -170,11 +169,19 @@ public class GameThread extends Thread {
 					player2.eventReleased(KeyCode.S);
 				else if (action.getContent().equals("right"))
 					player2.eventReleased(KeyCode.D);
-				player1.getClient().notify(new Message(MessageType.PLAYER_OTHER_STOP, action.getContent()));
 				break;
 			default:
 				break;
 			}
+		}
+
+		posTimer -= delta;
+		if (posTimer <= 0) {
+			player1.getClient().notify(new Message(MessageType.PLAYER_OTHER, player2.getCarPlayer().getCoordinate().toString()));
+			player1.getClient().notify(new Message(MessageType.PLAYER, player1.getCarPlayer().getCoordinate().toString()));
+			player2.getClient().notify(new Message(MessageType.PLAYER_OTHER, player1.getCarPlayer().getCoordinate().toString()));
+			player2.getClient().notify(new Message(MessageType.PLAYER, player2.getCarPlayer().getCoordinate().toString()));
+			posTimer = 0.3;
 		}
 		
 		spawnTimer -= delta;
@@ -186,19 +193,27 @@ public class GameThread extends Thread {
 			switch(selecGO) {
 				case 1:
 					gameObjects.add(new Obstacle(x, -50));
-					sendAllClients(new Message(MessageType.OBSTACLE_NEW, x.toString()));
+					player1.getClient().notify(new Message(MessageType.OBSTACLE_NEW, String.format("%.3f", x)));
+					player2.getClient().notify(new Message(MessageType.OBSTACLE_NEW, String.format("%.3f", x)));
+//					sendAllClients(new Message(MessageType.OBSTACLE_NEW, x.toString()));
 					break;
 				case 2:
 					gameObjects.add(new BadDriver(x, -50, Direction.UP));
-					sendAllClients(new Message(MessageType.ENEMY_NEW, x.toString()));
+					player1.getClient().notify(new Message(MessageType.ENEMY_NEW, String.format("%.3f", x)));
+					player2.getClient().notify(new Message(MessageType.ENEMY_NEW, String.format("%.3f", x)));
+//					sendAllClients(new Message(MessageType.ENEMY_NEW, x.toString()));
 					break;
 				case 3:
 					gameObjects.add(new PowerUp(x, -50.0, 100));
-					sendAllClients(new Message(MessageType.ITEM_NEW, x.toString()));
+					player1.getClient().notify(new Message(MessageType.ITEM_NEW, String.format("%.3f", x)));
+					player2.getClient().notify(new Message(MessageType.ITEM_NEW, String.format("%.3f", x)));
+//					sendAllClients(new Message(MessageType.ITEM_NEW, x.toString()));
 					break;
 				case 4:
 					gameObjects.add(new PowerDown(x, -50.0));
-					sendAllClients(new Message(MessageType.PDOWN_NEW, x.toString()));
+					player1.getClient().notify(new Message(MessageType.PDOWN_NEW, String.format("%.3f", x)));
+					player2.getClient().notify(new Message(MessageType.PDOWN_NEW, String.format("%.3f", x)));
+//					sendAllClients(new Message(MessageType.PDOWN_NEW, x.toString()));
 					break;
 			}
 			
@@ -270,11 +285,11 @@ public class GameThread extends Thread {
 			}
 		}
 	}
-
-	public void oneSecondUpdate(double delta) {
-		fps.set(frames - last_fps_frame);
-		last_fps_frame = frames;
-	}
+//
+//	public void oneSecondUpdate(double delta) {
+//		fps.set(frames - last_fps_frame);
+//		last_fps_frame = frames;
+//	}
 	
 //	protected void addTimeEventsAnimationTimer() {
 //		gameTimer = new AnimationTimer() {
@@ -306,7 +321,7 @@ public class GameThread extends Thread {
 			
 			currentNano = System.nanoTime();
 			// Update tick
-			if ((currentNano - previousNanoFrame) / NANOS_IN_SECOND_D > 1/60) {
+			if ((currentNano - previousNanoFrame) > 16666666) {
 				update((currentNano - previousNanoFrame) / NANOS_IN_SECOND_D);
 				previousNanoFrame = currentNano;
 				previousNanoSecond = System.nanoTime();

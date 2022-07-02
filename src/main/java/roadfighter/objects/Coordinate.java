@@ -64,7 +64,7 @@ public class Coordinate {
 	
 	@Override
 	public String toString() {
-		return "(" + String.format("%.2f", x) + ", " + String.format("%.2f", x) + ")";
+		return String.format("%.2f", x) + "|" + String.format("%.2f", x);
 	}
 	
 	public static Coordinate calculateDirection(Coordinate origen, Coordinate destino) {
