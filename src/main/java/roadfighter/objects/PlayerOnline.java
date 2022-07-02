@@ -1,12 +1,13 @@
 package roadfighter.objects;
 
-import java.awt.TrayIcon.MessageType;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import roadfighter.client.utils.Message;
+import roadfighter.client.utils.MessageType;
 import roadfighter.threads.ListenerThread;
 import roadfighter.utils.GameObject;
 
@@ -52,38 +53,38 @@ public class PlayerOnline extends GameObject {
 
 	public void eventPressed(KeyEvent e) throws IOException {
 		if (e.getCode() == getKeys().get(0)) {
-			output.writeUTF(MessageType.UP);
+			output.writeUTF(new Message(MessageType.PLAYER_MOVE, "up").getJsonString());
 			//car.setDirectionUp();
 		}
 		if (e.getCode() == getKeys().get(1)) {
-			output.writeUTF(MessageType.LEFT);
+			output.writeUTF(new Message(MessageType.PLAYER_MOVE, "left").getJsonString());
 			//car.setDirectionLeft();
 		}
 		if (e.getCode() == getKeys().get(2)) {
-			output.writeUTF(MessageType.DOWN);
+			output.writeUTF(new Message(MessageType.PLAYER_MOVE, "down").getJsonString());
 			//car.setDirectionDown();
 		}
 		if (e.getCode() == getKeys().get(3)) {
-			output.writeUTF(MessageType.RIGHT);
+			output.writeUTF(new Message(MessageType.PLAYER_MOVE, "right").getJsonString());
 			//car.setDirectionRight();
 		}
 	}
 	
 	public void eventReleased(KeyEvent e) throws IOException {
 		if (e.getCode() == getKeys().get(0)) {
-			output.writeUTF(MessageType.NO_UP);
+			output.writeUTF(new Message(MessageType.PLAYER_STOP, "up").getJsonString());
 			//car.setDirectionNone(Direction.UP);
 		}
 		if (e.getCode() == getKeys().get(1)) {
-			output.writeUTF(MessageType.NO_LEFT);
+			output.writeUTF(new Message(MessageType.PLAYER_STOP, "left").getJsonString());
 			//car.setDirectionNone(Direction.LEFT);
 		}
 		if (e.getCode() == getKeys().get(2)) {
-			output.writeUTF(MessageType.NO_DOWN);
+			output.writeUTF(new Message(MessageType.PLAYER_STOP, "down").getJsonString());
 			//car.setDirectionNone(Direction.DOWN);
 		}
 		if (e.getCode() == getKeys().get(3)) {
-			output.writeUTF(MessageType.NO_RIGHT);
+			output.writeUTF(new Message(MessageType.PLAYER_STOP, "right").getJsonString());
 			//car.setDirectionNone(Direction.RIGHT);
 		}
 	}

@@ -49,10 +49,6 @@ public class OnlineGameSceneHandler extends SceneHandler {
 	private ArrayList<KeyCode> keysPlayerOne = new ArrayList<KeyCode>();
 	private ArrayList<KeyCode> keysPlayerTwo = new ArrayList<KeyCode>();
 	private BadDriver enemy;
-	private Random random;
-	private double spawnTimer;
-	
-	private boolean singlePlayer;
 
 	private EventHandler<KeyEvent> keyReleasedHandler;
 
@@ -60,16 +56,12 @@ public class OnlineGameSceneHandler extends SceneHandler {
 	private Group rootGroup;
 	private AudioClip audioGame;
 	
-	private boolean winnerExists = false;
-	private String winner = "nadie (algo salio mal)";
 	private ListenerThread servidor;
 
-	public OnlineGameSceneHandler(RoadFighterGame g,boolean singlePlayer) {
+	public OnlineGameSceneHandler(RoadFighterGame g, ListenerThread servidor) {
 		super(g);
 		GOBuilder = GameObjectBuilder.getInstance();
-		random = new Random();
-		this.singlePlayer = singlePlayer;
-		//servido = null;
+		this.servidor = servidor;
 	}
 
 	public void load() {
@@ -115,7 +107,6 @@ public class OnlineGameSceneHandler extends SceneHandler {
 		//obstacles.add(new Obstacle(825.0, 200.0,"file:src/resources/images/ObstacleSprite.png"));
 
 		enemy = new BadDriver(990.0, 0.0, Direction.UP);
-		spawnTimer = 1;
 
 		GOBuilder.setRootNode(rootGroup);
 		gameObjects.add(background);
@@ -137,11 +128,11 @@ public class OnlineGameSceneHandler extends SceneHandler {
 			gameObjects.add(obstacle);
 		}
 		GOBuilder.add(gameObjects);
+		
+		
 
-//		if (fullStart) {
 		addTimeEventsAnimationTimer();
 		addInputEvents();
-//		}
 	}
 
 	@Override
@@ -201,99 +192,7 @@ public class OnlineGameSceneHandler extends SceneHandler {
 	@Override
 	public void update(double delta) {
 		
-		//while()
 		
-//		super.update(delta);
-//		if(players.get(0).getCarPlayer().getPlayerState() == PlayerState.PLAYER_DEATH && singlePlayer) {
-//			audioGame.stop();
-//			g.startMenu();
-//			g.startGame(singlePlayer);
-//		}
-//		spawnTimer -= delta;
-//		if (spawnTimer <= 0) {
-//			//ahora se eliminan solos cuando su coordenada en Y llega a la altura de la pantalla + 500
-//			ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
-//			int selecGO = random.nextInt(1,5);
-//			switch(selecGO) {
-//				case 1:
-//					gameObjects.add(new Obstacle(random.nextDouble(515, 990), -50,"file:src/resources/images/Conito.png"));
-//					break;
-//				case 2:
-//					gameObjects.add(new BadDriver(random.nextDouble(515, 990), -50, Direction.UP));
-//					break;
-//				case 3:
-//					gameObjects.add(new PowerUp(random.nextDouble(515, 990), -50.0, 100,"file:src/resources/images/coin.png"));
-//					break;
-//				case 4:
-//					gameObjects.add(new PowerDown(random.nextDouble(515, 990), -50.0,"file:src/resources/images/velocityDown.png"));
-//					break;
-//			}
-//			
-//	
-//			GOBuilder.add(gameObjects);
-//
-//			spawnTimer = random.nextDouble(0.5, 1.5);
-//		}
-//		
-//		checkCollisions();
-//		
-//		int alivePlayers = 0;
-//		
-//		for (int i = 0; i < players.size(); i++) {
-//			Player current = players.get(i);
-//			if (current.isAlive()) {
-//				alivePlayers++;
-//				winner = "PLAYER " + (i + 1);
-//			}
-//			if (current.getPoint() >= Config.maxScore) {
-//				winnerExists = true;
-//				winner = "PLAYER " + (i + 1);//los player podrian tener un nombre eventualmente
-//				break;
-//			}
-//		}
-//		
-//		if (winnerExists || (alivePlayers == 1 && !singlePlayer)) {
-//			g.startWin(winner, singlePlayer);
-//		}
-//		
-//		// aca va cualquier cosa que no se haga en el metodo update()
-//		// de los updateables
-	}
-
-	private void checkCollisions() {
-		List<Collidator> collidators = GOBuilder.getCollidators();
-		List<Collideable> collideables = GOBuilder.getCollideables();
-
-		for (int i = 0; i < collidators.size(); i++) {
-			Collidator collidator = collidators.get(i);
-			for (int j = i + 1; j < collidators.size(); j++) {
-				Collidator otherCollidator = collidators.get(j);
-				Shape intersect = Shape.intersect(collidator.getCollider(), otherCollidator.getCollider());
-				if (intersect.getBoundsInLocal().getWidth() != -1) {
-					collidator.collide(otherCollidator);
-					otherCollidator.collide(collidator);
-				}
-			}
-
-			for (int j = 0; j < collideables.size(); j++) {
-				Collideable collideable = collideables.get(j);
-				Shape intersect = Shape.intersect(collidator.getCollider(), collideable.getCollider());
-
-				// TODO test times
-				// XXX Si el substract es distinto???
-				// Check intersects
-				if (intersect.getBoundsInLocal().getWidth() != -1) {
-					collidator.collide(collideable);
-				} else {
-					// Check contains
-					Bounds collideableBounds = collideable.getCollider().getBoundsInLocal();
-					Bounds collidatorBounds = collidator.getCollider().getBoundsInLocal();
-					if (collideableBounds.contains(collidatorBounds.getCenterX(), collidatorBounds.getCenterY())) {
-						collidator.collide(collideable);
-					}
-				}
-			}
-		}
 	}
 
 	public void unload() {

@@ -11,13 +11,11 @@ public enum MessageType {
 	@SerializedName("4") LOBBY_CONTROL,
 	@SerializedName("5") LOBBY_QUIT,
 	@SerializedName("6") LOBBY_CHAT,
-	@SerializedName("7") UP,
-	@SerializedName("8") LEFT,
-	@SerializedName("9") RIGHT,
-	@SerializedName("10") DOWN,
-	@SerializedName("11") NO_UP,
-	@SerializedName("12") NO_LEFT,
-	@SerializedName("13") NO_RIGHT,
-	@SerializedName("14") NO_DOWN
-	
+	@SerializedName("7") PLAYER_MOVE,
+	@SerializedName("8") PLAYER_STOP,
+	@SerializedName("9") PLAYER_OTHER,
+	@SerializedName("10") PLAYER_STATE,
+	@SerializedName("11") ENEMY_NEW,
+	@SerializedName("12") ENEMY_DESTROY,
+	@SerializedName("13") ITEM_NEW
 }
