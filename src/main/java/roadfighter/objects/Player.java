@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import roadfighter.server.threads.Client;
 import roadfighter.utils.GameObject;
 
 public class Player extends GameObject {
@@ -17,6 +18,7 @@ public class Player extends GameObject {
 //	private boolean down;
 //	private boolean left;
 //	private boolean right;
+	private Client client;
 
 	public Player(CarPlayer carPlayer) {
 		setKeys(new ArrayList<KeyCode>());
@@ -99,7 +101,36 @@ public class Player extends GameObject {
 			car.setDirectionNone(Direction.RIGHT);
 		}
 	}
-
+	public void eventPressed(KeyCode e) {
+		if (e == getKeys().get(0)) {
+			car.setDirectionUp();
+			System.out.println("arriba");
+		}
+		else if (e == getKeys().get(1)) {
+			car.setDirectionLeft();
+		}
+		else if (e == getKeys().get(2)) {
+			car.setDirectionDown();
+		}
+		else if (e == getKeys().get(3)) {
+			car.setDirectionRight();
+		}
+	}
+	
+	public void eventReleased(KeyCode e) {
+		if (e == getKeys().get(0)) {
+			car.setDirectionNone(Direction.UP);
+		}
+		else if (e == getKeys().get(1)) {
+			car.setDirectionNone(Direction.LEFT);
+		}
+		else if (e == getKeys().get(2)) {
+			car.setDirectionNone(Direction.DOWN);
+		}
+		else if (e == getKeys().get(3)) {
+			car.setDirectionNone(Direction.RIGHT);
+		}
+	}
 //	public void input(Direction direction, boolean pressed) {
 //		switch (direction) {
 //		case UP:
@@ -213,5 +244,11 @@ public class Player extends GameObject {
 	 * mario.setDirectionLeft(true); break; case Q: mario.die(); break; default:
 	 * break; } } });
 	 */
-
+	public void setClient(Client client) {
+		this.client = client;
+	}
+	
+	public Client getClient() {
+		return client;
+	}
 }

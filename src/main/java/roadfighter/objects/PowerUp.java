@@ -12,7 +12,7 @@ public class PowerUp extends Item{
 	private final double WIDTH = 70;
 	private final double HEIGHT = 70;
 	
-	public PowerUp(double x, double y, int p,String path) {
+	public PowerUp(double x, double y, int p) {
 		setCoordinate(new Coordinate(x,y));
 		setModel(null);
 		setPoints(p);

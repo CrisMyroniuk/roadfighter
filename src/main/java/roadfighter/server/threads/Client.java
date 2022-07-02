@@ -62,9 +62,15 @@ public class Client {
 	}
 	
 	public void setReady(String readyMessage) {
-		boolean ready = readyMessage.equals("true");
-		lobby.readyClient(this, ready);
-		notify(new Message(MessageType.LOBBY_CONTROL, ready ? "ready" : "unready"));
+		if (readyMessage.equals("ready")) {
+			lobby.readyClient(this, true);
+			notify(new Message(MessageType.LOBBY_CONTROL, "ready"));
+		}
+		else if (readyMessage.equals("notReady")) {
+			lobby.readyClient(this, false);
+			notify(new Message(MessageType.LOBBY_CONTROL, "notReady"));
+		}
+		
 	}
 	
 	public void quitLobby() {
@@ -111,5 +117,9 @@ public class Client {
 			return false;
 		Client other = (Client) obj;
 		return Objects.equals(userName, other.userName);
+	}
+	
+	public Message pollActions() {
+		return listener.pollActions();
 	}
 }

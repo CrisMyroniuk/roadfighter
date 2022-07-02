@@ -10,5 +10,20 @@ public enum MessageType {
 	@SerializedName("3") LOBBY_JOIN,
 	@SerializedName("4") LOBBY_CONTROL,
 	@SerializedName("5") LOBBY_QUIT,
-	@SerializedName("6") LOBBY_CHAT
+	@SerializedName("6") LOBBY_CHAT,
+	@SerializedName("7") PLAYER_MOVE,
+	@SerializedName("8") PLAYER_STOP,
+	@SerializedName("9") PLAYER_OTHER,
+	@SerializedName("10") PLAYER_STATE,
+	@SerializedName("11") ENEMY_NEW,
+	@SerializedName("12") ENEMY_DESTROY,
+	@SerializedName("13") ITEM_NEW,
+	@SerializedName("14") ITEM_DESTROY,
+	@SerializedName("15") OBSTACLE_NEW,
+	@SerializedName("16") OBSTACLE_DESTROY,
+	@SerializedName("17") PDOWN_NEW,
+	@SerializedName("18") PDOWN_DESTROY,
+	@SerializedName("19") PLAYER_OTHER_MOVE,
+	@SerializedName("20") PLAYER_OTHER_STOP
+	
 }

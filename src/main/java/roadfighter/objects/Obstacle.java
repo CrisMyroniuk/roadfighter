@@ -13,7 +13,7 @@ public class Obstacle extends Item{
 	private final double WIDTH = 50;
 	private final double HEIGHT = 50;
 
-	public Obstacle(double x, double y,String path) {
+	public Obstacle(double x, double y) {
 		visible = true;
 		setCoordinate(new Coordinate(x, y));
 		//render.relocate(x - WIDTH / 2, y - HEIGHT / 2);

@@ -16,7 +16,7 @@ public class PowerDown extends Item{
 		return speedDown;
 	}
 	
-	public PowerDown(double x, double y,String path) {
+	public PowerDown(double x, double y) {
 		setCoordinate(new Coordinate(x, y));
 		visible=true;
 		

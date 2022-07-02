@@ -4,11 +4,11 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
-import java.net.SocketException;
 import java.net.SocketTimeoutException;
+import java.util.concurrent.LinkedBlockingQueue;
+
 import com.google.gson.Gson;
 
-import roadfighter.server.Lobby;
 import roadfighter.server.Server;
 import roadfighter.server.utils.Message;
 import roadfighter.server.utils.MessageType;
@@ -19,11 +19,13 @@ public class ClientListener extends Thread {
 	private Socket socket;
 	private final Server server;
 	private Client client;
+	private LinkedBlockingQueue<Message> actions;
 	
 	public ClientListener(Socket socket, Server server) throws IOException {
 		this.socket = socket;
 		this.server = server;
 		input = new DataInputStream(socket.getInputStream());
+		actions = new LinkedBlockingQueue<Message>();
 	}
 	
 	private boolean validate(Message request) {
@@ -92,7 +94,7 @@ public class ClientListener extends Thread {
 					}
 					break;
 				case LOBBY_JOIN:
-					server.joinLobby(client, Integer.parseInt(message.getContent()));
+					server.joinLobby(client, message.getContent());
 					break;
 				case LOBBY_CONTROL:
 					client.setReady(message.getContent());
@@ -106,6 +108,10 @@ public class ClientListener extends Thread {
 				case SESSION_LOGOUT:
 					client.quitLobby();
 					server.removeClient(client);
+				case PLAYER_MOVE:
+				case PLAYER_STOP:
+					actions.add(message);
+					break;
 				default:
 					break;
 				}
@@ -117,5 +123,9 @@ public class ClientListener extends Thread {
 			}
 			
 		}
+	}
+	
+	public Message pollActions() {
+		return actions.poll();
 	}
 }

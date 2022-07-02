@@ -128,7 +128,7 @@ public class CarPlayer extends Vehicle implements Collidator{
 
 	// region Constructor
 
-	public CarPlayer(double x, double y, String image) {
+	public CarPlayer(double x, double y) {
 
 		this.acceleration = 20;
 		this.speedLimit = 200;

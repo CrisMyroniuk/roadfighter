@@ -14,7 +14,7 @@ public class GoodDriver extends Enemy implements Collidator{
 	private final double HEIGHT = 160;
 	private Rectangle hitbox;
 	
-	public GoodDriver(double x, double y,Direction d,String image) {
+	public GoodDriver(double x, double y,Direction d) {
 		setCoordinate(new Coordinate(x, y));
 		setDirection(d);
 		setOriginalCoordinate(new Coordinate(x, y));
