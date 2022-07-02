@@ -15,6 +15,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
+import roadfighter.client.utils.Message;
 import roadfighter.interfaces.Collidator;
 import roadfighter.interfaces.Collideable;
 import roadfighter.objects.Background;
@@ -191,8 +192,14 @@ public class OnlineGameSceneHandler extends SceneHandler {
 
 	@Override
 	public void update(double delta) {
-		
-		
+		Message message = servidor.pollGameMessage();
+		switch(message.getType()) {
+		case ITEM_NEW:
+			GOBuilder.add(new PowerUp(Double.parseDouble(message.getContent()), -50.0, 100, "file:src/resources/images/coin.png"));
+			break;
+		default:
+			break;
+		}
 	}
 
 	public void unload() {

@@ -17,5 +17,6 @@ public enum MessageType {
 	@SerializedName("10") PLAYER_STATE,
 	@SerializedName("11") ENEMY_NEW,
 	@SerializedName("12") ENEMY_DESTROY,
-	@SerializedName("13") ITEM_NEW
+	@SerializedName("13") ITEM_NEW,
+	@SerializedName("14") ITEM_DESTROY
 }
