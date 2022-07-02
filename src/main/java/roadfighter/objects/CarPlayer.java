@@ -316,47 +316,51 @@ public class CarPlayer extends Vehicle implements Collidator, Renderable{
 		//getCoordinate().setX(getCoordinate().getX()+x);
 		getCoordinate().setY(getCoordinate().getY()+y);
 	}
+	
+	public void setCoordinate(double x, double y) {
+		this.setCoordinate(new Coordinate(x, y));
+	}
 
 	// endregion
 	
 	public void update(double delta) {
-		double translateX = 0;
-		double translateY = 0;
-		
-		if (crashTimer > 0)
-			crashTimer -= delta;
-		else
-			crashTimer = crashTimerMax;
-			
-		
-		if (control) {
-			if (!isLeft() || !isRight()) {
-				if (isLeft()) {
-					translateX = -horizontalSpeed;
-				} else if (isRight()) {
-					translateX = horizontalSpeed;
-				}
-			}
-			if (!isUp()|| !isDown()) {
-				if (isUp()) {
-					translateY = -getSpeed();
-				} else if (isDown()) {
-					translateY = getSpeed();
-				}
-			}
-			
-			move(translateX * delta, translateY * delta);
-			
-		}
-		else {
-			if (controlOffTimer <= 0) {
-				control = true;
-			}
-			else {
-				controlOffTimer -= delta;
-				move(controlLossSpeed * controlLossX * delta, controlLossSpeed * controlLossY * delta);
-			}
-		}
+//		double translateX = 0;
+//		double translateY = 0;
+//		
+//		if (crashTimer > 0)
+//			crashTimer -= delta;
+//		else
+//			crashTimer = crashTimerMax;
+//			
+//		
+//		if (control) {
+//			if (!isLeft() || !isRight()) {
+//				if (isLeft()) {
+//					translateX = -horizontalSpeed;
+//				} else if (isRight()) {
+//					translateX = horizontalSpeed;
+//				}
+//			}
+//			if (!isUp()|| !isDown()) {
+//				if (isUp()) {
+//					translateY = -getSpeed();
+//				} else if (isDown()) {
+//					translateY = getSpeed();
+//				}
+//			}
+//			
+//			move(translateX * delta, translateY * delta);
+//			
+//		}
+//		else {
+//			if (controlOffTimer <= 0) {
+//				control = true;
+//			}
+//			else {
+//				controlOffTimer -= delta;
+//				move(controlLossSpeed * controlLossX * delta, controlLossSpeed * controlLossY * delta);
+//			}
+//		}
 		render.setTranslateX(getCoordinate().getX() - WIDTH / 2);
 		render.setTranslateY(getCoordinate().getY() - HEIGHT / 2);
 		hitbox.setX(this.getCoordinate().getX() - WIDTH / 2);

@@ -70,7 +70,6 @@ public class ListenerThread extends Thread {
 		while(true) {
 			try {
 				buffer = input.readUTF();
-				System.out.println(buffer + " (listenerThread 73)");
 				message = gson.fromJson(buffer, Message.class);
 				
 				switch(message.getType()) {
@@ -90,6 +89,10 @@ public class ListenerThread extends Thread {
 				case PLAYER_OTHER:
 				case PLAYER_OTHER_MOVE:
 				case PLAYER_OTHER_STOP:
+				case ITEM_NEW:
+				case OBSTACLE_NEW:
+				case PDOWN_NEW:
+				case ENEMY_NEW:
 					game.offer(message);
 					break;
 				default:

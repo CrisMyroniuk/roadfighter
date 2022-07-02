@@ -180,64 +180,70 @@ public class OnlineGameSceneHandler extends SceneHandler {
 	@Override
 	public void update(double delta) {
 		super.update(delta);
-		for (int i = 0; i < 10; i++) {
-			Message message = servidor.pollGameMessage();
+		Message message;
+		while ((message = servidor.pollGameMessage()) != null) {
 			if (message != null) {
 				switch(message.getType()) {
 				case ITEM_NEW:
-					GOBuilder.add(new PowerUp(Double.parseDouble(message.getContent()), -50.0, 100, "file:src/resources/images/coin.png"));
+					GOBuilder.add(new PowerUp(Double.parseDouble(message.getContent().replace(',', '.')), -50.0, 100, "file:src/resources/images/coin.png"));
 					break;
 				case ENEMY_NEW:
-					GOBuilder.add(new BadDriver(Double.parseDouble(message.getContent()), -50.0, Direction.UP));
+					GOBuilder.add(new BadDriver(Double.parseDouble(message.getContent().replace(',', '.')), -50.0, Direction.UP));
 					break;
 				case OBSTACLE_NEW:
-					GOBuilder.add(new Obstacle(Double.parseDouble(message.getContent()), -50.0, "file:src/resources/images/Conito.png"));
+					GOBuilder.add(new Obstacle(Double.parseDouble(message.getContent().replace(',', '.')), -50.0, "file:src/resources/images/Conito.png"));
 					break;
 				case PDOWN_NEW:
-					GOBuilder.add(new PowerDown(Double.parseDouble(message.getContent()), -50.0, "file:src/resources/images/velocityDown.png"));
+					GOBuilder.add(new PowerDown(Double.parseDouble(message.getContent().replace(',', '.')), -50.0, "file:src/resources/images/velocityDown.png"));
 					break;
-				case PLAYER_MOVE:
-					if (message.getContent().equals("up"))
-						player1.eventPressed(KeyCode.W);
-					else if (message.getContent().equals("left"))
-						player1.eventPressed(KeyCode.A);
-					else if (message.getContent().equals("down"))
-						player1.eventPressed(KeyCode.S);
-					else if (message.getContent().equals("right"))
-						player1.eventPressed(KeyCode.D);
-					break;
-				case PLAYER_STOP:
-					if (message.getContent().equals("up"))
-						player1.eventReleased(KeyCode.W);
-					else if (message.getContent().equals("left"))
-						player1.eventReleased(KeyCode.A);
-					else if (message.getContent().equals("down"))
-						player1.eventReleased(KeyCode.S);
-					else if (message.getContent().equals("right"))
-						player1.eventReleased(KeyCode.D);
+				case PLAYER:
+					String[] p1Coord = message.getContent().replace(',', '.').split("|");
+					player1.getCarPlayer().setCoordinate(Double.parseDouble(p1Coord[0]), Double.parseDouble(p1Coord[1]));
 					break;
 				case PLAYER_OTHER:
+					String[] p2Coord = message.getContent().replace(',', '.').split("|");
+					player2.getCarPlayer().setCoordinate(Double.parseDouble(p2Coord[0]), Double.parseDouble(p2Coord[1]));					
 					break;
-				case PLAYER_OTHER_MOVE:
-					if (message.getContent().equals("up"))
-						player2.eventPressed(KeyCode.W);
-					else if (message.getContent().equals("left"))
-						player2.eventPressed(KeyCode.A);
-					else if (message.getContent().equals("down"))
-						player2.eventPressed(KeyCode.S);
-					else if (message.getContent().equals("right"))
-						player2.eventPressed(KeyCode.D);
-					break;
-				case PLAYER_OTHER_STOP:
-					if (message.getContent().equals("up"))
-						player2.eventReleased(KeyCode.W);
-					else if (message.getContent().equals("left"))
-						player2.eventReleased(KeyCode.A);
-					else if (message.getContent().equals("down"))
-						player2.eventReleased(KeyCode.S);
-					else if (message.getContent().equals("right"))
-						player2.eventReleased(KeyCode.D);
-					break;
+//				case PLAYER_MOVE:
+//					if (message.getContent().equals("up"))
+//						player1.eventPressed(KeyCode.W);
+//					else if (message.getContent().equals("left"))
+//						player1.eventPressed(KeyCode.A);
+//					else if (message.getContent().equals("down"))
+//						player1.eventPressed(KeyCode.S);
+//					else if (message.getContent().equals("right"))
+//						player1.eventPressed(KeyCode.D);
+//					break;
+//				case PLAYER_STOP:
+//					if (message.getContent().equals("up"))
+//						player1.eventReleased(KeyCode.W);
+//					else if (message.getContent().equals("left"))
+//						player1.eventReleased(KeyCode.A);
+//					else if (message.getContent().equals("down"))
+//						player1.eventReleased(KeyCode.S);
+//					else if (message.getContent().equals("right"))
+//						player1.eventReleased(KeyCode.D);
+//					break;
+//				case PLAYER_OTHER_MOVE:
+//					if (message.getContent().equals("up"))
+//						player2.eventPressed(KeyCode.W);
+//					else if (message.getContent().equals("left"))
+//						player2.eventPressed(KeyCode.A);
+//					else if (message.getContent().equals("down"))
+//						player2.eventPressed(KeyCode.S);
+//					else if (message.getContent().equals("right"))
+//						player2.eventPressed(KeyCode.D);
+//					break;
+//				case PLAYER_OTHER_STOP:
+//					if (message.getContent().equals("up"))
+//						player2.eventReleased(KeyCode.W);
+//					else if (message.getContent().equals("left"))
+//						player2.eventReleased(KeyCode.A);
+//					else if (message.getContent().equals("down"))
+//						player2.eventReleased(KeyCode.S);
+//					else if (message.getContent().equals("right"))
+//						player2.eventReleased(KeyCode.D);
+//					break;
 				default:
 					break;
 				}
